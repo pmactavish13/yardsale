@@ -1,0 +1,9 @@
+.jumbotron {
+    height: 30%;
+    width:100%;
+    margin-top: 150px;
+    text-align: "center";
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    color: rgb(20, 72, 25);
+    border: dashed 6px rgb(20, 72, 25);
+}

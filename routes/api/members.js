@@ -8,7 +8,7 @@ router.route("/members")
 
 // Matches with "/api/members/:id"
 router
-  .route("member/:id")
+  .route("/member/:id")
   .get(membersController.findById)
   .put(membersController.update)
   .delete(membersController.remove);

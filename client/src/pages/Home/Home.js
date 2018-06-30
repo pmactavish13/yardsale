@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-// import API from "../../utils/API";
-// import { Link } from "react-router-dom";
+//import API from "../../utils/API";
+//import { Link } from "react-router-dom";
 import Wrapper from "../../components/Wrapper";
 import { Container } from "../../components/Grid";
 import Nav from "../../components/Nav";
 import { List, ListA, ListDropdown, ListDropdownItem } from "../../components/List";
+import { FormLogIn } from "../../components/Form";
+import Jumbotron from "../../components/Jumbotron";
 
-class Products extends Component {
+class Home extends Component {
     render() {
         return (
             <Wrapper>
                 <Container fluid>
                     <Nav>
                         <List>
-                            <ListA
-                                navLink="home"
-                            />
-                            <ListDropdown category="View Categories" >
+                            <ListDropdown category="View Categories">
                                 <ListDropdownItem
                                     linkFilter="Select All"
                                 />
@@ -25,11 +24,9 @@ class Products extends Component {
                                 />
                                 <ListDropdownItem
                                     linkFilter="Furniture"
-                                />
-                                <ListDropdownItem
+                                /><ListDropdownItem
                                     linkFilter="Kitchen"
-                                />
-                                <ListDropdownItem
+                                /><ListDropdownItem
                                     linkFilter="Other"
                                 />
                             </ListDropdown>
@@ -37,17 +34,16 @@ class Products extends Component {
                             <ListA
                                 navLink="sign up"
                             />
-                            <ListA
-                                navLink="log in"
-                            />
-
+                            <ListDropdown category="LOG IN">
+                                <FormLogIn/>
+                            </ListDropdown>
                         </List>
                     </Nav>
                 </Container>
-
+                <Jumbotron />
             </Wrapper>
         );
     }
 }
 
-export default Products;
+export default Home;

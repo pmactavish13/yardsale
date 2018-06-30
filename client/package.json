@@ -1,14 +1,14 @@
 {
-  "name": "mern",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-scripts": "1.0.14",
-    "react-router-dom": "^4.1.2",
-    "axios": "^0.16.2"
+    "axios": "^0.18.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

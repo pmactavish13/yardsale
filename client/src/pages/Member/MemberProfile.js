@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-// import API from "../../utils/API";
-// import { Link } from "react-router-dom";
+//import API from "../../utils/API";
+//import { Link } from "react-router-dom";
 import Wrapper from "../../components/Wrapper";
 import { Container } from "../../components/Grid";
 import Nav from "../../components/Nav";
 import { List, ListA, ListDropdown, ListDropdownItem } from "../../components/List";
 
-class Products extends Component {
+
+class MemberProfile extends Component {
     render() {
         return (
             <Wrapper>
@@ -16,7 +17,8 @@ class Products extends Component {
                             <ListA
                                 navLink="home"
                             />
-                            <ListDropdown category="View Categories" >
+
+                            <ListDropdown category="View Categories">
                                 <ListDropdownItem
                                     linkFilter="Select All"
                                 />
@@ -25,29 +27,24 @@ class Products extends Component {
                                 />
                                 <ListDropdownItem
                                     linkFilter="Furniture"
-                                />
-                                <ListDropdownItem
+                                /><ListDropdownItem
                                     linkFilter="Kitchen"
-                                />
-                                <ListDropdownItem
+                                /><ListDropdownItem
                                     linkFilter="Other"
                                 />
                             </ListDropdown>
 
                             <ListA
-                                navLink="sign up"
+                                navLink="log out"
                             />
-                            <ListA
-                                navLink="log in"
-                            />
-
                         </List>
                     </Nav>
                 </Container>
-
+                
             </Wrapper>
         );
     }
 }
 
-export default Products;
+// export default MemberProfile;
+

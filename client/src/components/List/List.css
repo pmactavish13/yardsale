@@ -1,0 +1,11 @@
+.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+    color: whitesmoke;
+}
+
+.nav-link {
+    font-family: "Book Antiqua", serif;
+    font-weight: 100;
+}
+#navbarResponsive {
+    margin-right: 15px;
+}

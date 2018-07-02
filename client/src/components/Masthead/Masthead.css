@@ -1,8 +1,17 @@
-.jumbotron{
-    height: 300;
-    clear: "both";
-    padding-top: 120;
-    text-align: "center"
+.container {
+    width: 90%;
+    margin-left:0;
+}
+
+.jumbotron {
+    width:100%;
+    text-align: "center";
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    color: rgb(27, 94, 34);
+}
+
+h1.title {
+    padding: 10px 20px 5px 20px;
 }
 
 .frame {
@@ -16,7 +25,7 @@
     box-shadow:0 0 5px 0 rgba(0,0,0,.25) inset, 0 5px 10px 5px rgba(0,0,0,.25);
     box-sizing:border-box;
     display:inline-block;
-    margin:9vh 9vw;
+    /* margin:8vh 9vw; */
     padding:8vmin 8vmin 4vmin 8vmin;
     position:relative;
     text-align:center;

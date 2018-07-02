@@ -1,10 +1,17 @@
 import React from "react";
+import PropTypes from 'prop-types'
+import { List } from "./List";
 
-export const ListA = props => (
+export const ListA = ({navlink, navLinkName, children}) => (
   <li className="nav-item active">
-    <a className="nav-link js-scroll-trigger" href="">{props.navLink}
+    <a className="nav-link js-scroll-trigger" href={navlink}>{navLinkName}
     </a> 
-    {props.children}
+    {children}
   </li>
 );
+
+
+List.PropTypes = {
+  navlink: PropTypes.string
+}
 

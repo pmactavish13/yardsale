@@ -1,6 +1,6 @@
 nav {
     height: 70px;
-    background-color:rgb(27, 94, 34);;
+    background-color:rgb(27, 94, 34);
     color: whitesmoke;
     border-bottom: solid 1px rgb(20, 72, 25);
 }
@@ -29,6 +29,19 @@ h6.logoName {
     text-align: center;
     position: absolute;
     
+}
+.navbar-nav, .nav-link {
+    color: whitesmoke !important;
+    text-transform: uppercase;
+}
+
+#logIn {
+    min-width: 300px;
+}
+
+#logInBtn {
+    margin-top: 10px;
+
 }
 
 .fa-bars {

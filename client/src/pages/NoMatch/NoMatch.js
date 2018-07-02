@@ -2,6 +2,7 @@ import React from "react";
 import Jumbotron from "../../components/Jumbotron";
 import Wrapper from "../../components/Wrapper";
 import { Row, Column } from "../../components/Grid";
+
 const NoMatch = () => (
   <Wrapper>
     <Row>

@@ -4,11 +4,17 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "ajv": "^6.5.2",
     "axios": "^0.18.0",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
     "react": "^16.4.1",
+    "react-bootstrap-modal": "^4.1.1",
     "react-dom": "^16.4.1",
+    "react-popper": "^1.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "reactstrap": "^6.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

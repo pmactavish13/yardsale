@@ -30,11 +30,13 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "client": "file:client",
     "express": "^4.16.3",
     "if-env": "^1.0.4",
     "mongoose": "^5.1.6",
     "nodemon": "^1.17.5",
     "path": "^0.12.7",
+    "prop-types": "^15.6.2",
     "update": "^0.7.4"
   }
 }

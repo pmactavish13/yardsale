@@ -2,16 +2,18 @@ const router = require("express").Router();
 const productsController = require("../../controllers/productsController");
 
 // Matches with "/api/products"
-router.route("/" || "/products")
+router.route("/")
   .get(productsController.findAll);
 
-// Create a new product listing
+// Create a new product listing equiv of api/products/newProduct*********************change\
+
+// ****************************************************************************************
 router.route("/newProduct")  
   .post(productsController.create);
 
 // Matches with "/api/products/:id"
 router
-  .route("/product/:id")
+  .route("/:id")
   .get(productsController.findById)
   .put(productsController.update)
   .delete(productsController.remove);

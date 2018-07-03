@@ -63,14 +63,16 @@ export default class Navigation extends React.Component {
         <div>
           <Navbar dark expand="md">
             <NavbarBrand href="/" id="logo">
-              <img className="logoImage" src="./images/yardsaleLogo.jpg" alt="logo" />
+            
+              {/* <img className="logoImage" src="./images/yardsaleLogo.jpg" alt="logo" /> */}
+              <img className="logoImage" src="./images/signBird.png" alt="png" />
               <h6 className="logoName">Yardsale</h6>
             </NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/home">HOME</NavLink>
+                  <NavLink href="/home" id="home">HOME</NavLink>
                 </NavItem>
 
                 {/* <NavItem>

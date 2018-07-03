@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import API from "../../utils/API";
+import API from "../../utils/API";
 //import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import FormContainer from "../../components/FormContainer"
@@ -9,11 +9,11 @@ class NewProduct extends Component {
     // Setting the initial values of ex: this.state.username
     state = {
         email: "",
-        userName: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        phoneNum: ""
+        username: "",
+        item: "",
+        description: "",
+        price: "",
+        textAlertNum: ""
     };
 
     // handle any changes to the input fields
@@ -30,8 +30,29 @@ class NewProduct extends Component {
     // When the form is submitted, prevent the default event and alert the username and password
     handleListItemSubmit = event => {
         event.preventDefault();
-        alert(`email: ${this.state.email}\nUsername: ${this.state.userName}\nItem: ${this.state.item}\nDescription: ${this.state.description}\nPhone Number: ${this.state.textAlertNum}\nPhone Number: ${this.state.price}}`);
-        this.setState({ email: "", userName: "", item: "", desctiption: "", textAlertNum: "" });
+        if (!this.state.email) {
+            alert("Enter your email address!");
+        } else if (!this.state.username) {
+            alert(`Enter your username!`);
+        } else if (!this.state.item) {
+            alert(`Enter your item name!`);
+        } else if (!this.state.description) {
+            alert(`Enter a description of your item!`);
+        } else if (!this.state.price) {
+            alert(`Enter a price!`);
+        } else { API.saveProduct({
+            email: this.state.email,
+            username: this.state.username,
+            textAlertNum: this.state.textAlertNum,
+            item: this.state.item,
+            desctiption: this.state.desctiption,
+            price: this.state.price
+        })
+            .then(res => this.loadProducts())
+            .catch(err => console.log(err));
+            alert(`email: ${this.state.email}\nUsername: ${this.state.username}\nItem: ${this.state.item}\nDescription: ${this.state.description}\nPhone Number: ${this.state.textAlertNum}\nPhone Number: ${this.state.price}}`);
+            this.setState({ email: "", username: "", item: "", desctiption: "", textAlertNum: "" });
+        };
     };
 
     render() {
@@ -62,10 +83,10 @@ class NewProduct extends Component {
                                 <label>User Name</label>
                                 <input
                                     type="text"
-                                    name="userName"
+                                    name="username"
                                     className="form-control form-control-sm"
                                     placeholder="Confirm UserName to be Posted with Listing"
-                                    value={this.state.userName}
+                                    value={this.state.username}
                                     onChange={this.handleListItemInputChange} />
                             </ Column>
                         </Row>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import API from "../../utils/API";
+import API from "../../utils/API";
+// import { Redirect } from 'react-router';
 // import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import FormContainer from "../../components/FormContainer";
@@ -9,18 +10,23 @@ class MemberSignUp extends Component {
     // Setting the initial values of ex: this.state.username
     state = {
         email: "",
-        userName: "",
+        username: "",
         password: "",
         firstName: "",
         lastName: "",
         phoneNum: ""
     };
 
+    loadNewMembers = () => {  
+        //alert(`You are signed up!\nemail: ${this.state.email}\nUsername: ${this.state.username}\nPassword: ${this.state.password}\nFirst Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nPhone Number: ${this.state.phoneNum}`)
+        this.setState({ email: "", username: "", password: "", firstName: "", lastName: "", phoneNum: "" })
+        //window.location.href = '/products';
+    }
+
     // handle any changes to the input fields
     handleNewMemberInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
         const { name, value } = event.target;
-
         // Set the state for the appropriate input field
         this.setState({
             [name]: value
@@ -30,18 +36,44 @@ class MemberSignUp extends Component {
     // When the form is submitted, prevent the default event and alert the username and password
     handleNewMemberFormSubmit = event => {
         event.preventDefault();
-        alert(`email: ${this.state.email}\nUsername: ${this.state.userName}\nPassword: ${this.state.password}\nFirst Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nPhone Number: ${this.state.phoneNum}`);
-        this.setState({ email: "", userName: "", password: "", firstName:"", lastName:"", phoneNum:"" });
-    };
+        if (!this.state.email) {
+            alert("Enter your email address!");
+        } else if (!this.state.username) {
+            alert(`Enter your username!`);
+        } else if (!this.state.password) {
+            alert(`Enter your password!`);
+        } else if (!this.state.firstName) {
+            alert(`Enter your first name!`);
+        } else if (!this.state.lastName) {
+            alert(`Enter your last name!`);
+        } else if (!this.state.username) {
+            alert(`Enter your username!`);
+        } else if (!this.state.phoneNum) {
+            alert(`Enter your phone number!`);
+        } else {
+            console.log(this.state.email)
+            API.saveMember({
+                email: this.state.email,
+                username: this.state.username,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phoneNum: this.state.phoneNum
+            })
+                .then(res => this.loadNewMembers())
+                .catch(err => console.log(err));
+            //console.log('sup');
+            
+            }  
+        };
+
 
     render() {
         return (
             <FormContainer>
-
                 <h1>Member Enrollment Form</h1>
-
                 <form>
-                <div className="formgroup">
+                    <div className="formgroup">
                         <Row>
                             <Column size="md-12">
                                 <label>Email</label>
@@ -63,10 +95,10 @@ class MemberSignUp extends Component {
                                 <label>User Name</label>
                                 <input
                                     type="text"
-                                    name="userName"
+                                    name="username"
                                     className="form-control form-control-sm"
                                     placeholder="Posted with any Listing"
-                                    value={this.state.userName}
+                                    value={this.state.username}
                                     onChange={this.handleNewMemberInputChange} />
                             </ Column>
                             <Column size="md-6">

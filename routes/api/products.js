@@ -8,7 +8,7 @@ router.route("/")
 // Create a new product listing equiv of api/products/newProduct*********************change\
 
 // ****************************************************************************************
-router.route("/newProduct")  
+router.route("/")  
   .post(productsController.create);
 
 // Matches with "/api/products/:id"

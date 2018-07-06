@@ -1,23 +1,22 @@
 import React from "react";
-import Jumbotron from "../../components/Jumbotron";
-import Wrapper from "../../components/Wrapper";
+import Frame from "../../components/Frame";
 import { Row, Column } from "../../components/Grid";
 
 const NoMatch = () => (
-  <Wrapper>
+  <Frame>
     <Row>
       <Column size="md-12">
-        <Jumbotron>
-          <h1>404 Page Not Found</h1>
-          <h1>
-            <span role="img" aria-label="Face With Rolling Eyes Emoji">
-              🙄
+        <div className="jumbotronBorder">
+            <h2>404 Page Not Found</h2>
+            <h2>
+              <span role="img" aria-label="Face With Rolling Eyes Emoji">
+                🙄
             </span>
-          </h1>
-        </Jumbotron>
+            </h2>
+        </div>
       </Column>
     </Row>
-  </Wrapper>
+  </Frame>
 );
 
 export default NoMatch;

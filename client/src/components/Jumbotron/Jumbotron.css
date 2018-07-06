@@ -1,43 +1,36 @@
 .jumbotron{
-    height: 300;
+    width:100%;
     clear: "both";
-    padding-top: 120;
-    text-align: "center"
+    text-align: "center";
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    border: groove 2px rgb(22, 72, 27);
+    color: rgb(22, 72, 27);
+    border-radius: 0 important!;
+    background-color: rgb(242, 240, 240)
 }
 
-.frame {
-    background-color:rgb(27, 94, 34);
-    border:solid 5vmin #eee;
-    border-bottom-color:#fff;
-    border-left-color:#eee;
-    border-radius:2px;
-    border-right-color:#eee;
-    border-top-color:#ddd;
-    box-shadow:0 0 5px 0 rgba(0,0,0,.25) inset, 0 5px 10px 5px rgba(0,0,0,.25);
-    box-sizing:border-box;
-    display:inline-block;
-    margin:9vh 9vw;
-    padding:8vmin 8vmin 4vmin 8vmin;
-    position:relative;
-    text-align:center;
+.jumbotronBorder{
+    width:100%;
+    clear: "both";
+    text-align: "center";
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    border: groove 2px rgb(22, 72, 27);
+    color: rgb(22, 72, 27);
+    border-radius: 0;
+    background-color: rgb(242, 240, 240);
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:70px;
+    padding-bottom: 90px
 }
-.frame:before {
-      border-radius:2px;
-      bottom:-2vmin;
-      box-shadow:0 2px 5px 0 rgba(0,0,0,.25) inset;
-      content:"";
-      left:-2vmin;
-      position:absolute;
-      right:-2vmin;
-      top:-2vmin;
-    }
-.frame:after {
-    border-radius:2px;
-    bottom:-2.5vmin;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.25);
-    content:"";
-    left:-2.5vmin;
-    position:absolute;
-    right:-2.5vmin;
-    top:-2.5vmin;
+
+.h2, h2 {
+    color: rgb(22, 72, 27);
+    text-align: center;
+    font-size: 2.6rem;
+    border-bottom:dotted 2px grey; 
+    padding-left:50px;
+    padding-right:50px;
+    padding-top:10px;
+    padding-bottom: 20px
 }

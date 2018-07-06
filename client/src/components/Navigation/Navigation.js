@@ -14,55 +14,30 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 
-// const styles = {
-//       navbarShow: {
-//         display: "inline"
-//       }
-// ,
-// navbarHide: {
-//   display: "block"
-// }
-//};
-
 export default class Navigation extends React.Component {
   constructor(props) {
-    super(props);  
-    
+    super(props);
+
     // Setting the initial values of this.state.username and this.state.password
-  this.state = {
-    email: "",
-    password: "",
-    isOpen: false
-  };
+    this.state = {
+      email: "",
+      password: "",
+      isOpen: false,
+      //*** fake Authorization ******/
+      isLoggedIn: false
+      //*****************************/
+    };
 
-  // handles navbar collapse - expand
+    // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
-    
-    console.log(window.location.pathname)
-    //componentWillMount() {  
-
-    // var pathUrl = window.location.pathname;
-    // if(window.location.pathname === '/home'){
-    //   $("#home").hide();
-    // }
-    // if (window.location.pathname === /home) {
-    //     this.setState = inactive
-    // }
-    // fires immediately before the initial render
-    // }
-
-
-
-    
   }
 
+  // Navbar Menu Open/Close
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-
-
 
   // handle any changes to the input fields
   handleInputChange = event => {
@@ -76,7 +51,7 @@ export default class Navigation extends React.Component {
   };
 
   // When the form is submitted, prevent the default event and alert the email and password
-  handleFormSubmit = event => {
+  handleSignInFormSubmit = event => {
     event.preventDefault();
     if (!this.state.email) {
       alert("Enter your email address!");
@@ -87,6 +62,12 @@ export default class Navigation extends React.Component {
       this.setState({ email: "", password: "" });
     };
   };
+
+  //  Sign Out
+  handleSignOutSubmit = event => {
+    event.preventDefault();
+
+  }
 
   render() {
     return (
@@ -100,17 +81,18 @@ export default class Navigation extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto dropdownList" navbar>
               <NavItem >
-                <NavLink href="/home" id="home" >HOME</NavLink>
+                {window.location.pathname === '/home' ? null :
+                  <NavLink href="/home" >HOME</NavLink>}
               </NavItem>
               <NavItem>
-                <NavLink href="/about">ABOUT</NavLink>
+                {window.location.pathname === '/about' ? null :
+                  <NavLink href="/about" >ABOUT</NavLink>}
               </NavItem>
               <NavItem>
-                <NavLink href="/safetyTips">SAFETY TIPS</NavLink>
+                {window.location.pathname === '/safetyTips' ? null :
+                  <NavLink href="/safetyTips" >SAFETY TIPS</NavLink>}
               </NavItem>
-              <NavItem>
-                <NavLink href="/newProduct">POST NEW LISTING</NavLink>
-              </NavItem>
+
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   LISTINGS
@@ -130,13 +112,26 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                <NavLink href="/memberSignUp">Sign Up</NavLink>
+                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
+                  <NavLink href="/newProduct" >POST NEW LISTING</NavLink>}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === true ?
+                  <NavLink href="/memberProfile" >MEMBER PROFILE</NavLink> : null}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
+                  <NavLink href="/memberSignUp" >SIGN UP</NavLink>}
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  SIGN IN
-                </DropdownToggle>
+
+                {this.state.isLoggedIn === true ?
+                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutSubmit}>SIGN OUT</button> :
+                  <DropdownToggle nav caret>
+                    SIGN IN
+                </DropdownToggle>}
+
                 <DropdownMenu right id="logIn">
                   <form className="p-4">
                     <div className="form-group">

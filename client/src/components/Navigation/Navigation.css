@@ -58,3 +58,13 @@ h6.logoName {
     font-family: "Palatino Linotype", "Book Antiqua", serif;
 }
 
+a:hover {
+    color:rgb(50, 141, 252)!important;
+}
+
+.logOut {
+    font-family: "Palatino Linotype", "Book Antiqua", serif; 
+    font-size: 15px !important;
+    margin-top:3px
+}
+

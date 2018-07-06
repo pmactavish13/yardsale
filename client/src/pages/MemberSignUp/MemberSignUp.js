@@ -3,21 +3,25 @@ import API from "../../utils/API";
 // import { Redirect } from 'react-router';
 // import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
-import FormContainer from "../../components/FormContainer";
+import { FormContainer } from "../../components/Form";
+import Frame from "../../components/Frame";
 import "./MemberSignUp.css";
 
 class MemberSignUp extends Component {
-    // Setting the initial values of ex: this.state.username
-    state = {
-        email: "",
-        username: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        phoneNum: ""
+    constructor(props) {
+    super(props);
+        // Setting the initial values of ex: this.state.username
+        this.state = {
+            email: "",
+            username: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            phoneNum: ""
+        }
     };
 
-    loadNewMembers = () => {  
+    loadNewMembers = () => {
         //alert(`You are signed up!\nemail: ${this.state.email}\nUsername: ${this.state.username}\nPassword: ${this.state.password}\nFirst Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nPhone Number: ${this.state.phoneNum}`)
         this.setState({ email: "", username: "", password: "", firstName: "", lastName: "", phoneNum: "" })
         //window.location.href = '/products';
@@ -62,16 +66,16 @@ class MemberSignUp extends Component {
             })
                 .then(res => this.loadNewMembers())
                 .catch(err => console.log(err));
-            //console.log('sup');
-            
-            }  
-        };
+
+        }
+    };
 
 
     render() {
         return (
+            <Frame>
             <FormContainer>
-                <h1>Member Enrollment Form</h1>
+                <h3>Member Enrollment Form</h3>
                 <form>
                     <div className="formgroup">
                         <Row>
@@ -158,9 +162,12 @@ class MemberSignUp extends Component {
                             </ Column>
                         </Row>
                     </div>
-                    <button type="submit" className="btn btn-primary newMember" onClick={this.handleNewMemberFormSubmit}>SIGN UP</button>
+                    <div className="buttonHolder">
+                    <button type="submit" className="btn  newMember" onClick={this.handleNewMemberFormSubmit}>SIGN UP</button>
+                    </div>
                 </form>
             </FormContainer>
+            </Frame>
         );
     }
 }

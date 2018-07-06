@@ -1,10 +1,9 @@
-.h1, h1 {
+h3 {
     text-align: center;
-    font-size: 2.6rem;
+    font-size: 38px;
     border-bottom:dotted 2px grey; 
-    padding:25px;
-}
-
-.form-control {
-    margin-bottom: 15px
+    padding-top:10px;
+    padding-bottom:15px;
+    padding-left:130px;
+    padding-right:130px
 }

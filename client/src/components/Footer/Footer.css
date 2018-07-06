@@ -1,16 +1,33 @@
 .footer {
-    min-height: 60px;
-    background-color:rgb(27, 94, 34);
-    color: whitesmoke;
-    position: relative;
-  }
+  min-height: 60px;
+  background-color:rgb(22, 72, 27);
+  color: whitesmoke;
+  position: relative;
+  margin-bottom: 0;  
+}
   
-  .footer span {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px;
-    background-color:rgb(27, 94, 34);
-    color: rgb(205, 203, 203);
-  }
+.footerTag {
+  max-height: 60px;
+  float: left;
+  margin-left:20px;
+  padding: 16px;
+  background-color:rgb(22, 72, 27);
+  color: rgb(205, 203, 203);
+  overflow: hidden
+  }  
+
+.developers {
+  max-height: 60px;
+  float: right;
+  line-height: 6px;
+  padding-top: 16px;
+  padding-right: 36px;
+  background-color:rgb(22, 72, 27);
+  color: rgb(205, 203, 203);
+  text-align: right; 
+  overflow: hidden   
+}  
+
+p {
+  margin-bottom: 0;
+  }    

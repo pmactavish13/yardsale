@@ -1,7 +1,7 @@
 nav {
     height: 70px;
-    background-color:rgb(27, 94, 34);
-    color: whitesmoke;
+    background-color:rgb(22, 72, 27);
+    color: rgb(242, 240, 240);
     border-bottom: solid 1px rgb(20, 72, 25);
 }
 
@@ -22,7 +22,7 @@ img.logoImage {
 h6.logoName {
     font-size:16px;
     font-style: oblique;
-    color: whitesmoke;
+    color: rgb(242, 240, 240);
     font-family:  "Book Antiqua", serif;
     margin-top: -30px;
     margin-left: 38px;
@@ -31,26 +31,29 @@ h6.logoName {
     
 }
 .navbar-nav, .nav-link {
-    color: whitesmoke !important;
+    color: rgb(242, 240, 240) !important;
     text-transform: uppercase;
+}
+
+.dropdownList {
+    background-color: rgb(22, 72, 27);
+    position: relative;
+    z-index: 2;
+    border-radius: 1px;
+     text-align:center;
 }
 
 #logIn {
     min-width: 300px;
 }
 
-#logInBtn {
-    margin-top: 10px;
-
-}
-
 .fa-bars {
-    color: whitesmoke;
+    color: rgb(242, 240, 240);
     padding-left: 3px;
 } 
 
 .navbar-light, .navbar-toggler {
-    color: whitesmoke;
+    color: rgb(242, 240, 240);
     border-color: rgb(20, 72, 25, 0.1);
     font-family: "Palatino Linotype", "Book Antiqua", serif;
 }

@@ -14,25 +14,55 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 
+// const styles = {
+//       navbarShow: {
+//         display: "inline"
+//       }
+// ,
+// navbarHide: {
+//   display: "block"
+// }
+//};
+
 export default class Navigation extends React.Component {
   constructor(props) {
-    super(props);
+    super(props);  
+    
+    // Setting the initial values of this.state.username and this.state.password
+  this.state = {
+    email: "",
+    password: "",
+    isOpen: false
+  };
 
+  // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
+    
+    console.log(window.location.pathname)
+    //componentWillMount() {  
+
+    // var pathUrl = window.location.pathname;
+    // if(window.location.pathname === '/home'){
+    //   $("#home").hide();
+    // }
+    // if (window.location.pathname === /home) {
+    //     this.setState = inactive
+    // }
+    // fires immediately before the initial render
+    // }
+
+
+
+    
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  // Setting the initial values of this.state.username and this.state.password
-  state = {
-    email: "",
-    password: ""
-  };
+
+
 
   // handle any changes to the input fields
   handleInputChange = event => {
@@ -58,95 +88,89 @@ export default class Navigation extends React.Component {
     };
   };
 
-    render() {
-      return (
-        <div>
-          <Navbar dark expand="md">
-            <NavbarBrand href="/" id="logo">
-            
-              {/* <img className="logoImage" src="./images/yardsaleLogo.jpg" alt="logo" /> */}
-              <img className="logoImage" src="./images/signBird.png" alt="png" />
-              <h6 className="logoName">Yardsale</h6>
-            </NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink href="/home" id="home">HOME</NavLink>
-                </NavItem>
-
-                {/* <NavItem>
-                <NavLink href="/aboutUs">ABOUT</NavLink>
+  render() {
+    return (
+      <div>
+        <Navbar dark expand="md">
+          <NavbarBrand href="/" id="logo">
+            <img className="logoImage" src="./images/signBird.png" alt="png" />
+            <h6 className="logoName">Yardsale</h6>
+          </NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto dropdownList" navbar>
+              <NavItem >
+                <NavLink href="/home" id="home" >HOME</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/about">ABOUT</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/safetyTips">SAFETY TIPS</NavLink>
-              </NavItem> */}
-
-                <NavItem>
-                  <NavLink href="/newProduct">POST NEW LISTING</NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    LISTINGS
+              </NavItem>
+              <NavItem>
+                <NavLink href="/newProduct">POST NEW LISTING</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  LISTINGS
                 </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>
-                      ALL LISTINGS
+                <DropdownMenu right>
+                  <DropdownItem>
+                    ALL LISTINGS
                   </DropdownItem>
-                    <DropdownItem>
-                      FURNITURE
+                  <DropdownItem>
+                    FURNITURE
                   </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>
-                      OTHER
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    OTHER
                   </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+                </DropdownMenu>
+              </UncontrolledDropdown>
 
-                <NavItem>
-                  <NavLink href="/memberSignUp">Sign Up</NavLink>
-                </NavItem>
+              <NavItem>
+                <NavLink href="/memberSignUp">Sign Up</NavLink>
+              </NavItem>
 
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    SIGN IN
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  SIGN IN
                 </DropdownToggle>
-                  <DropdownMenu right id="logIn">
-                    <form className="p-4">
-                      <div className="form-group">
-                        <label>Email address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          name="email"
-                          placeholder="email@example.com"
-                          value={this.state.email}
-                          onChange={this.handleSignInInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Password</label>
-                        <input type="password"
-                          className="form-control"
-                          name="password"
-                          placeholder="Password"
-                          value={this.state.password}
-                          onChange={this.handleSignInInputChange}
-                        />
-                      </div>
-                      <div className="form-check">
-                        <input type="checkbox" className="form-check-input" id="dropdownCheck2" />
-                        <label className="form-check-label">Remember me</label>
-                      </div>
-                      <button type="submit" className="btn btn-primary" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
-                    </form>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Nav>
-            </Collapse>
-          </Navbar>
-        </div>
-      );
-    }
+                <DropdownMenu right id="logIn">
+                  <form className="p-4">
+                    <div className="form-group">
+                      <label>Email address</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        placeholder="email@example.com"
+                        value={this.state.email}
+                        onChange={this.handleSignInInputChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Password</label>
+                      <input type="password"
+                        className="form-control"
+                        name="password"
+                        placeholder="Password"
+                        value={this.state.password}
+                        onChange={this.handleSignInInputChange}
+                      />
+                    </div>
+                    <div className="buttonHolder">
+                      <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
+                    </div>
+                  </form>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div >
+    );
   }
+}
 

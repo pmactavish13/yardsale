@@ -22,12 +22,12 @@ form {
 button {
     border: solid 1px rgb(22, 72, 27);
     background-color:  rgb(22, 72, 27);
-    color:whitesmoke
+    color:whitesmoke;
+    font-family: "Palatino Linotype", "Book Antiqua", serif
 }
 
 button:hover {
-    background-color:  rgb(28, 121, 37);
-    color:whitesmoke
+    color:rgb(50, 141, 252)
 }
 
 .buttonHolder { 

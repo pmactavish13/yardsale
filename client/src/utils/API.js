@@ -11,17 +11,18 @@ export default {
     return axios.get("/api/products/" + id);
   },
   // Updates the product with the given id
-  // updateProduct: function(id) {
-  //   return axios.put("/api/products/" + id, productData);
-  // },
+  updateProduct: function(id) {
+    // return axios.put("/api/products/" + id, productData);
+    return axios.put("/api/products/" + id);
+  },
   // Deletes the product with the given id
   deleteProduct: function(id) {
     return axios.delete("/api/products/" + id);
   },
   // Saves a product to the database
-  // saveProduct: function(productData) {
-  //   return axios.post("/api/products", productData);
-  // },
+  saveProduct: function(productData) {
+    return axios.post("/api/products", productData);
+  },
 
 //*************** MEMBER *************************/
   // Gets the member with the given id
@@ -32,12 +33,12 @@ export default {
   deleteMember: function(id) {
     return axios.delete("/api/members/" + id);
   },
-  // // Update the member with the given id
-  // updateMember: function(id) {
-  //   return axios.put("/api/members/" + id, memberData);
-  // },
-  // // Saves a member to the database
-  // saveMember: function(memberData) {
-  //   return axios.post("/api/members", memberData);
-  // }
+  // Update the member with the given id
+  updateMember: function(id) {
+    return axios.put("/api/members/" + id);
+  },
+  // Saves a member to the database
+  saveMember: function(memberData) {
+    return axios.post("/api/members", memberData);
+  }
 };

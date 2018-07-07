@@ -62,6 +62,10 @@ a:hover {
     color:rgb(50, 141, 252)!important;
 }
 
+.dropDown {
+    color:rgb(22, 72, 27)!important
+}
+
 .logOut {
     font-family: "Palatino Linotype", "Book Antiqua", serif; 
     font-size: 15px !important;

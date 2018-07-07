@@ -24,7 +24,7 @@ export default class Navigation extends React.Component {
       password: "",
       isOpen: false,
       //*** fake Authorization ******/
-      isLoggedIn: false
+      isLoggedIn: true
       //*****************************/
     };
 
@@ -99,7 +99,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    ALL LISTINGS
+                  <NavLink href="/products" className="dropDown">ALL LISTINGS</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE

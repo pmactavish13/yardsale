@@ -55,7 +55,6 @@ class MemberSignUp extends Component {
         } else if (!this.state.phoneNum) {
             alert(`Enter your phone number!`);
         } else {
-            console.log(this.state.email)
             API.saveMember({
                 email: this.state.email,
                 username: this.state.username,

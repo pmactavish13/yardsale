@@ -18,65 +18,81 @@ export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
+    // Setting the initial values of this.state.username and this.state.password
     this.state = {
-      isOpen: false
+      email: "",
+      password: "",
+      isOpen: false,
+      //*** fake Authorization ******/
+      isLoggedIn: false
+      //*****************************/
     };
+
+    // handles navbar collapse - expand
+    this.toggle = this.toggle.bind(this);
   }
+
+  // Navbar Menu Open/Close
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-    // Setting the initial values of this.state.username and this.state.password
-    state = {
-      username: "",
-      password: ""
-    };
-  
-    // handle any changes to the input fields
-    handleInputChange = event => {
-      // Pull the name and value properties off of the event.target (the element which triggered the event)
-      const { name, value } = event.target;
-  
-      // Set the state for the appropriate input field
-      this.setState({
-        [name]: value
-      });
-    };
-  
-    // When the form is submitted, prevent the default event and alert the email and password
-    handleFormSubmit = event => {
-      event.preventDefault();
+
+  // handle any changes to the input fields
+  handleInputChange = event => {
+    // Pull the name and value properties off of the event.target (the element which triggered the event)
+    const { name, value } = event.target;
+
+    // Set the state for the appropriate input field
+    this.setState({
+      [name]: value
+    });
+  };
+
+  // When the form is submitted, prevent the default event and alert the email and password
+  handleSignInFormSubmit = event => {
+    event.preventDefault();
+    if (!this.state.email) {
+      alert("Enter your email address!");
+    } else if (!this.state.password) {
+      alert(`Enter your password!`);
+    } else {
       alert(`email: ${this.state.email}\npassword: ${this.state.password}`);
-      this.setState({ username: "", password: "" });
+      this.setState({ email: "", password: "" });
     };
+  };
+
+  //  Sign Out
+  handleSignOutSubmit = event => {
+    event.preventDefault();
+
+  }
 
   render() {
     return (
       <div>
         <Navbar dark expand="md">
           <NavbarBrand href="/" id="logo">
-            <img className="logoImage" src="./images/yardsaleLogo.jpg" alt="logo" />
+            <img className="logoImage" src="./images/signBird.png" alt="png" />
             <h6 className="logoName">Yardsale</h6>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
+            <Nav className="ml-auto dropdownList" navbar>
+              <NavItem >
+                {window.location.pathname === '/home' ? null :
+                  <NavLink href="/home" >HOME</NavLink>}
+              </NavItem>
               <NavItem>
-                <NavLink href="/home">HOME</NavLink>
+                {window.location.pathname === '/about' ? null :
+                  <NavLink href="/about" >ABOUT</NavLink>}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/safetyTips' ? null :
+                  <NavLink href="/safetyTips" >SAFETY TIPS</NavLink>}
               </NavItem>
 
-              {/* <NavItem>
-                <NavLink href="/aboutUs">ABOUT</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/safetyTips">SAFETY TIPS</NavLink>
-              </NavItem> */}
-
-              <NavItem>
-                <NavLink href="/newProduct">POST NEW LISTING</NavLink>
-              </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   LISTINGS
@@ -96,13 +112,26 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                <NavLink href="/memberSignUp">Sign Up</NavLink>
+                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
+                  <NavLink href="/newProduct" >POST NEW LISTING</NavLink>}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === true ?
+                  <NavLink href="/memberProfile" >MEMBER PROFILE</NavLink> : null}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
+                  <NavLink href="/memberSignUp" >SIGN UP</NavLink>}
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  SIGN IN
-                </DropdownToggle>
+
+                {this.state.isLoggedIn === true ?
+                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutSubmit}>SIGN OUT</button> :
+                  <DropdownToggle nav caret>
+                    SIGN IN
+                </DropdownToggle>}
+
                 <DropdownMenu right id="logIn">
                   <form className="p-4">
                     <div className="form-group">
@@ -112,8 +141,8 @@ export default class Navigation extends React.Component {
                         className="form-control"
                         name="email"
                         placeholder="email@example.com"
-                        value={this.state.username}
-                        onChange={this.handleInputChange}
+                        value={this.state.email}
+                        onChange={this.handleSignInInputChange}
                       />
                     </div>
                     <div className="form-group">
@@ -122,22 +151,20 @@ export default class Navigation extends React.Component {
                         className="form-control"
                         name="password"
                         placeholder="Password"
-                        value={this.state.username}
-                        onChange={this.handleInputChange}
+                        value={this.state.password}
+                        onChange={this.handleSignInInputChange}
                       />
                     </div>
-                    <div className="form-check">
-                      <input type="checkbox" className="form-check-input" id="dropdownCheck2" />
-                      <label className="form-check-label">Remember me</label>
+                    <div className="buttonHolder">
+                      <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
                     </div>
-                    <button type="submit" className="btn btn-primary" id="logInBtn" onClick={this.handleFormSubmit}>SIGN IN</button>
                   </form>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
+      </div >
     );
   }
 }

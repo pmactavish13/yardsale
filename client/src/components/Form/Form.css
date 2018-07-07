@@ -1,12 +1,53 @@
-.pull-right .dropdown-menu:after {
-    left: auto;
-    right: 13px;
-}
-.pull-right .dropdown-menu {
-    left: auto;
-    right: 0;
+.formContainer{
+    padding: 20px;
+    text-align: "center";
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    color: rgb(22, 72, 27);
+    border: groove 2px rgb(23, 79, 29);
+    background-color: rgb(242, 240, 240);
+    height:100%;
+    position: relative;
+    z-index: 1
 }
 
-.dropdown-menu {
-    min-width: 15rem;
+form {
+    text-align: left  
 }
+
+
+.form-control {
+    margin-bottom: 15px
+}
+
+button {
+    border: solid 1px rgb(22, 72, 27);
+    background-color:  rgb(22, 72, 27);
+    color:whitesmoke;
+    font-family: "Palatino Linotype", "Book Antiqua", serif
+}
+
+button:hover {
+    color:rgb(50, 141, 252)
+}
+
+.buttonHolder { 
+    text-align: center;
+    background-color: rgb(242, 240, 240)
+ }
+
+ .holder {
+    text-align: center;
+    background-color: rgb(242, 240, 240);
+    border-left: groove 2px rgb(22, 72, 27);
+    border-right: groove 2px rgb(22, 72, 27);
+    border-bottom: groove 2px rgb(22, 72, 27);
+    margin-Top: -30px;
+    padding-bottom: 30px;
+    position: relative;
+    z-index: 1
+ }
+
+ .loadImage {
+     max-width: 200px;
+ }
+

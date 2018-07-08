@@ -13,6 +13,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 import "./Navigation.css";
+import API from "../../utils/API";
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -58,7 +59,13 @@ export default class Navigation extends React.Component {
     } else if (!this.state.password) {
       alert(`Enter your password!`);
     } else {
-      alert(`email: ${this.state.email}\npassword: ${this.state.password}`);
+      API.signIn({
+        email: this.state.email,
+        password: this.state.password
+      })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+
       this.setState({ email: "", password: "" });
     };
   };
@@ -140,9 +147,9 @@ export default class Navigation extends React.Component {
                         type="email"
                         className="form-control"
                         name="email"
-                        placeholder="email@example.com"
+                        placeholder="email@navigation.com"
                         value={this.state.email}
-                        onChange={this.handleSignInInputChange}
+                        onChange={this.handleInputChange}
                       />
                     </div>
                     <div className="form-group">
@@ -152,7 +159,7 @@ export default class Navigation extends React.Component {
                         name="password"
                         placeholder="Password"
                         value={this.state.password}
-                        onChange={this.handleSignInInputChange}
+                        onChange={this.handleInputChange}
                       />
                     </div>
                     <div className="buttonHolder">

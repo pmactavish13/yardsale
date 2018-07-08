@@ -1,27 +1,28 @@
 const router = require("express").Router();
-const productsController = require("../../controllers/productsController");
+const accountController = require("../../controllers/accountController");
 
 // // Matches with "/api/products"
 // router.route("/")
-//   .get(productsController.findAll);
+//   .get(accountController.findAll);
 
 // Create a new product listing equiv of api/products/newProduct*********************change\
 
 // ****************************************************************************************
-router.route("/signup")  
-  .post(productsController.create);
+// router.route("/signup")  
+//   .post(accountController.create);
 
-  router.route("/signin")  
-  .post(productsController.create);
+// Matches with "/api/account/signin"
+router.route("/signin")
+  .post(accountController.signIn);
 
-  router.route("/signup")  
-  .post(productsController.create);
+// router.route("/signup")  
+// .post(accountController.create);
 
-// Matches with "/api/products/:id"
-router
-  .route("/:id")
-  .get(productsController.findById)
-  .put(productsController.update)
-  .delete(productsController.remove);
+// // Matches with "/api/products/:id"
+// router
+//   .route("/:id")
+//   .get(accountController.findById)
+//   .put(accountController.update)
+//   .delete(accountController.remove);
 
 module.exports = router; 

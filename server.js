@@ -39,6 +39,9 @@ app.use(express.json());
 // API routes
 app.use(routes);
 
+// API routes
+// require('./routes')(app);
+
 // if (isDev) {
 //   const compiler = webpack(webpackConfig);
 
@@ -74,7 +77,9 @@ app.listen(PORT, '0.0.0.0', (err) => {
     console.log(err);
   }
 
-  console.info(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  // console.info(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+
 });
 
 module.exports = app;

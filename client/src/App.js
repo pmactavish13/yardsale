@@ -28,7 +28,7 @@ const App = () => (
           <Route exact path="/product/:id" render={props => <Products {...props} />} />
           <Route exact path="/newProduct" render={props => <NewProduct {...props} />} />
           <Route exact path="/memberSignUp" render={props => <MemberSignUp {...props} />} />
-          <Route exact path="/member/:id" render={props => <MemberProfile {...props} />} />
+          <Route exact path="/memberProfile/:id" render={props => <MemberProfile {...props} />} />
           <Route component={NoMatch} />
         </ Switch>
       </Wrapper>

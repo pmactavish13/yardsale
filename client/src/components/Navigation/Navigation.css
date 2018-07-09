@@ -15,6 +15,7 @@ img.logoImage {
     height: 50px;
     width:100px;
     border-radius: 3px;
+    filter: invert(100%);
     -webkit-filter: invert(100%);
     margin-left: 15px; 
 }
@@ -60,6 +61,10 @@ h6.logoName {
 
 a:hover {
     color:rgb(50, 141, 252)!important;
+}
+
+.dropDown {
+    color:rgb(22, 72, 27)!important
 }
 
 .logOut {

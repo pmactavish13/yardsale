@@ -84,7 +84,7 @@ class MemberSignUp extends Component {
                                     type="email"
                                     name="email"
                                     className="form-control form-control-sm"
-                                    placeholder="email@example.com"
+                                    placeholder="email@signup.com"
                                     value={this.state.email}
                                     onChange={this.handleNewMemberInputChange}
                                 />

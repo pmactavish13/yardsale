@@ -40,5 +40,13 @@ export default {
   // Saves a member to the database
   saveMember: function(memberData) {
     return axios.post("/api/members", memberData);
-  }
+  },
+
+  
+//*************** SESSION *************************/
+  // Gets the member with the given id
+  signIn: function(loginData) {
+    // console.log(loginData)
+    return axios.post("/api/account/signin", loginData);
+  },
 };

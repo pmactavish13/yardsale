@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import API from "../../utils/API";
 // import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
-import { Container } from "../../components/Grid";
-import Frame from "../../components/Frame"
+import {  Row, Column } from "../../components/Grid";
+// import Frame from "../../components/Frame";
+import "./Products.css";
 
 class Products extends Component {
     state = {
@@ -23,6 +24,7 @@ class Products extends Component {
 
     loadProducts = () => {
         API.getProducts()
+
             .then(res =>
                 this.setState({
                     products: res.data
@@ -39,41 +41,43 @@ class Products extends Component {
 
     render() {
         return (
-            <div>
-                {this.state.products.length ? (
-                    <Container>
-                        {this.state.products.map(product => (
-                            <ProductCard key={product._id}>
-                                <div className="img-container">
-                                    <img alt={product.item} src={product.image1} />
-                                </div>
-                                <div className="content">
-                                    <ul>
-                                        <li>
-                                            <strong>Item:</strong> {product.item}
-                                        </li>
-                                        <li>
-                                            <strong>Description:</strong> {product.description}
-                                        </li>
-                                        <li>
-                                            <strong>Price:</strong> {product.price}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </ProductCard>
-                        ))}
-                    </Container>
-                ) : (
-                    <Frame>
-                        <h2>No Results to Display</h2>
-                        <h2>
-                            <span role="img" aria-label="Face With Rolling Eyes Emoji">
-                                🙄
-                            </span>
-                        </h2>
-                    </Frame>
-                )}
+            <div className="productPage fluid">
+                <Row> {this.state.products.map(product => (
+                    <Column size="md-3" key={product._id}>
+                        <ProductCard key={product._id}>
+                            <div className="img-container">
+                                <img className="productImage" alt={product.item} src={product.image1} />
+                            </div>
+                            <div className="content">
+                                <ul>
+                                    <li>
+                                        <strong>Item:</strong> {product.item}
+                                    </li>
+                                    <li>
+                                        <strong>Description:</strong> {product.description}
+                                    </li>
+                                    <li>
+                                        <strong>Price: $</strong> {product.price}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className='buttonHolder'>
+                            <button className="btn productById">More Information</button>
+                            </div>
+                        </ProductCard>
+                    </Column>
+                ))}
+                </Row>
             </div>
+
+            // <Frame>
+            //     <h2>No Results to Display</h2>
+            //     <h2>
+            //         <span role="img" aria-label="Face With Rolling Eyes Emoji">
+            //             🙄
+            //                 </span>
+            //     </h2>
+            // </Frame>  
         );
     }
 }

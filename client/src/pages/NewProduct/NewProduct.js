@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//import ReactFileReader from 'react-file-reader';
 import API from "../../utils/API";
-//import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame"
@@ -22,11 +20,11 @@ class NewProduct extends Component {
             image2: "",
             image3: "",
         };
-  };
+    };
 
     loadNewProducts = () => {
-            this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: ""});
-        }
+        this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "" });
+    }
 
     // handle any changes to the input fields
     handleListItemInputChange = event => {
@@ -39,20 +37,19 @@ class NewProduct extends Component {
             [name]: value,
         });
     };
-   
+
     handleFileImageInputChange = event => {
         console.log(event.target.files[0])
-            let image1DataURL
-            var file = event.target.files[0];
-            var reader = new FileReader();
-            reader.onloadend = () => {
-              image1DataURL = reader.result
-              console.log(image1DataURL)
-              this.setState({image1: image1DataURL})
-            }
-            reader.readAsDataURL(file);
-          }
-    
+        let image1DataURL
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onloadend = () => {
+            image1DataURL = reader.result
+            console.log(image1DataURL)
+            this.setState({ image1: image1DataURL })
+        }
+        reader.readAsDataURL(file);
+    }
 
     // When the form is submitted, prevent the default event and alert the username and password
     handleListItemSubmit = event => {
@@ -147,7 +144,7 @@ class NewProduct extends Component {
                                 <div className="formgroup loadImage">
                                     <label>Image 1</label>
                                     <input
-                                        type="file" 
+                                        type="file"
                                         className="form-control form-control-sm"
                                         onChange={this.handleFileImageInputChange} />
                                 </div>

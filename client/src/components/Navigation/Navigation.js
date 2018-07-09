@@ -14,6 +14,11 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 import API from "../../utils/API";
+import {
+  getFromStorage,
+  setInStorage
+} from '../../utils/storage';
+
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -63,7 +68,26 @@ export default class Navigation extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-        .then(res => console.log(res))
+        .then(res => res.json())
+        .then(json => {
+          if (json.success) {
+            console.log("saving token")
+            setInStorage('the_main_app', { token: json.token });
+            this.setState({
+              signInError: json.message,
+              isLoading: false,
+              signInEmail: '',
+              signInPassword: '',
+              token: json.token
+            })
+          } else {
+            this.setState({
+              signUpError: json.message,
+              isLoading: false,
+
+            })
+          }
+        })
         .catch(err => console.log(err));
 
       this.setState({ email: "", password: "" });

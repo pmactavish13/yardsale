@@ -15,6 +15,7 @@ img.logoImage {
     height: 50px;
     width:100px;
     border-radius: 3px;
+    filter: invert(100%);
     -webkit-filter: invert(100%);
     margin-left: 15px; 
 }

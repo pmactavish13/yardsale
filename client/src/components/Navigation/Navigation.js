@@ -24,7 +24,7 @@ export default class Navigation extends React.Component {
       password: "",
       isOpen: false,
       //*** fake Authorization ******/
-      isLoggedIn: true
+      isLoggedIn: false
       //*****************************/
     };
 

@@ -14,10 +14,10 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 import API from "../../utils/API";
-import {
-  getFromStorage,
-  setInStorage
-} from '../../utils/storage';
+// import {
+//   getFromStorage,
+//   setInStorage
+// } from '../../utils/storage';
 
 
 export default class Navigation extends React.Component {
@@ -72,7 +72,7 @@ export default class Navigation extends React.Component {
         .then(json => {
           if (json.success) {
             console.log("saving token")
-            setInStorage('the_main_app', { token: json.token });
+            // setInStorage('the_main_app', { token: json.token });
             this.setState({
               signInError: json.message,
               isLoading: false,
@@ -130,7 +130,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                  <NavLink href="/products" className="dropDown">ALL LISTINGS</NavLink>
+                    <NavLink href="/products" className="dropDown">ALL LISTINGS</NavLink>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE

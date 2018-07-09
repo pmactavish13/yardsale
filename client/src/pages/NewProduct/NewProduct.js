@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import ReactFileReader from 'react-file-reader';
 import API from "../../utils/API";
 //import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
@@ -11,6 +12,7 @@ class NewProduct extends Component {
         super(props);
 
         // Setting the initial values of controlled components ex: this.state.username
+        // this.
         this.state = {
             item: "",
             description: "",
@@ -20,36 +22,37 @@ class NewProduct extends Component {
             image2: "",
             image3: "",
         };
-    };
+  };
 
     loadNewProducts = () => {
-            this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "", image4: "" });
-            // alert(`Item: ${this.state.item}\nDescription: ${this.state.description}\nselectOption: ${this.state.selectOption}\nPrice: ${this.state.price}`);
+            this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: ""});
         }
-
-    // updateCheckbox(event) {
-    //     event.preventDefault();
-
-    //     this.setState({ selectOption: !this.state.selectOption });
-    //     console.log(this.state.selectOption);  // This logs 'false' meaning the click did cause the state change 
-    //     console.log(event.target.selectOption);  // However, this logs 'true' because the checkmark is still there 
-    // }
 
     // handle any changes to the input fields
     handleListItemInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
-        // const { name, value } = event.target;
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-    
-
         // Set the state for the appropriate input field
         this.setState({
             [name]: value,
-            // selectOption: !this.state.selectOption
         });
     };
+   
+    handleFileImageInputChange = event => {
+        console.log(event.target.files[0])
+            let image1DataURL
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onloadend = () => {
+              image1DataURL = reader.result
+              console.log(image1DataURL)
+              this.setState({image1: image1DataURL})
+            }
+            reader.readAsDataURL(file);
+          }
+    
 
     // When the form is submitted, prevent the default event and alert the username and password
     handleListItemSubmit = event => {
@@ -69,7 +72,7 @@ class NewProduct extends Component {
                 selectOption: this.state.selectOption,
                 item: this.state.item,
                 description: this.state.description,
-                price: parseInt(this.state.price)
+                price: parseInt(this.state.price, 10)
             })
                 .then(res => this.loadNewProducts())
                 .catch(err => console.log(err));
@@ -81,7 +84,6 @@ class NewProduct extends Component {
             <Frame>
                 <FormContainer>
                     <h3>New Item Listing Form</h3>
-
                     <form>
                         <Row>
                             <Column size="md-12">
@@ -145,11 +147,9 @@ class NewProduct extends Component {
                                 <div className="formgroup loadImage">
                                     <label>Image 1</label>
                                     <input
-                                        type="file"
-                                        name="image1"
+                                        type="file" 
                                         className="form-control form-control-sm"
-                                        value={this.state.image1}
-                                        onChange={this.handleListItemInputChange} />
+                                        onChange={this.handleFileImageInputChange} />
                                 </div>
                             </ Column>
                             <Column size="md-4">

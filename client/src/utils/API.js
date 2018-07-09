@@ -46,7 +46,7 @@ export default {
 //*************** SESSION *************************/
   // Gets the member with the given id
   signIn: function(loginData) {
-    console.log(loginData)
+    // console.log(loginData)
     return axios.post("/api/account/signin", loginData);
   },
 };

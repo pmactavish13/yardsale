@@ -68,10 +68,7 @@ export default class Navigation extends React.Component {
         .then(res => {
           const { data } = res;
           if (data.success) {
-            console.log("Saving Token")
-            //TODO: Store session token in LocalStorage
             Storage.setInStorage('YardSale', { token: data.token });
-            //TODO: Toggle isLoggedIn to True
             this.setState({
               signInError: data.message,
               isLoading: false,
@@ -97,11 +94,19 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutSubmit = event => {
     event.preventDefault();
-    //TODO: Wire up to controller
-    //TODO: Toggle isLoggedIn to True
-  }
+    API.signOut({
+      token: this.state.token
+    })
+      .then(res => {
+    Storage.removeFromStorage('YardSale');
+    this.setState({
+      isLoggedIn: false
+    })
+  });
+}
 
   render() {
+    
     return (
       <div>
         <Navbar dark expand="md">

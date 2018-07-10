@@ -31,6 +31,21 @@ export default {
         } catch (err) {
             console.log(err);
         }
-    }
+    },
 
+    // Removes key from storage
+    removeFromStorage: function (key) {
+        if (!key) {
+            console.log('Error: Key is missing');
+        }
+
+        try {
+            console.log(key)
+            // localStorage.removeItem(key);
+            localStorage.clear();
+            return null;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 };

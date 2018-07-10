@@ -7,12 +7,10 @@ const db = require("../models");
 // module.exports = (app) => {
 module.exports = {
     signIn: function (req, res) {
-         const { body } = req;
+        const { body } = req;
         const { password } = body;
         let { email } = body;
 
-        // console.log(email)
-        // console.log(password)
         if (!password) {
             return res.send({
                 success: false,
@@ -67,8 +65,7 @@ module.exports = {
                         err: err
                     });
                 }
-                
-                console.log("AccountController: Token: " + doc._id)
+
                 return res.send({
                     success: true,
                     message: 'Valid sign in',
@@ -77,6 +74,18 @@ module.exports = {
 
             })
         });
+    },
+
+    signOut: function (req, res) {
+        const { body } = req;
+        const { token } = body;
+
+        if (!password) {
+            return res.send({
+                success: false,
+                message: 'Error: password cannot be blank.'
+            })
+        }
     }
 
 

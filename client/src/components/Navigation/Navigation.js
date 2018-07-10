@@ -68,21 +68,24 @@ export default class Navigation extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            console.log("saving token")
+        .then(res => {
+          const { data } = res;
+          if (data.success) {
+            console.log("Saving Token")
+            //TODO: Store session token in LocalStorage
             // setInStorage('the_main_app', { token: json.token });
+            //TODO: Toggle isLoggedIn to True
             this.setState({
-              signInError: json.message,
+              signInError: data.message,
               isLoading: false,
               signInEmail: '',
               signInPassword: '',
-              token: json.token
+              isLoggedIn: true,
+              token: data.token
             })
           } else {
             this.setState({
-              signUpError: json.message,
+              signUpError: data.message,
               isLoading: false,
 
             })
@@ -97,7 +100,8 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutSubmit = event => {
     event.preventDefault();
-
+    //TODO: Wire up to controller
+    //TODO: Toggle isLoggedIn to True
   }
 
   render() {

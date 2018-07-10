@@ -7,14 +7,12 @@ const db = require("../models");
 // module.exports = (app) => {
 module.exports = {
     signIn: function (req, res) {
-        // console.log("In Signin")
-
-        const { body } = req;
+         const { body } = req;
         const { password } = body;
         let { email } = body;
 
-        console.log(email)
-        console.log(password)
+        // console.log(email)
+        // console.log(password)
         if (!password) {
             return res.send({
                 success: false,
@@ -43,7 +41,6 @@ module.exports = {
                     message: 'Error: Server Error 130.'
                 });
             } else if (members.length != 1) {
-                console.log(members.length)
                 return res.send({
                     success: false,
                     message: 'Member Not found'
@@ -51,7 +48,7 @@ module.exports = {
             }
 
             const member = members[0];
-            // console.log(member)
+            //TODO: Restore password validation.
             // if (!member.validPassword(password)) {
             //     return res.send({
             //         success: false,
@@ -59,7 +56,6 @@ module.exports = {
             //     });
             // }
 
-            // console.log('here: 59')
             //otherwise launch a session
             const session = new db.Session();
             session.userId = member._id;
@@ -71,8 +67,8 @@ module.exports = {
                         err: err
                     });
                 }
-
-                console.log("Token: " + doc._id)
+                
+                console.log("AccountController: Token: " + doc._id)
                 return res.send({
                     success: true,
                     message: 'Valid sign in',

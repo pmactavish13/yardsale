@@ -11,6 +11,10 @@ const productSchema = new Schema({
   image1: { data: Buffer, type: String, required: true },
   image2: { data: Buffer, type: String, required: false},
   image3: { data: Buffer, type: String, required: false },
+  member: {
+    type: Schema.Types.ObjectId,
+    ref: "Member"
+}
 });
 
 const Product = mongoose.model("Product", productSchema);

@@ -14,10 +14,7 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 import API from "../../utils/API";
-// import {
-//   getFromStorage,
-//   setInStorage
-// } from '../../utils/storage';
+import Storage from "../../utils/storage";
 
 
 export default class Navigation extends React.Component {
@@ -73,7 +70,7 @@ export default class Navigation extends React.Component {
           if (data.success) {
             console.log("Saving Token")
             //TODO: Store session token in LocalStorage
-            // setInStorage('the_main_app', { token: json.token });
+            Storage.setInStorage('YardSale', { token: data.token });
             //TODO: Toggle isLoggedIn to True
             this.setState({
               signInError: data.message,

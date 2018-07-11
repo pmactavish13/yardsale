@@ -77,13 +77,39 @@ module.exports = {
     signOut: function (req, res) {
         const { body } = req;
         const { token } = body;
-
+        console.log("controller");
+        console.log(token);
         if (!token) {
             return res.send({
                 success: false,
                 message: 'Error: Token cannot be blank.'
             })
-        }
+        };
+        // TODO:  Actually delete the token
+            return res.send({
+                success: true,
+                message: 'Valid sign Out',
+                token: ''
+            });
+        // //otherwise launch a session
+        // const session = new db.Session();
+        // session.userId = member._id;
+        // session.remove((err, doc) => {
+        //     if (err) {
+        //         return res.send({
+        //             success: false,
+        //             message: 'Error: Server Error 154.',
+        //             err: err
+        //         });
+        //     }
+
+        //     return res.send({
+        //         success: true,
+        //         message: 'Valid sign Out',
+        //         token: ''
+        //     });
+
+        // });
     }
 
 

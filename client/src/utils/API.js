@@ -50,6 +50,7 @@ export default {
   },
   // Signs out the member with the given id
   signOut: function (logoutData) {
+    console.log("API")
     return axios.post("/api/account/signout", logoutData);
   },
 };

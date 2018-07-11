@@ -15,7 +15,11 @@ const accountController = require("../../controllers/accountController");
 router.route("/signin")
   .post(accountController.signIn);
 
-// router.route("/signup")  
+// Matches with "/api/account/signout"
+  router.route("/signout")
+  .post(accountController.signOut);
+
+  // router.route("/signup")  
 // .post(accountController.create);
 
 // // Matches with "/api/products/:id"

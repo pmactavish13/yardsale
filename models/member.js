@@ -3,17 +3,22 @@ const mongoose = require("mongoose");
 //TODO: Bleeding edge version fixes it...  
 //TODO: https://github.com/yarnpkg/yarn/issues/2286
 // const bcrypt = require('bcrypt');
+const Product = require("./Product")
 const Schema = mongoose.Schema;
 
 const memberSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  // username: { type: String, required: true },
+  username: { type: String, required: true },
   phoneNum: { type: Number, required: false },
   email: { type: String, required: true },
   password: { type: String, required: true },
   date: { type: Date, default: Date.now },
-  isDeleted: { type: Boolean, default: false }
+  isDeleted: { type: Boolean, default: false },
+  product: [{
+    type: Schema.Types.ObjectId,
+    ref: "Product"
+ }]
 });
 
 memberSchema.methods.generateHash = function (password) {

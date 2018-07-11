@@ -193,7 +193,7 @@ export default class Navigation extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </div>
-                    <div className="buttonHolder">
+                    <div className="signInHolder">
                       <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
                     </div>
                   </form>

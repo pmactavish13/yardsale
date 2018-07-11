@@ -50,8 +50,6 @@ class MemberSignUp extends Component {
             alert(`Enter your first name!`);
         } else if (!this.state.lastName) {
             alert(`Enter your last name!`);
-        } else if (!this.state.username) {
-            alert(`Enter your username!`);
         } else if (!this.state.phoneNum) {
             alert(`Enter your phone number!`);
         } else {

@@ -7,6 +7,7 @@
     background-color: rgb(242, 240, 240);
     /* border-radius: 2px; */
     max-height: 500px;
+    max-width: 420px;
     /* margin: 25px -10px 15px 20px; */
     box-shadow: 4px 4px 10px rgb(57, 56, 56);
   }

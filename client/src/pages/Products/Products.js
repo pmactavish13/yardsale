@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import {  Row, Column } from "../../components/Grid";
 // import Frame from "../../components/Frame";
@@ -9,12 +9,13 @@ import "./Products.css";
 class Products extends Component {
     state = {
         products: [],
-        // item: "",
-        // description: "",
-        // price: "",
-        // image1: "",
+        item: "",
+        description: "",
+        price: "",
+        image1: "",
         // image2: "",
         // image3: "",
+        _id: ""
     };
 
 
@@ -27,12 +28,12 @@ class Products extends Component {
 
             .then(res =>
                 this.setState({
-                    products: res.data
-                    //     , 
-                    // item: "",
-                    // description: "",
-                    // price: "",
-                    // image1: ""
+                    products: res.data, 
+                    item: "", 
+                    description: "", 
+                    price: "", 
+                    image1: "", 
+                    _id: ""
                 })
             )
             .catch(err => console.error(err));
@@ -44,7 +45,7 @@ class Products extends Component {
             <div className="productPage fluid">
                 <Row> {this.state.products.map(product => (
                     <Column size="md-3" key={product._id}>
-                        <ProductCard key={product._id}>
+                        <ProductCard>
                             <div className="img-container">
                                 <img className="productImage" alt={product.item} src={product.image1} />
                             </div>
@@ -62,7 +63,9 @@ class Products extends Component {
                                 </ul>
                             </div>
                             <div className='buttonHolder'>
-                            <button className="btn productById">More Information</button>
+                            <Link to={"/products/" + product._id} >
+                            More Information
+                            </Link>
                             </div>
                         </ProductCard>
                     </Column>

@@ -41,8 +41,8 @@ export default {
 
         try {
 
-            // localStorage.removeItem(key);
-            localStorage.clear();
+            localStorage.removeItem(key);
+            // localStorage.clear();
             return null;
         } catch (err) {
             console.error(err);

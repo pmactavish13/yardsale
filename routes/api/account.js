@@ -15,6 +15,7 @@ const accountController = require("../../controllers/accountController");
 router.route("/signin")
   .post(accountController.signIn);
 
+// Matches with "/api/account/signout"
   router.route("/signout")
   .post(accountController.signOut);
 

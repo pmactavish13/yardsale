@@ -92,13 +92,15 @@ export default class Navigation extends React.Component {
   };
 
   //  Sign Out
-  handleSignOutSubmit = event => {
+  handleSignOutFormSubmit = event => {
     event.preventDefault();
+    console.log("signout");
     API.signOut({
       token: this.state.token
     })
       .then(res => {
-    Storage.removeFromStorage('YardSale');
+        console.log("remove from storage");
+        Storage.removeFromStorage('YardSale');
     this.setState({
       isLoggedIn: false
     })
@@ -164,7 +166,7 @@ export default class Navigation extends React.Component {
               <UncontrolledDropdown nav inNavbar>
 
                 {this.state.isLoggedIn === true ?
-                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutSubmit}>SIGN OUT</button> :
+                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
                   <DropdownToggle nav caret>
                     SIGN IN
                 </DropdownToggle>}

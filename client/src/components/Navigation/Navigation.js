@@ -14,10 +14,7 @@ import {
 } from 'reactstrap';
 import "./Navigation.css";
 import API from "../../utils/API";
-// import {
-//   getFromStorage,
-//   setInStorage
-// } from '../../utils/storage';
+import Storage from "../../utils/storage";
 
 
 export default class Navigation extends React.Component {
@@ -68,39 +65,49 @@ export default class Navigation extends React.Component {
         email: this.state.email,
         password: this.state.password
       })
-        .then(res => res.json())
-        .then(json => {
-          if (json.success) {
-            console.log("saving token")
-            // setInStorage('the_main_app', { token: json.token });
+        .then(res => {
+          const { data } = res;
+          if (data.success) {
+            Storage.setInStorage('YardSale', { token: data.token });
             this.setState({
-              signInError: json.message,
+              signInError: data.message,
               isLoading: false,
               signInEmail: '',
               signInPassword: '',
-              token: json.token
+              isLoggedIn: true,
+              token: data.token
             })
           } else {
             this.setState({
-              signUpError: json.message,
+              signUpError: data.message,
               isLoading: false,
 
             })
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 
       this.setState({ email: "", password: "" });
     };
   };
 
   //  Sign Out
-  handleSignOutSubmit = event => {
+  handleSignOutFormSubmit = event => {
     event.preventDefault();
 
-  }
+    API.signOut({
+      token: this.state.token
+    })
+      .then(res => {
+        Storage.removeFromStorage('YardSale');
+    this.setState({
+      isLoggedIn: false
+    })
+  });
+}
 
   render() {
+    
     return (
       <div>
         <Navbar dark expand="md">
@@ -158,7 +165,7 @@ export default class Navigation extends React.Component {
               <UncontrolledDropdown nav inNavbar>
 
                 {this.state.isLoggedIn === true ?
-                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutSubmit}>SIGN OUT</button> :
+                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
                   <DropdownToggle nav caret>
                     SIGN IN
                 </DropdownToggle>}

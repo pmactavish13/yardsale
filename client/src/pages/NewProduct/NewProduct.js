@@ -72,7 +72,7 @@ class NewProduct extends Component {
                 price: parseInt(this.state.price, 10)
             })
                 .then(res => this.loadNewProducts())
-                .catch(err => console.log(err));
+                .catch(err => console.error(err));
         };
     };
 

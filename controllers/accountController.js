@@ -32,8 +32,6 @@ module.exports = {
             password: password
         }, (err, members) => {
             if (err) {
-
-                console.log('Error: Server Error 130.')
                 return res.send({
                     success: false,
                     message: 'Error: Server Error 130.'
@@ -80,10 +78,10 @@ module.exports = {
         const { body } = req;
         const { token } = body;
 
-        if (!password) {
+        if (!token) {
             return res.send({
                 success: false,
-                message: 'Error: password cannot be blank.'
+                message: 'Error: Token cannot be blank.'
             })
         }
     }

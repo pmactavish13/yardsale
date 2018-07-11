@@ -85,7 +85,7 @@ export default class Navigation extends React.Component {
             })
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 
       this.setState({ email: "", password: "" });
     };

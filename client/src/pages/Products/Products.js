@@ -35,7 +35,7 @@ class Products extends Component {
                     // image1: ""
                 })
             )
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
     };
 
 

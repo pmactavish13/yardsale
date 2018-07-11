@@ -23,29 +23,29 @@ export default {
     // Sets key in storage
     setInStorage: function (key, obj) {
         if (!key) {
-            console.log('Error: Key is missing');
+            console.warn('Error: Key is missing');
         }
         try {
             localStorage.setItem(key, JSON.stringify(obj));
 
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     },
 
     // Removes key from storage
     removeFromStorage: function (key) {
         if (!key) {
-            console.log('Error: Key is missing');
+            console.warn('Error: Key is missing');
         }
 
         try {
-            console.log(key)
+
             // localStorage.removeItem(key);
             localStorage.clear();
             return null;
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 };

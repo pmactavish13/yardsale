@@ -77,8 +77,6 @@ module.exports = {
     signOut: function (req, res) {
         const { body } = req;
         const { token } = body;
-        console.log("controller");
-        console.log(token);
         if (!token) {
             return res.send({
                 success: false,

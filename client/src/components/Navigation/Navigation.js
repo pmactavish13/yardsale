@@ -26,7 +26,7 @@ export default class Navigation extends React.Component {
       email: "",
       password: "",
       isOpen: false,
-      //*** fake Authorization ******/
+      //*** Authorization ******/
       isLoggedIn: false
       //*****************************/
     };
@@ -206,4 +206,3 @@ export default class Navigation extends React.Component {
     );
   }
 }
-

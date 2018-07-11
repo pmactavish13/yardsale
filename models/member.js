@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 //TODO: Bleeding edge version fixes it...  
 //TODO: https://github.com/yarnpkg/yarn/issues/2286
 // const bcrypt = require('bcrypt');
-const Product = require("./Product")
+const Product = require("./product")
 const Schema = mongoose.Schema;
 
 const memberSchema = new Schema({

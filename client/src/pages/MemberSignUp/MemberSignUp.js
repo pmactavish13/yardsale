@@ -62,7 +62,8 @@ class MemberSignUp extends Component {
                 phoneNum: this.state.phoneNum
             })
                 .then(res => this.loadNewMembers())
-                .catch(err => console.log(err));
+                .catch(err => console.error(err));
+
         }
     };
 

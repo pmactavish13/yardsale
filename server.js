@@ -74,11 +74,10 @@ app.use(routes);
 
 app.listen(PORT, '0.0.0.0', (err) => {
   if (err) {
-    console.log(err);
+    console.error(err);
   }
 
-  // console.info(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  console.info(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 
 });
 

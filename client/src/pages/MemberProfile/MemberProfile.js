@@ -54,7 +54,6 @@ class MemberProfile extends Component {
         } else if (!this.state.phoneNum) {
             alert(`Enter your phone number!`);
         } else {
-            console.log(this.state.email)
             API.saveMember({
                 email: this.state.email,
                 username: this.state.username,
@@ -64,7 +63,7 @@ class MemberProfile extends Component {
                 phoneNum: this.state.phoneNum
             })
                 .then(res => this.loadNewMembers())
-                .catch(err => console.log(err));
+                .catch(err => console.error(err));
 
         }
     };

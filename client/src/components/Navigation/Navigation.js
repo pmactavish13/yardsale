@@ -94,12 +94,11 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutFormSubmit = event => {
     event.preventDefault();
-    console.log("signout");
+
     API.signOut({
       token: this.state.token
     })
       .then(res => {
-        console.log("remove from storage");
         Storage.removeFromStorage('YardSale');
     this.setState({
       isLoggedIn: false

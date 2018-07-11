@@ -64,12 +64,18 @@ a:hover {
 }
 
 .dropDown {
-    color:rgb(22, 72, 27)!important
+    color:rgb(22, 72, 27)!important;
+    background-color: #fff;
 }
 
 .logOut {
     font-family: "Palatino Linotype", "Book Antiqua", serif; 
     font-size: 15px !important;
     margin-top:3px
+}
+
+.signInHolder {
+    text-align: center;
+    background-color: #fff
 }
 

@@ -10,10 +10,11 @@ var NoteSchema = new Schema({
         type: String
     },
     product_id: {
-        type: String
+         type: Schema.Types.ObjectId
+        
     }, 
     member_id: {
-        type: String
+        type: Schema.Types.ObjectId
     },
     private: {
         type: Boolean, default: false 

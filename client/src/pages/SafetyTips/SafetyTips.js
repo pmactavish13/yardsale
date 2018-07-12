@@ -8,7 +8,10 @@ const SafetyTips = () => (
     <Row>
       <Column size="md-12">
         <Jumbotron>
-          
+          <h2>Safety Tips</h2>
+          <ul>
+            <li></li>
+            </ul>
         </Jumbotron>
       </Column>
     </Row>

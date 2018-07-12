@@ -84,11 +84,11 @@ module.exports = {
             })
         };
         // TODO:  Actually delete the token
-            return res.send({
-                success: true,
-                message: 'Valid sign Out',
-                token: ''
-            });
+        return res.send({
+            success: true,
+            message: 'Valid sign Out',
+            token: ''
+        });
         // //otherwise launch a session
         // const session = new db.Session();
         // session.userId = member._id;
@@ -109,8 +109,19 @@ module.exports = {
 
         // });
     }
+    ,
 
+    verify: function (req, res) {
+        const { body } = req;
+        const { token } = body;
 
+        // TODO:  Literally anything
+        return res.send({
+            success: true,
+            message: 'Valid sign Out',
+            token: ''
+        });
+    }
     // app.post('/account/signup', (req, res, next) => {
     //     const { body } = req;
     //     const { firstName, lastName, password } = body;

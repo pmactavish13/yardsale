@@ -51,23 +51,25 @@ export default class Navigation extends React.Component {
       console.log(token);
       //verify
       API.verify({ token: token })
-      //   .then(res => res.json())
-      //   .then(json => {
-      //     if (json.success) {
-      //       this.setState({
-      //         token,
-      //         isLoading: false
-      //       });
-      //     } else {
-      //       this.setState({
-      //         isLoading: false
-      //       });
-      //     }
-      //   });
-      // } else {
-      //   this.setState({
-      //     isLoading: false
-      //   });
+        // .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          if (json.data && json.data.success) {
+              this.setState({
+                token,
+                isLoading: false,
+                isLoggedIn: true
+              });
+          } else {
+            this.setState({
+              isLoading: false
+            });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false
+      });
     }
   }
 

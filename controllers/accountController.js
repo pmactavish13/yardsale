@@ -118,8 +118,7 @@ module.exports = {
         // TODO:  Literally anything
         return res.send({
             success: true,
-            message: 'Valid sign Out',
-            token: ''
+            message: 'User Logged in'
         });
     }
     // app.post('/account/signup', (req, res, next) => {

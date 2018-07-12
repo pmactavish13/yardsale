@@ -26,11 +26,14 @@ export default class Navigation extends React.Component {
       email: "",
       password: "",
       isOpen: false,
+      show: false,
       //*** Authorization ******/
       isLoggedIn: false
       //*****************************/
     };
-
+    this.handleSignInFormSubmit = this.handleSignInFormSubmit.bind(this);
+    this.handleSignOutFormSubmit = this.handleSignOutFormSubmit.bind(this);
+    
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
   }
@@ -85,8 +88,7 @@ export default class Navigation extends React.Component {
             })
           }
         })
-        .catch(err => console.error(err));
-
+        .catch(err => console.error(err));  
       this.setState({ email: "", password: "" });
     };
   };
@@ -94,20 +96,19 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutFormSubmit = event => {
     event.preventDefault();
-
     API.signOut({
       token: this.state.token
     })
       .then(res => {
         Storage.removeFromStorage('YardSale');
-    this.setState({
-      isLoggedIn: false
-    })
-  });
-}
+        this.setState({
+          isLoggedIn: false
+        })
+      });
+  }
 
   render() {
-    
+    // const isLoggedIn = this.state.isLoggedIn;
     return (
       <div>
         <Navbar dark expand="md">
@@ -162,43 +163,42 @@ export default class Navigation extends React.Component {
                   <NavLink href="/memberSignUp" >SIGN UP</NavLink>}
               </NavItem>
 
-              <UncontrolledDropdown nav inNavbar>
+              {this.state.isLoggedIn === true ?
 
-                {this.state.isLoggedIn === true ?
-                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
+                <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
+                <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     SIGN IN
-                </DropdownToggle>}
-
-                <DropdownMenu right id="logIn">
-                  <form className="p-4">
-                    <div className="form-group">
-                      <label>Email address</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        placeholder="email@navigation.com"
-                        value={this.state.email}
-                        onChange={this.handleInputChange}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Password</label>
-                      <input type="password"
-                        className="form-control"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onChange={this.handleInputChange}
-                      />
-                    </div>
-                    <div className="signInHolder">
-                      <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
-                    </div>
-                  </form>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+                      </DropdownToggle>
+                  <DropdownMenu right id="logIn">
+                    <form className="p-4">
+                      <div className="form-group">
+                        <label>Email address</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          name="email"
+                          placeholder="email@navigation.com"
+                          value={this.state.email}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Password</label>
+                        <input type="password"
+                          className="form-control"
+                          name="password"
+                          placeholder="Password"
+                          value={this.state.password}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div className="signInHolder">
+                        <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
+                      </div>
+                    </form>
+                  </DropdownMenu>
+                </UncontrolledDropdown>}
             </Nav>
           </Collapse>
         </Navbar>

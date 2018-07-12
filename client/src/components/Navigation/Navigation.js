@@ -42,6 +42,36 @@ export default class Navigation extends React.Component {
     });
   }
 
+
+  //get request
+  componentDidMount() {
+    const obj = Storage.getFromStorage('YardSale');
+    if (obj && obj.token) {
+      const { token } = obj;
+      console.log(token);
+      //verify
+      API.verify({ token: token })
+      //   .then(res => res.json())
+      //   .then(json => {
+      //     if (json.success) {
+      //       this.setState({
+      //         token,
+      //         isLoading: false
+      //       });
+      //     } else {
+      //       this.setState({
+      //         isLoading: false
+      //       });
+      //     }
+      //   });
+      // } else {
+      //   this.setState({
+      //     isLoading: false
+      //   });
+    }
+  }
+
+
   // handle any changes to the input fields
   handleInputChange = event => {
     // Pull the name and value properties off of the event.target (the element which triggered the event)
@@ -100,14 +130,14 @@ export default class Navigation extends React.Component {
     })
       .then(res => {
         Storage.removeFromStorage('YardSale');
-    this.setState({
-      isLoggedIn: false
-    })
-  });
-}
+        this.setState({
+          isLoggedIn: false
+        })
+      });
+  }
 
   render() {
-    
+
     return (
       <div>
         <Navbar dark expand="md">

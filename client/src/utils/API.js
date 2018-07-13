@@ -28,24 +28,24 @@ export default {
   //*************** NOTE *****************/
 
   // Gets the notes with the given id
-  getNote: function(id) {
+  getNote: function (id) {
     return axios.get("/api/notes/" + id);
   },
   // Updates the notes with the given id
-  updateNote: function(id) {
+  updateNote: function (id) {
     // return axios.put("/api/notes/" + id, noteData);
     return axios.put("/api/notes/" + id);
   },
   // Deletes the note with the given id
-  deleteNote: function(id) {
+  deleteNote: function (id) {
     return axios.delete("/api/notes/" + id);
   },
   // Saves a note to the database
-  saveNote: function(noteData) {
+  saveNote: function (noteData) {
     return axios.post("/api/notes", noteData);
   },
 
-//*************** MEMBER *************************/
+  //*************** MEMBER *************************/
   // Gets the member with the given id
   getMember: function (id) {
     return axios.get("/api/members/" + id);
@@ -73,4 +73,8 @@ export default {
   signOut: function (logoutData) {
     return axios.post("/api/account/signout", logoutData);
   },
+  // Signs out the member with the given id
+  verify: function (verifyData) {
+    return axios.post("/api/account/verify", verifyData);
+  }
 };

@@ -29,7 +29,8 @@ module.exports = {
 
         db.Member.find({
             email: email,
-            password: password
+            password: password,
+            isDeleted: false
         }, (err, members) => {
             if (err) {
                 return res.send({
@@ -83,6 +84,7 @@ module.exports = {
                 message: 'Error: Token cannot be blank.'
             })
         };
+
         // TODO:  Verify token is marked deleted in DB
         return res.send({
             success: true,
@@ -90,18 +92,34 @@ module.exports = {
             token: ''
         });
 
-    }
-    ,
+    },
+    // verify: function (req, res) {
+    //     const { body } = req;
+    //     const { token } = body;
 
-    verify: function (req, res) {
-        const { body } = req;
-        const { token } = body;
+    //     // TODO:  Actually Verify the user session againts the DB...
 
-        // TODO:  Actually Verify the user session againts the DB...
-        return res.send({
-            success: true,
-            message: 'User Logged in'
-        });
-    }
+    //     db.Session.find({
+    //         _id: token,
+    //         isDeleted: false
+    //     }, (err, sessions) => {
+    //         console.log(sessions[0].userId);
+    //         if (err) {
+    //             return res.send({
+    //                 success: false,
+    //                 message: 'Error: Server Error 130.'
+    //             });
+    //         } else if (sessions.length != 1) {
+    //             return res.send({
+    //                 success: false,
+    //                 message: 'Session Error'
+    //             });
+    //         }
 
+    //         return res.send({
+    //             success: true,
+    //             message: 'User Logged in'
+    //         });
+    //     });
+    // }
 };

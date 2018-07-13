@@ -2,22 +2,24 @@ import React, { Component } from 'react';
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
-import {  Row, Column } from "../../components/Grid";
+import { Row, Column } from "../../components/Grid";
 // import Frame from "../../components/Frame";
 import "./Products.css";
 
 class Products extends Component {
-    state = {
-        products: [],
-        item: "",
-        description: "",
-        price: "",
-        image1: "",
-        // image2: "",
-        // image3: "",
-        _id: ""
+    constructor(props) {
+        super(props)
+        this.state = {
+            products: [],
+            item: "",
+            description: "",
+            price: "",
+            image1: "",
+            // image2: "",
+            // image3: "",
+            _id: ""
+        }
     };
-
 
     componentDidMount() {
         this.loadProducts();
@@ -28,11 +30,11 @@ class Products extends Component {
 
             .then(res =>
                 this.setState({
-                    products: res.data, 
-                    item: "", 
-                    description: "", 
-                    price: "", 
-                    image1: "", 
+                    products: res.data,
+                    item: "",
+                    description: "",
+                    price: "",
+                    image1: "",
                     _id: ""
                 })
             )
@@ -63,9 +65,9 @@ class Products extends Component {
                                 </ul>
                             </div>
                             <div className='buttonHolder'>
-                            <Link to={"/products/" + product._id} >
-                            More Information
-                            </Link>
+                                <Link to={"/products/" + product._id} className="productLink">
+                                    More Information
+                                </Link>
                             </div>
                         </ProductCard>
                     </Column>

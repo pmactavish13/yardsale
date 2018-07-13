@@ -65,9 +65,9 @@ class Products extends Component {
                                 </ul>
                             </div>
                             <div className='buttonHolder'>
-                                <Link to={"/products/" + product._id} >
+                                <Link to={"/products/" + product._id} className="productLink">
                                     More Information
-                            </Link>
+                                </Link>
                             </div>
                         </ProductCard>
                     </Column>

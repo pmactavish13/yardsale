@@ -78,48 +78,43 @@ module.exports = {
     signOut: function (req, res) {
         const { body } = req;
         const { token } = body;
+
         if (!token) {
             return res.send({
                 success: false,
                 message: 'Error: Token cannot be blank.'
             })
         };
+        // TODO: Revisit setting state to deleted
+        db.Session.remove({
+            _id: token,
+            isDeleted: false
+        }, (err) => {
+            if (!err) {
+                return res.send({
+                    success: false,
+                    message: 'Server Error',
+                    err: err
+                });
+            } else {
+                return res.send({
+                    success: true,
+                    message: 'Valid sign Out',
+                    token: ''
+                });
+            }
+        });
+    },
 
-        // TODO:  Verify token is marked deleted in DB
+    verify: function (req, res) {
+        const { body } = req;
+        const { token } = body;
+
+        // TODO:  Literally anything
         return res.send({
             success: true,
-            message: 'Valid sign Out',
-            token: ''
+            message: 'User Logged in'
         });
+    }
 
-    },
-    // verify: function (req, res) {
-    //     const { body } = req;
-    //     const { token } = body;
-
-    //     // TODO:  Actually Verify the user session againts the DB...
-
-    //     db.Session.find({
-    //         _id: token,
-    //         isDeleted: false
-    //     }, (err, sessions) => {
-    //         console.log(sessions[0].userId);
-    //         if (err) {
-    //             return res.send({
-    //                 success: false,
-    //                 message: 'Error: Server Error 130.'
-    //             });
-    //         } else if (sessions.length != 1) {
-    //             return res.send({
-    //                 success: false,
-    //                 message: 'Session Error'
-    //             });
-    //         }
-
-    //         return res.send({
-    //             success: true,
-    //             message: 'User Logged in'
-    //         });
-    //     });
-    // }
 };

@@ -2,25 +2,29 @@ const db = require("../models");
 
 // Defining methods for the SessionsController
 module.exports = {
-  findById: function(req, res) {
+  findById: function (req, res) {
+    console.log("Controller: " + req.params.id);
+    console.log("Controller: " + req.body);
     db.Session
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: function(req, res) {
+  create: function (req, res) {
     db.Session
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  update: function(req, res) {
+  update: function (req, res) {
+    console.log("Controller: " + req.params.id);
+    console.log("Controller: " + req.body);
     db.Session
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function(req, res) {
+  remove: function (req, res) {
     db.Session
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())

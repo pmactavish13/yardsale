@@ -46,6 +46,38 @@ export default class Navigation extends React.Component {
     });
   }
 
+
+  //get request
+  componentDidMount() {
+    const obj = Storage.getFromStorage('YardSale');
+    if (obj && obj.token) {
+      const { token } = obj;
+      console.log(token);
+      //verify
+      API.verify({ token: token })
+        // .then(res => res.json())
+        .then(json => {
+          console.log(json)
+          if (json.data && json.data.success) {
+              this.setState({
+                token,
+                isLoading: false,
+                isLoggedIn: true
+              });
+          } else {
+            this.setState({
+              isLoading: false
+            });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false
+      });
+    }
+  }
+
+
   // handle any changes to the input fields
   handleInputChange = event => {
     // Pull the name and value properties off of the event.target (the element which triggered the event)

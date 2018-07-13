@@ -3,21 +3,6 @@ import Frame from "../../components/Frame";
 import { Row, Column } from "../../components/Grid";
 
 class NoMatch extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  // // Setting the initial values of ex: this.state.username
-    
-  //   this.state = {
-  //     isLoggedIn: "" 
-  //      }
-   
-  // }
-
-  // componentWillMount() {
-  //   this.setState({ isLoggedIn: new isLoggedIn});
-  // }
-
   render() {
     return (
       <Frame>

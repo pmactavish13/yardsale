@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -6,7 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  // NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -26,11 +27,14 @@ export default class Navigation extends React.Component {
       email: "",
       password: "",
       isOpen: false,
+      show: false,
       //*** Authorization ******/
       isLoggedIn: false
       //*****************************/
     };
-
+    this.handleSignInFormSubmit = this.handleSignInFormSubmit.bind(this);
+    this.handleSignOutFormSubmit = this.handleSignOutFormSubmit.bind(this);
+    
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
   }
@@ -52,6 +56,10 @@ export default class Navigation extends React.Component {
       [name]: value
     });
   };
+
+  // componentWillUpdate() {
+  //   localStorage.setItem()
+  // }
 
   // When the form is submitted, prevent the default event and alert the email and password
   handleSignInFormSubmit = event => {
@@ -85,29 +93,26 @@ export default class Navigation extends React.Component {
             })
           }
         })
-        .catch(err => console.error(err));
-
-      this.setState({ email: "", password: "" });
+        .catch(err => console.error(err));  
+      // this.setState({ email: "", password: "" });
     };
   };
 
   //  Sign Out
   handleSignOutFormSubmit = event => {
     event.preventDefault();
-
     API.signOut({
       token: this.state.token
     })
       .then(res => {
         Storage.removeFromStorage('YardSale');
-    this.setState({
-      isLoggedIn: false
-    })
-  });
-}
+        this.setState({
+          isLoggedIn: false
+        })
+      });
+  }
 
   render() {
-    
     return (
       <div>
         <Navbar dark expand="md">
@@ -120,15 +125,15 @@ export default class Navigation extends React.Component {
             <Nav className="ml-auto dropdownList" navbar>
               <NavItem >
                 {window.location.pathname === '/home' ? null :
-                  <NavLink href="/home" >HOME</NavLink>}
+                <Link to="/home" className="navBarLinkStyle">HOME</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/about' ? null :
-                  <NavLink href="/about" >ABOUT</NavLink>}
+                  <Link to="/about" className="navBarLinkStyle">ABOUT</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/safetyTips' ? null :
-                  <NavLink href="/safetyTips" >SAFETY TIPS</NavLink>}
+                  <Link to="/safetyTips" className="navBarLinkStyle">SAFETY TIPS</Link>} &nbsp;
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
@@ -137,7 +142,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <NavLink href="/products" className="dropDown">ALL LISTINGS</NavLink>
+                  <Link to="/products" className="dropDown">ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE
@@ -150,55 +155,56 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
+                &nbsp;
                 {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
-                  <NavLink href="/newProduct" >POST NEW LISTING</NavLink>}
+                  <Link to="/newProduct" className="navBarLinkStyle">&nbsp;POST NEW LISTING&nbsp;</Link>}&nbsp;&nbsp;
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === true ?
-                  <NavLink href="/memberProfile" >MEMBER PROFILE</NavLink> : null}
+                  <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link> : null}
               </NavItem>
               <NavItem>
+                {/* &nbsp; */}
                 {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
-                  <NavLink href="/memberSignUp" >SIGN UP</NavLink>}
+                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>} &nbsp;
               </NavItem>
 
-              <UncontrolledDropdown nav inNavbar>
+              {this.state.isLoggedIn === true ?
 
-                {this.state.isLoggedIn === true ?
-                  <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
-                  <DropdownToggle nav caret>
-                    SIGN IN
-                </DropdownToggle>}
+                <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
+                
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>SIGN IN</DropdownToggle>
+                  <DropdownMenu right id="logIn">
+                    <form className="p-4">
+                      <div className="form-group">
+                        <label>Email address</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          name="email"
+                          placeholder="email@navigation.com"
+                          value={this.state.email}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Password</label>
+                        <input type="password"
+                          className="form-control"
+                          name="password"
+                          placeholder="Password"
+                          value={this.state.password}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <div className="signInHolder">
+                        <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
+                      </div>
+                    </form>
+                  </DropdownMenu>
+                </UncontrolledDropdown>}
 
-                <DropdownMenu right id="logIn">
-                  <form className="p-4">
-                    <div className="form-group">
-                      <label>Email address</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        placeholder="email@navigation.com"
-                        value={this.state.email}
-                        onChange={this.handleInputChange}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Password</label>
-                      <input type="password"
-                        className="form-control"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onChange={this.handleInputChange}
-                      />
-                    </div>
-                    <div className="signInHolder">
-                      <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
-                    </div>
-                  </form>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>

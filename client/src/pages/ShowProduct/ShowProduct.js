@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import { Redirect } from "react-router-dom";
 import API from "../../utils/API";
-// import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import { Container, Row, Column } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
@@ -10,22 +8,21 @@ import "./ShowProduct.css";
 
 class ShowProduct extends Component {
     //const ShowProduct = ({ match: { params: { id }}}) => (
+    constructor(props) {
+        super(props);
 
-    state = {
-        product: {},
-        notes: []
-    };
-
+        this.state = {
+            product: {},
+            notes: []
+        };
+    }
 
     componentDidMount() {
-        this.loadProduct();
+
         API.getProduct(this.props.match.params.id)
             .then(res => this.setState({ product: res.data }))
             .catch(err => console.log(err))
-
-    }
-
-    loadProduct = () => {
+    
         API.getNote(this.props.match.params.id)
             .then(res => this.setState({ note: res.data }))
             .catch(err => console.log(err))
@@ -34,7 +31,7 @@ class ShowProduct extends Component {
     render() {
         return (
             <Row>
-                <Column size="md-1" />
+                <Column size="md-1"/>
                 <Column size="md-10">
             <Frame>
                 <Row>
@@ -57,9 +54,7 @@ class ShowProduct extends Component {
                                     </li>
                                 </ul>
                             </div>
-                            {/* <div className='buttonHolder'>
-                                <button className="btn productById">More Information</button>
-                            </div> */}
+                        
                         </ProductCard>
                     </Column>
                     {/* ))} */}

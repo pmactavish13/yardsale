@@ -29,7 +29,8 @@ module.exports = {
 
         db.Member.find({
             email: email,
-            password: password
+            password: password,
+            isDeleted: false
         }, (err, members) => {
             if (err) {
                 return res.send({
@@ -175,84 +176,41 @@ module.exports = {
     //             });
     //         }
 
-    //         const newMember = new Member();
-    //         newMember.email = email;
-    //         newMember.firstName = firstName;
-    //         newMember.lastName = lastName;
-    //         newMember.password = newMember.generateHash(password);
-    //         newMember.save((err, member) => {
-    //             if (err) {
-    //                 return res.send({
-    //                     success: false,
-    //                     message: 'Error: Server Error 84.'
-    //                 });
-    //             }
-    //             return res.send({
-    //                 success: true,
-    //                 message: 'Signed up.'
-    //             });
-    //         });
-    //     })
+        // // TODO:  Verify token is marked deleted in DB
+        // return res.send({
+        //     success: true,
+        //     message: 'Valid sign Out',
+        //     token: ''
+        // });
 
-    // });
+    // },
+    // verify: function (req, res) {
+    //     const { body } = req;
+    //     const { token } = body;
 
-    // app.get('/account/verify', (req, res, next) => {
-    //     // get the token
-    //     const { query } = req;
-    //     const { token } = query;
+    //     // TODO:  Actually Verify the user session againts the DB...
 
-    //     //verify the token
-    //     Session.find({
+    //     db.Session.find({
     //         _id: token,
     //         isDeleted: false
     //     }, (err, sessions) => {
+    //         console.log(sessions[0].userId);
     //         if (err) {
     //             return res.send({
     //                 success: false,
-    //                 message: 'Error: Server error 181.'
+    //                 message: 'Error: Server Error 130.'
     //             });
-    //         }
-
-    //         if (sessions.length != 1) {
+    //         } else if (sessions.length != 1) {
     //             return res.send({
     //                 success: false,
-    //                 message: 'Error: Invalid.'
-    //             });
-    //         } else {
-    //             return res.send({
-    //                 success: true,
-    //                 message: 'Good Session.'
-    //             });
-    //         }
-
-
-    //     });
-
-    // });
-
-    // app.get('/account/logout', (req, res, next) => {
-    //     // get the token
-    //     const { query } = req;
-    //     const { token } = query;
-
-    //     //verify the token
-    //     Session.findOneAndUpdate({
-    //         _id: token,
-    //         isDeleted: false
-    //     }, { $set: { isDeleted: true } }, null, (err, sessions) => {
-    //         if (err) {
-    //             return res.send({
-    //                 success: false,
-    //                 message: 'Error: Server error 181.'
+    //                 message: 'Session Error'
     //             });
     //         }
 
     //         return res.send({
     //             success: true,
-    //             message: 'Logged Out.'
+    //             message: 'User Logged in'
     //         });
-
     //     });
-
-    // });
+    // }
 };

@@ -22,12 +22,12 @@ class NewProduct extends Component {
         };
     };
 
-    componentDidMount () {
-        // const { email } = this.props.location.state 
-        API.getMember(this.props.location.state)
-            .then(res => this.setState({ member: res.data }))
-            .catch(err => console.log(err)) 
-    }
+    // componentDidMount () {
+    //     // const { email } = this.props.location.state 
+    //     API.getMember(this.props.location.state)
+    //         .then(res => this.setState({ member: res.data }))
+    //         .catch(err => console.log(err)) 
+    // }
 
     loadNewProducts = () => {
         this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "" });
@@ -70,7 +70,7 @@ class NewProduct extends Component {
         } else {
             console.log(this.state)
             API.saveProduct({
-                member_id: this.state.member._id,
+                member: "5b49a02aa0dc680930660254",
                 image1: this.state.image1,
                 image2: this.state.image2,
                 image3: this.state.image3,
@@ -86,6 +86,7 @@ class NewProduct extends Component {
 
     render() {
         console.log('state', this.props.location.state.email)
+        console.log('state', this.props.location.state.member)
         return (
             <Frame>
                 <FormContainer>

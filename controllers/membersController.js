@@ -3,8 +3,9 @@ const db = require("../models");
 // Defining methods for the membersController
 module.exports = {
   findById: function (req, res) {
+    // TODO:  Remove Password from returned member
     db.Member
-      .findById(req.params.id)
+      .findById(req.params.id, { password:0 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -34,9 +35,9 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   validPassword: function (req, res) {
+    // TODO:  Remove Password from returned member
     db.Member
-      .findById({ _id: req.params.id })
-      .then(dbModel => dbModel.remove())
+      .findById({ _id: req.params.id }, { password:0 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

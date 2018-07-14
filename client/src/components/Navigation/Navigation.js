@@ -7,7 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  // NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -34,7 +33,7 @@ export default class Navigation extends React.Component {
     };
     this.handleSignInFormSubmit = this.handleSignInFormSubmit.bind(this);
     this.handleSignOutFormSubmit = this.handleSignOutFormSubmit.bind(this);
-    
+
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
   }
@@ -83,7 +82,8 @@ export default class Navigation extends React.Component {
               signInEmail: '',
               signInPassword: '',
               isLoggedIn: true,
-              token: data.token
+              token: data.token,
+              memberId: data.memberId
             })
           } else {
             this.setState({
@@ -93,8 +93,7 @@ export default class Navigation extends React.Component {
             })
           }
         })
-        .catch(err => console.error(err));  
-      // this.setState({ email: "", password: "" });
+        .catch(err => console.error(err));
     };
   };
 
@@ -110,6 +109,7 @@ export default class Navigation extends React.Component {
           isLoggedIn: false
         })
       });
+    this.setState({ email: "", password: "" });
   }
 
   render() {
@@ -125,15 +125,30 @@ export default class Navigation extends React.Component {
             <Nav className="ml-auto dropdownList" navbar>
               <NavItem >
                 {window.location.pathname === '/home' ? null :
-                <Link to="/home" className="navBarLinkStyle">HOME</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
+                  <Link to="/home" className="navBarLinkStyle">HOME</Link>}
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/about' ? null :
-                  <Link to="/about" className="navBarLinkStyle">ABOUT</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
+                  <Link to="/about" className="navBarLinkStyle">ABOUT</Link>}
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/safetyTips' ? null :
-                  <Link to="/safetyTips" className="navBarLinkStyle">SAFETY TIPS</Link>} &nbsp;
+                  <Link to="/safetyTips" className="navBarLinkStyle">SAFETY TIPS</Link>}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
+                  <Link className="navBarLinkStyle"
+                    to={{
+                      pathname: '/newProduct',
+                      state: {
+                        email: this.state.email
+                      }
+                    }}>
+                  POST NEW LISTING</Link>}
+              </NavItem>
+              <NavItem>
+                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === false ? null :
+                  <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link>}
               </NavItem>
 
               <UncontrolledDropdown nav inNavbar>
@@ -142,7 +157,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                  <Link to="/products" className="dropDown">ALL LISTINGS</Link>
+                    <Link to="/products" className="dropDown">ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE
@@ -155,24 +170,14 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                &nbsp;
-                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
-                  <Link to="/newProduct" className="navBarLinkStyle">&nbsp;POST NEW LISTING&nbsp;</Link>}&nbsp;&nbsp;
-              </NavItem>
-              <NavItem>
-                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === true ?
-                  <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link> : null}
-              </NavItem>
-              <NavItem>
-                {/* &nbsp; */}
                 {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
-                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>} &nbsp;
+                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>}
               </NavItem>
 
               {this.state.isLoggedIn === true ?
 
                 <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
-                
+
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>SIGN IN</DropdownToggle>
                   <DropdownMenu right id="logIn">
@@ -204,7 +209,7 @@ export default class Navigation extends React.Component {
                     </form>
                   </DropdownMenu>
                 </UncontrolledDropdown>}
-
+              {this.props.children}
             </Nav>
           </Collapse>
         </Navbar>

@@ -39,8 +39,15 @@ h6.logoName {
 li.nav-item {
     margin-top: 12px;
 }
-
+a {
+    padding-left:8px;
+    padding-right:8px
+}
 a.dropdown-toggle {
+    margin-top: -8px;
+}
+
+a.dropdown-toggle:hover {
     margin-top: -8px;
 }
 
@@ -91,8 +98,4 @@ a:hover {
 .signInHolder {
     text-align: center;
     background-color: #fff
-}
-
-a:hover {
-  color  :none
 }

@@ -31,11 +31,11 @@ module.exports = {
             email: email,
             password: password,
             isDeleted: false
-        }, (err, members) => {
+        }, { password: 0 }, (err, members) => {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server Error 130.'
+                    message: 'Error: Server Error 38.'
                 });
             } else if (members.length != 1) {
                 return res.send({
@@ -60,7 +60,7 @@ module.exports = {
                 if (err) {
                     return res.send({
                         success: false,
-                        message: 'Error: Server Error 154.',
+                        message: 'Error: Server Error 63.',
                         err: err
                     });
                 }
@@ -68,7 +68,8 @@ module.exports = {
                 return res.send({
                     success: true,
                     message: 'Valid sign in',
-                    token: doc._id
+                    token: doc._id,
+                    member
                 });
 
             })
@@ -93,7 +94,7 @@ module.exports = {
             if (!err) {
                 return res.send({
                     success: false,
-                    message: 'Server Error',
+                    message: 'Error: Server Error 96',
                     err: err
                 });
             } else {
@@ -110,11 +111,56 @@ module.exports = {
         const { body } = req;
         const { token } = body;
 
-        // TODO:  Literally anything
-        return res.send({
-            success: true,
-            message: 'User Logged in'
+        db.Session.find({
+            _id: token,
+            isDeleted: false
+        }, (err, sessions) => {
+
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server Error 120.'
+                });
+            } else if (sessions.length != 1) {
+                return res.send({
+                    success: false,
+                    message: 'Member Not found'
+                });
+            }
+
+            session = sessions[0];
+            console.log(session.userId);
+            //TODO: Pass through controller, not model?
+            db.Member.find({
+                _id: session.userId,
+                isDeleted: false
+            }, { password: 0 }, (err, members) => {
+
+                member = members[0];
+
+                if (err) {
+                    return res.send({
+                        success: false,
+                        message: 'Error: Server Error 38.'
+                    });
+                } else if (members.length != 1) {
+                    return res.send({
+                        success: false,
+                        message: 'Member Not found'
+                    });
+                } else {
+                    return res.send({
+                        success: true,
+                        message: 'User Logged in',
+                        token: session._id,
+                        member
+                    });
+                }
+
+            });
+
         });
+
     }
 
 };

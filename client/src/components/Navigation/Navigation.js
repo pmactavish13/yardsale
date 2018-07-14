@@ -16,8 +16,6 @@ import {
 import "./Navigation.css";
 import API from "../../utils/API";
 import Storage from "../../utils/storage";
-
-
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +24,7 @@ export default class Navigation extends React.Component {
     this.state = {
       email: "",
       password: "",
+      username: "",
       isOpen: false,
       show: false,
       //*** Authorization ******/
@@ -34,7 +33,7 @@ export default class Navigation extends React.Component {
     };
     this.handleSignInFormSubmit = this.handleSignInFormSubmit.bind(this);
     this.handleSignOutFormSubmit = this.handleSignOutFormSubmit.bind(this);
-    
+
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
   }
@@ -52,18 +51,19 @@ export default class Navigation extends React.Component {
     const obj = Storage.getFromStorage('YardSale');
     if (obj && obj.token) {
       const { token } = obj;
-      console.log(token);
+      console.log("Did Mount: " + token);
       //verify
       API.verify({ token: token })
         // .then(res => res.json())
         .then(json => {
-          console.log(json)
+          console.log(json.data)
           if (json.data && json.data.success) {
-              this.setState({
-                token,
-                isLoading: false,
-                isLoggedIn: true
-              });
+            this.setState({
+              token,
+              isLoading: false,
+              isLoggedIn: true,
+              // username: 
+            });
           } else {
             this.setState({
               isLoading: false
@@ -108,6 +108,8 @@ export default class Navigation extends React.Component {
         .then(res => {
           const { data } = res;
           if (data.success) {
+
+            console.log(data)
             Storage.setInStorage('YardSale', { token: data.token });
             this.setState({
               signInError: data.message,
@@ -125,7 +127,7 @@ export default class Navigation extends React.Component {
             })
           }
         })
-        .catch(err => console.error(err));  
+        .catch(err => console.error(err));
       // this.setState({ email: "", password: "" });
     };
   };
@@ -157,7 +159,7 @@ export default class Navigation extends React.Component {
             <Nav className="ml-auto dropdownList" navbar>
               <NavItem >
                 {window.location.pathname === '/home' ? null :
-                <Link to="/home" className="navBarLinkStyle">HOME</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
+                  <Link to="/home" className="navBarLinkStyle">HOME</Link>}&nbsp;&nbsp;&nbsp;&nbsp;
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/about' ? null :
@@ -174,7 +176,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                  <Link to="/products" className="dropDown">ALL LISTINGS</Link>
+                    <Link to="/products" className="dropDown">ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE
@@ -204,7 +206,7 @@ export default class Navigation extends React.Component {
               {this.state.isLoggedIn === true ?
 
                 <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
-                
+
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>SIGN IN</DropdownToggle>
                   <DropdownMenu right id="logIn">

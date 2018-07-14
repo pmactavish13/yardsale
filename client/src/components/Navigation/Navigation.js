@@ -15,8 +15,6 @@ import {
 import "./Navigation.css";
 import API from "../../utils/API";
 import Storage from "../../utils/storage";
-
-
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +23,7 @@ export default class Navigation extends React.Component {
     this.state = {
       email: "",
       password: "",
+      username: "",
       isOpen: false,
       show: false,
       //*** Authorization ******/
@@ -44,6 +43,39 @@ export default class Navigation extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
+
+  //get request
+  componentDidMount() {
+    const obj = Storage.getFromStorage('YardSale');
+    if (obj && obj.token) {
+      const { token } = obj;
+      console.log("Did Mount: " + token);
+      //verify
+      API.verify({ token: token })
+        // .then(res => res.json())
+        .then(json => {
+          console.log(json.data)
+          if (json.data && json.data.success) {
+            this.setState({
+              token,
+              isLoading: false,
+              isLoggedIn: true,
+              // username: 
+            });
+          } else {
+            this.setState({
+              isLoading: false
+            });
+          }
+        });
+    } else {
+      this.setState({
+        isLoading: false
+      });
+    }
+  }
+
 
   // handle any changes to the input fields
   handleInputChange = event => {
@@ -75,6 +107,8 @@ export default class Navigation extends React.Component {
         .then(res => {
           const { data } = res;
           if (data.success) {
+
+            console.log(data)
             Storage.setInStorage('YardSale', { token: data.token });
             this.setState({
               signInError: data.message,

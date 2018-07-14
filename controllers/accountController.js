@@ -29,12 +29,13 @@ module.exports = {
 
         db.Member.find({
             email: email,
-            password: password
-        }, (err, members) => {
+            password: password,
+            isDeleted: false
+        }, { password: 0 }, (err, members) => {
             if (err) {
                 return res.send({
                     success: false,
-                    message: 'Error: Server Error 130.'
+                    message: 'Error: Server Error 38.'
                 });
             } else if (members.length != 1) {
                 return res.send({
@@ -59,7 +60,7 @@ module.exports = {
                 if (err) {
                     return res.send({
                         success: false,
-                        message: 'Error: Server Error 154.',
+                        message: 'Error: Server Error 63.',
                         err: err
                     });
                 }
@@ -68,7 +69,11 @@ module.exports = {
                     success: true,
                     message: 'Valid sign in',
                     token: doc._id,
+
                     memberId: session.userId
+
+                    member
+
                 });
 
             })
@@ -78,31 +83,88 @@ module.exports = {
     signOut: function (req, res) {
         const { body } = req;
         const { token } = body;
+
         if (!token) {
             return res.send({
                 success: false,
                 message: 'Error: Token cannot be blank.'
             })
         };
-        // TODO:  Verify token is marked deleted in DB
-        return res.send({
-            success: true,
-            message: 'Valid sign Out',
-            token: ''
+        // TODO: Revisit setting state to deleted
+        db.Session.remove({
+            _id: token,
+            isDeleted: false
+        }, (err) => {
+            if (!err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server Error 96',
+                    err: err
+                });
+            } else {
+                return res.send({
+                    success: true,
+                    message: 'Valid sign Out',
+                    token: ''
+                });
+            }
         });
-
-    }
-    ,
+    },
 
     verify: function (req, res) {
         const { body } = req;
         const { token } = body;
 
-        // TODO:  Actually Verify the user session againts the DB...
-        return res.send({
-            success: true,
-            message: 'User Logged in'
+        db.Session.find({
+            _id: token,
+            isDeleted: false
+        }, (err, sessions) => {
+
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: 'Error: Server Error 120.'
+                });
+            } else if (sessions.length != 1) {
+                return res.send({
+                    success: false,
+                    message: 'Member Not found'
+                });
+            }
+
+            session = sessions[0];
+            console.log(session.userId);
+            //TODO: Pass through controller, not model?
+            db.Member.find({
+                _id: session.userId,
+                isDeleted: false
+            }, { password: 0 }, (err, members) => {
+
+                member = members[0];
+
+                if (err) {
+                    return res.send({
+                        success: false,
+                        message: 'Error: Server Error 38.'
+                    });
+                } else if (members.length != 1) {
+                    return res.send({
+                        success: false,
+                        message: 'Member Not found'
+                    });
+                } else {
+                    return res.send({
+                        success: true,
+                        message: 'User Logged in',
+                        token: session._id,
+                        member
+                    });
+                }
+
+            });
+
         });
+
     }
 
 };

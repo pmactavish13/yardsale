@@ -17,7 +17,7 @@ class Products extends Component {
             image1: "",
             // image2: "",
             // image3: "",
-            _id: ""
+            _id: "",
         }
     };
 
@@ -44,7 +44,7 @@ class Products extends Component {
 
     render() {
         return (
-            <div className="productPage fluid">
+            <div className="productPage-fluid">
                 <Row> {this.state.products.map(product => (
                     <Column size="md-3" key={product._id}>
                         <ProductCard>
@@ -53,6 +53,9 @@ class Products extends Component {
                             </div>
                             <div className="content">
                                 <ul>
+                                {/* <li>
+                                        <strong>email:</strong> {this.state.email}
+                                    </li> */}
                                     <li>
                                         <strong>Item:</strong> {product.item}
                                     </li>

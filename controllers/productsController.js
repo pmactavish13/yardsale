@@ -18,7 +18,11 @@ module.exports = {
   create: function(req, res) {
     db.Product
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => 
+        db.Member.findOneAndUpdate({_id: req.params.id }, { $push: { product: dbProduct._id } })
+      )
+      .then(dbMember =>
+        res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {

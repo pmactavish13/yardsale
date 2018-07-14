@@ -22,6 +22,13 @@ class NewProduct extends Component {
         };
     };
 
+    componentDidMount () {
+        // const { email } = this.props.location.state 
+        API.getMember(this.props.location.state)
+            .then(res => this.setState({ member: res.data }))
+            .catch(err => console.log(err)) 
+    }
+
     loadNewProducts = () => {
         this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "" });
     }
@@ -63,6 +70,7 @@ class NewProduct extends Component {
         } else {
             console.log(this.state)
             API.saveProduct({
+                member_id: this.state.member._id,
                 image1: this.state.image1,
                 image2: this.state.image2,
                 image3: this.state.image3,
@@ -77,10 +85,11 @@ class NewProduct extends Component {
     };
 
     render() {
+        console.log('state', this.props.location.state.email)
         return (
             <Frame>
                 <FormContainer>
-                    <h3>New Item Listing Form</h3>
+                    <h3>New Item Listing Form </h3>
                     <form>
                         <Row>
                             <Column size="md-12">

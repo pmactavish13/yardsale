@@ -69,7 +69,11 @@ module.exports = {
                     success: true,
                     message: 'Valid sign in',
                     token: doc._id,
+
+                    memberId: session.userId
+
                     member
+
                 });
 
             })

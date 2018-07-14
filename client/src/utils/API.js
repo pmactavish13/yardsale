@@ -63,9 +63,8 @@ export default {
     return axios.post("/api/members", memberData);
   },
 
-
   //*************** SESSION *************************/
-  // Gets the member with the given id
+  // Gets the member with the given email/pass
   signIn: function (loginData) {
     return axios.post("/api/account/signin", loginData);
   },

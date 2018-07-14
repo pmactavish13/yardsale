@@ -29,7 +29,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navigation />
+          <Navigation/>
           <Wrapper>
             <Switch>
               <Route exact path="/" component={Home} />

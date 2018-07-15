@@ -1,0 +1,16 @@
+.productContainer {
+    border: solid 1px rgb(22, 72, 27);
+    color:rgb(22, 72, 27);
+    background-color: rgb(242, 240, 240);
+    max-height: 500px;
+    max-width: 420px;
+    margin-bottom: 10px;
+    box-shadow: 4px 4px 10px rgb(57, 56, 56);
+    position: relative;
+    z-index: 1
+  }
+
+  div.col-md-3 {
+      padding-left: 5px;
+      padding-right: 5px;
+  }

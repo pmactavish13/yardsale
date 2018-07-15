@@ -1,23 +1,17 @@
 const db = require("../models");
+const mongoose = require('mongoose');
 
 // Defining methods for the notesController
 module.exports = {
-//   findAll: function(req, res) {
-//     console.log(req.body)
-//     db.Note
-//       .find(req.query)
-//       .sort({ date: -1 })
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-//   },
-  findById: function(req, res) {
+find: function(req, res) {
+  console.log("notesController" + req.params.id)
     db.Note
-      .findById(req.params.id)
+      .find({product_id:req.params.id})
+      .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    // console.log(req.body)
     db.Note
       .create(req.body)
       .then(dbModel => res.json(dbModel))

@@ -131,7 +131,7 @@ module.exports = {
             }
 
             session = sessions[0];
-            console.log(session.userId);
+            console.log("session controller "+ session.userId);
             //TODO: Pass through controller, not model?
             db.Member.find({
                 _id: session.userId,

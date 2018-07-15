@@ -3,8 +3,6 @@ const db = require("../models");
 // Defining methods for the SessionsController
 module.exports = {
   findById: function (req, res) {
-    console.log("Controller: " + req.params.id);
-    console.log("Controller: " + req.body);
     db.Session
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
@@ -17,8 +15,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function (req, res) {
-    console.log("Controller: " + req.params.id);
-    console.log("Controller: " + req.body);
     db.Session
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))

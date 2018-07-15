@@ -15,6 +15,8 @@ import {
 import "./Navigation.css";
 import API from "../../utils/API";
 import Storage from "../../utils/storage";
+import Session from "../../utils/session";
+
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -44,38 +46,30 @@ export default class Navigation extends React.Component {
     });
   }
 
-
-  //get request
   componentDidMount() {
-    const obj = Storage.getFromStorage('YardSale');
-    if (obj && obj.token) {
-      const { token } = obj;
-      console.log("Did Mount: " + token);
-      //verify
-      API.verify({ token: token })
-        // .then(res => res.json())
-        .then(json => {
-          console.log(json.data)
-          if (json.data && json.data.success) {
-            this.setState({
-              token,
-              isLoading: false,
-              isLoggedIn: true,
-              // username: 
-            });
-          } else {
-            this.setState({
-              isLoading: false
-            });
-          }
-        });
-    } else {
-      this.setState({
-        isLoading: false
-      });
-    }
-  }
 
+    Session.verify()
+      .then(data => {
+        // console.log(data.member);
+        if (data && data.isVerified) {
+          this.setState({
+            token: "",
+            isLoading: false,
+            isLoggedIn: true,
+            member: data.member
+          });
+        } 
+      })
+      .catch(err => {
+        // console.error(err);
+        this.setState({
+          signInError: err,
+          isLoading: false,
+          isLoggedIn: false,
+          member: {}
+        });
+      })
+  }
 
   // handle any changes to the input fields
   handleInputChange = event => {
@@ -96,34 +90,22 @@ export default class Navigation extends React.Component {
     } else if (!this.state.password) {
       alert(`Enter your password!`);
     } else {
-      API.signIn({
+      Session.signIn({
         email: this.state.email,
         password: this.state.password
       })
-        .then(res => {
-          const { data } = res;
-          if (data.success) {
-
-            console.log(data)
-            Storage.setInStorage('YardSale', { token: data.token });
-            this.setState({
-              signInError: data.message,
-              isLoading: false,
-              signInEmail: '',
-              signInPassword: '',
-              isLoggedIn: true,
-              token: data.token,
-              member: data.member
-            })
-          } else {
-            this.setState({
-              signUpError: data.message,
-              isLoading: false,
-
-            })
-          }
+        .then(data => {
+          // console.log(data.member);
+          this.setState({
+            signInError: data.message,
+            isLoading: false,
+            signInEmail: '',
+            signInPassword: '',
+            isLoggedIn: true,
+            token: data.token,
+            memberId: data.memberId
+          })
         })
-        .catch(err => console.error(err));
     };
   };
 
@@ -175,7 +157,7 @@ export default class Navigation extends React.Component {
                         member:this.state.member
                       }
                     }}>
-                  POST NEW LISTING</Link>}
+                    POST NEW LISTING</Link>}
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === false ? null :

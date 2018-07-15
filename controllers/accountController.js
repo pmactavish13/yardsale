@@ -69,9 +69,7 @@ module.exports = {
                     success: true,
                     message: 'Valid sign in',
                     token: doc._id,
-                    // memberId: session.userId,
-                    member
-
+                    memberId: session.userId
                 });
 
             })
@@ -131,7 +129,7 @@ module.exports = {
             }
 
             session = sessions[0];
-            console.log("session controller "+ session.userId);
+            
             //TODO: Pass through controller, not model?
             db.Member.find({
                 _id: session.userId,

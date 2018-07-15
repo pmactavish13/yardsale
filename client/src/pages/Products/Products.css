@@ -1,16 +1,6 @@
 .productPage-fluid {
-    margin: 30px 0px 20px 0px
+    margin: 30px 40px 20px 40px
 }
-.productContainer {
-    border: solid 1px rgb(22, 72, 27);
-    color:rgb(22, 72, 27);
-    background-color: rgb(242, 240, 240);
-    /* border-radius: 2px; */
-    max-height: 500px;
-    max-width: 420px;
-    /* margin: 25px -10px 15px 20px; */
-    box-shadow: 4px 4px 10px rgb(57, 56, 56);
-  }
     
   .img-container {
       padding:10px;

@@ -22,12 +22,12 @@ class NewProduct extends Component {
         };
     };
 
-    componentDidMount () {
-        // const { email } = this.props.location.state 
-        API.getMember(this.props.location.state)
-            .then(res => this.setState({ member: res.data }))
-            .catch(err => console.log(err)) 
-    }
+    // componentDidMount () {
+    //     // const { email } = this.props.location.state 
+    //     API.getMember(this.props.location.state)
+    //         .then(res => this.setState({ member: res.data }))
+    //         .catch(err => console.log(err)) 
+    // }
 
     loadNewProducts = () => {
         this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "" });
@@ -70,7 +70,7 @@ class NewProduct extends Component {
         } else {
             console.log(this.state)
             API.saveProduct({
-                member_id: this.state.member._id,
+                member: "5b49a02aa0dc680930660254",
                 image1: this.state.image1,
                 image2: this.state.image2,
                 image3: this.state.image3,
@@ -85,7 +85,7 @@ class NewProduct extends Component {
     };
 
     render() {
-        console.log('state', this.props.location.state.email)
+        console.log('NewProduct render - state passed from Nav', this.props.location.state.member)
         return (
             <Frame>
                 <FormContainer>
@@ -158,7 +158,7 @@ class NewProduct extends Component {
                                         onChange={this.handleFileImageInputChange} />
                                 </div>
                             </ Column>
-                            <Column size="md-4">
+                            {/* <Column size="md-4">
                                 <div className="formgroup loadImage">
                                     <label>Image 2</label>
                                     <input
@@ -179,7 +179,7 @@ class NewProduct extends Component {
                                         value={this.state.image3}
                                         onChange={this.handleListItemInputChange} />
                                 </div>
-                            </ Column>
+                            </ Column> */}
                         </Row>
                         <div className='buttonHolder'>
                             <button type="submit" className="btn listItem" onClick={this.handleListItemSubmit}>LIST ITEM</button>

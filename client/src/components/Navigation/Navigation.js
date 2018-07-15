@@ -82,10 +82,6 @@ export default class Navigation extends React.Component {
     });
   };
 
-  // componentWillUpdate() {
-  //   localStorage.setItem()
-  // }
-
   // When the form is submitted, prevent the default event and alert the email and password
   handleSignInFormSubmit = event => {
     event.preventDefault();
@@ -157,7 +153,8 @@ export default class Navigation extends React.Component {
                     to={{
                       pathname: '/newProduct',
                       state: {
-                        email: this.state.email
+                        email: this.state.email,
+                        member:this.state.member
                       }
                     }}>
                     POST NEW LISTING</Link>}

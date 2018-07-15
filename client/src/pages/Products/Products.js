@@ -27,7 +27,6 @@ class Products extends Component {
 
     loadProducts = () => {
         API.getProducts()
-
             .then(res =>
                 this.setState({
                     products: res.data,
@@ -53,14 +52,11 @@ class Products extends Component {
                             </div>
                             <div className="content">
                                 <ul>
-                                {/* <li>
-                                        <strong>email:</strong> {this.state.email}
-                                    </li> */}
+                                    <li>
+                                        <strong>Posted by:</strong>  {/* {this.state.username}*/}
+                                    </li> 
                                     <li>
                                         <strong>Item:</strong> {product.item}
-                                    </li>
-                                    <li>
-                                        <strong>Description:</strong> {product.description}
                                     </li>
                                     <li>
                                         <strong>Price: $</strong> {product.price}

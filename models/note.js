@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new NoteSchema object
 var NoteSchema = new Schema({
-    body: {
-        type: String
+   message: {
+        type: String, required: true
     },
     product_id: {
          type: Schema.Types.ObjectId

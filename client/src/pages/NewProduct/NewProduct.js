@@ -85,8 +85,7 @@ class NewProduct extends Component {
     };
 
     render() {
-        console.log('state', this.props.location.state.email)
-        console.log('state', this.props.location.state.member)
+        console.log('NewProduct render - state passed from Nav', this.props.location.state.member)
         return (
             <Frame>
                 <FormContainer>
@@ -159,7 +158,7 @@ class NewProduct extends Component {
                                         onChange={this.handleFileImageInputChange} />
                                 </div>
                             </ Column>
-                            <Column size="md-4">
+                            {/* <Column size="md-4">
                                 <div className="formgroup loadImage">
                                     <label>Image 2</label>
                                     <input
@@ -180,7 +179,7 @@ class NewProduct extends Component {
                                         value={this.state.image3}
                                         onChange={this.handleListItemInputChange} />
                                 </div>
-                            </ Column>
+                            </ Column> */}
                         </Row>
                         <div className='buttonHolder'>
                             <button type="submit" className="btn listItem" onClick={this.handleListItemSubmit}>LIST ITEM</button>

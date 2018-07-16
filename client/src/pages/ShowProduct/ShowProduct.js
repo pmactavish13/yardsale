@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
 import ProductCard from "../../components/ProductCard";
-import { Container, Row, Column } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
+import { Row, Column } from "../../components/Grid";
+// import { List, ListItem } from "../../components/List";
 import Frame from "../../components/Frame";
 import "./ShowProduct.css";
+import Session from "../../utils/session";
 
 class ShowProduct extends Component {
     constructor(props) {
@@ -18,6 +19,33 @@ class ShowProduct extends Component {
         };
     }
 
+    componentWillMount() {
+
+        Session.verify()
+            .then(data => {
+                console.log(data.member);
+                if (data && data.isVerified) {
+                    this.setState({
+                        token: "",
+                        isLoading: false,
+                        isLoggedIn: true,
+                        member: data.member,
+                        username: "",
+                        _id: ""
+                    });
+                }
+            })
+            .catch(err => {
+                // console.error(err);
+                this.setState({
+                    signInError: err,
+                    isLoading: false,
+                    isLoggedIn: false,
+                    member: {}
+                });
+            })
+    }
+
     componentDidMount() {
         API.getProduct(this.props.match.params.id)
             // .then(res => console.log(res.data)) 
@@ -25,13 +53,13 @@ class ShowProduct extends Component {
             .catch(err => console.log(err))
 
         API.getNote(this.props.match.params.id)
-            .then(res => 
+            .then(res =>
                 // console.log(res.data[0])
-                this.setState({ 
+                this.setState({
                     note: res.data,
                     message: "",
-                    pubPrivOption:""
-             })
+                    pubPrivOption: ""
+                })
             )
             .catch(err => console.log(err))
     };
@@ -40,8 +68,8 @@ class ShowProduct extends Component {
         this.setState({ message: "", pubPrivOption: "" });
     }
 
-     // handle any changes to the input fields
-     handleNoteInputChange = event => {
+    // handle any changes to the input fields
+    handleNoteInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -70,17 +98,12 @@ class ShowProduct extends Component {
         };
     };
 
-
     render() {
-        
         return (
-            <Row>
-
-                <Column size="md-1" />
-                <Column size="md-10">
+            <Row >
+                <Column size="md-12">
                     <Frame>
                         <Row>
-
                             <Column size="md-6" key={this.state.product._id}>
                                 <ProductCard key={this.state.product._id}>
                                     {/* {this.state.products.map(product => ( */}
@@ -113,13 +136,13 @@ class ShowProduct extends Component {
                                         </div>
                                         {this.state.note.length ? (
                                             <div>
-                                                <List>
+                                                <ul>
                                                     {this.state.note.map(note => (
-                                                        <ListItem key={note._id}>
+                                                        <li className="noteHistory" key={note._id}>
                                                             {note.message}
-                                                        </ListItem>
+                                                        </li>
                                                     ))}
-                                                </List>
+                                                </ul>
                                             </div>
                                         ) : (
                                                 <h5 className="noNotes">There are no Public Notes for this Item.</h5>
@@ -129,7 +152,7 @@ class ShowProduct extends Component {
                                             <Row>
                                                 <Column size="md-12">
                                                     <div className="formgroup">
-                                                        <label>Leave a New Note</label>
+                                                        <label className="noteText">Leave a New Note</label>
                                                         <textarea
                                                             type="text"
                                                             name="newMessage"
@@ -143,7 +166,7 @@ class ShowProduct extends Component {
                                             </Row>
                                             <Row>
                                                 <Column size="md-12">
-                                                    <div className="checkbox-inline">
+                                                    <div className="checkbox-inline privateCheck">
                                                         <label><input
                                                             onChange={this.handleNoteInputChange}
                                                             type="checkbox"

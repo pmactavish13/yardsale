@@ -9,9 +9,9 @@ const productSchema = new Schema({
   selectOption: { type: Boolean, default: false },
   date: { type: Date, default: Date.now },
   image1: { data: Buffer, type: String, required: true },
-  image2: { data: Buffer, type: String, required: false},
-  image3: { data: Buffer, type: String, required: false },
-  
+  // image2: { data: Buffer, type: String, required: false},
+  // image3: { data: Buffer, type: String, required: false },
+  username: { type: String, required: true },
   member: {
     type: Schema.Types.ObjectId,
     ref: "Member"

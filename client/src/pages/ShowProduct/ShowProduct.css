@@ -9,11 +9,38 @@
     padding: 12px 0px 12px 0px
 }
 
+.noteHistory:nth-child(2n+1) {
+ background-color: rgb(213, 228, 207);
+ text-align:left;
+ padding-left: 6px;
+ font-size:14px
+} 
+.noteHistory:nth-child(2n+2) {
+    background-color: rgb(228, 228, 228);
+    text-align:right;
+    padding-right: 6px;
+    font-size:14px
+   } 
+.noteHistory {
+    border-radius:2px;
+    padding:2px;
+    margin:2px 8px 2px -7px
+}
+
 .noteForm {
     padding: 0px 15px 0px 15px;
     text-align: center;
     background-color: rgb(186, 186, 186);
-    padding: 5px
+    padding: 7px
+}
+
+label.noteText {
+    margin-bottom: 0px!important
+}
+
+.privateCheck {
+    margin-top: -12px;
+    font-size: 14px
 }
 
 .noNotes {
@@ -22,6 +49,6 @@
 }
 
 .newNote {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
     border-radius: 2px
 }

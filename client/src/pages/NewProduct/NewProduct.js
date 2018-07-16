@@ -4,6 +4,7 @@ import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame"
 import "./NewProduct.css";
+import Session from "../../utils/session";
 
 class NewProduct extends Component {
     constructor(props) {
@@ -19,18 +20,37 @@ class NewProduct extends Component {
             image1: "",
             image2: "",
             image3: "",
+            member:{}
+            // username: ""
         };
     };
 
-    // componentDidMount () {
-    //     // const { email } = this.props.location.state 
-    //     API.getMember(this.props.location.state)
-    //         .then(res => this.setState({ member: res.data }))
-    //         .catch(err => console.log(err)) 
-    // }
+    componentWillMount() {
+
+        Session.verify()
+            .then(data => {
+                console.log(data.member);
+                if (data && data.isVerified) {
+                    this.setState({
+                        token: "",
+                        isLoading: false,
+                        isLoggedIn: true,
+                        member: data.member,
+                    });
+                }
+            })
+            .catch(err => {
+                this.setState({
+                    signInError: err,
+                    isLoading: false,
+                    isLoggedIn: false,
+                    member: {}
+                });
+            })
+    }
 
     loadNewProducts = () => {
-        this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "" });
+        this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "", username: "" });
     }
 
     // handle any changes to the input fields
@@ -70,14 +90,15 @@ class NewProduct extends Component {
         } else {
             console.log(this.state)
             API.saveProduct({
-                member: "5b49a02aa0dc680930660254",
+                member: this.state.member._id,
                 image1: this.state.image1,
                 image2: this.state.image2,
                 image3: this.state.image3,
                 selectOption: this.state.selectOption,
                 item: this.state.item,
                 description: this.state.description,
-                price: parseInt(this.state.price, 10)
+                price: parseInt(this.state.price, 10),
+                username: this.state.member.username
             })
                 .then(res => this.loadNewProducts())
                 .catch(err => console.error(err));
@@ -85,11 +106,11 @@ class NewProduct extends Component {
     };
 
     render() {
-        console.log('NewProduct render - state passed from Nav', this.props.location.state.member)
         return (
             <Frame>
                 <FormContainer>
                     <h3>New Item Listing Form </h3>
+                    <h3>{this.state.member.username}</h3>
                     <form>
                         <Row>
                             <Column size="md-12">

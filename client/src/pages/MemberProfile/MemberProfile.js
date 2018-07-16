@@ -7,6 +7,7 @@ import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame";
 // import ProductCard from "../../components/ProductCard";
 import "./MemberProfile.css";
+import Session from "../../utils/session";
 
 class MemberProfile extends Component {
     constructor(props) {
@@ -23,12 +24,40 @@ class MemberProfile extends Component {
             // phoneNum: ""
         };
     }
-    componentDidMount() {
-        // this.loadMember();
-        API.getMember(this.props.match.params.id)
-            .then(res => this.setState({ member: res.data }))
-            .catch(err => console.log(err))
+
+    componentWillMount() {
+
+        Session.verify()
+            .then(data => {
+                console.log(data.member);
+                if (data && data.isVerified) {
+                    this.setState({
+                        token: "",
+                        isLoading: false,
+                        isLoggedIn: true,
+                        member: data.member,
+                        username: "",
+                        _id: ""
+                    });
+                }
+            })
+            .catch(err => {
+                // console.error(err);
+                this.setState({
+                    signInError: err,
+                    isLoading: false,
+                    isLoggedIn: false,
+                    member: {}
+                });
+            })
     }
+
+    // componentDidMount() {
+    //     // this.loadMember();
+    //     API.getMember(this.props.match.params.id)
+    //         .then(res => this.setState({ member: res.data }))
+    //         .catch(err => console.log(err))
+    // }
 
     // loadNewMembers = () => {
     //     //alert(`You are signed up!\nemail: ${this.state.email}\nUsername: ${this.state.username}\nPassword: ${this.state.password}\nFirst Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nPhone Number: ${this.state.phoneNum}`)
@@ -37,7 +66,7 @@ class MemberProfile extends Component {
     // }
 
     // handle any changes to the input fields
-    handleNewMemberInputChange = event => {
+    handleMemberInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
         const { name, value } = event.target;
         // Set the state for the appropriate input field
@@ -47,7 +76,7 @@ class MemberProfile extends Component {
     };
 
     // When the form is submitted, prevent the default event and alert the username and password
-    handleNewMemberFormSubmit = event => {
+    handleUpdateMemberSubmit = event => {
         event.preventDefault();
         if (!this.state.email) {
             alert("Enter your email address!");
@@ -64,7 +93,7 @@ class MemberProfile extends Component {
         } else if (!this.state.phoneNum) {
             alert(`Enter your phone number!`);
         } else {
-            API.saveMember({
+            API.updateMember({
                 email: this.state.email,
                 username: this.state.username,
                 password: this.state.password,
@@ -72,7 +101,7 @@ class MemberProfile extends Component {
                 lastName: this.state.lastName,
                 phoneNum: this.state.phoneNum
             })
-                .then(res => this.loadNewMembers())
+                .then(res => this.loadUpdateMembers())
                 .catch(err => console.error(err));
 
         }
@@ -83,7 +112,7 @@ class MemberProfile extends Component {
         return (
             <Frame>
                 <FormContainer>
-                    <h3>Member Enrollment Form</h3>
+                    <h3>Member Profile</h3>
                     <form>
                         <div className="formgroup">
                             <Row>
@@ -95,7 +124,7 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="email@profile.com"
                                         value={this.state.email}
-                                        onChange={this.handleNewMemberInputChange}
+                                        onChange={this.handleMemberInputChange}
                                     />
                                 </ Column>
                             </Row>
@@ -111,7 +140,7 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Posted with any Listing"
                                         value={this.state.username}
-                                        onChange={this.handleNewMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} />
                                 </ Column>
                                 <Column size="md-6">
                                     <label>Password</label>
@@ -121,7 +150,7 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Password Placeholder"
                                         value={this.state.password}
-                                        onChange={this.handleNewMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
                         </div>
@@ -136,7 +165,7 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="First Name Placeholder"
                                         value={this.state.firstName}
-                                        onChange={this.handleNewMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
                         </div>
@@ -151,7 +180,7 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Last Name Placeholder"
                                         value={this.state.lastName}
-                                        onChange={this.handleNewMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
                         </div>
@@ -166,19 +195,19 @@ class MemberProfile extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Phone Number Placeholder"
                                         value={this.state.phoneNum}
-                                        onChange={this.handleNewMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
                         </div>
-                        <button type="submit" className="btn btn-primary newMember" onClick={this.handleNewMemberFormSubmit}>SIGN UP</button>
+                        <button type="submit" className="btn btn-primary newMember" onClick={this.handleUpdateMemberSubmit}>SIGN UP</button>
                     </form>
                 </FormContainer>
 
                 {/* <Row>
                     {this.state.products.map(product => ( 
                     <Column size="md-6" key={this.state.product._id}> */}
-                        
-                        {/* <ProductCard key={this.state.product._id}>
+
+                {/* <ProductCard key={this.state.product._id}>
                             <div className="img-container">
                                 <img className="productImage" alt={this.state.product.item} src={this.state.product.image1} />
                             </div>
@@ -197,11 +226,11 @@ class MemberProfile extends Component {
                             </div>
                         </ProductCard> */}
 
-                    {/* </Column> */}
-             </Frame>
-                );
-            }
-        }
-        
-        export default MemberProfile;
-        
+                {/* </Column> */}
+            </Frame>
+        );
+    }
+}
+
+export default MemberProfile;
+

@@ -40,7 +40,7 @@ class App extends Component {
               <Route exact path="/products/:id" component={ShowProduct} />
               <Route exact path="/newProduct" component={NewProduct} />
               <Route exact path="/memberSignUp" component={MemberSignUp} />
-              <Route exact path="/memberProfile/:id" component={MemberProfile} />
+              <Route exact path="/memberProfile" component={MemberProfile} />
               <Route component={NoMatch} />
             </ Switch>
           </Wrapper>

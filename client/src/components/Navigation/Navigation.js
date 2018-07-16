@@ -28,6 +28,7 @@ export default class Navigation extends React.Component {
       username: "",
       isOpen: false,
       show: false,
+      member: {},
       //*** Authorization ******/
       isLoggedIn: false
       //*****************************/
@@ -50,13 +51,15 @@ export default class Navigation extends React.Component {
 
     Session.verify()
       .then(data => {
-        // console.log(data.member);
+        console.log(data.member);
         if (data && data.isVerified) {
           this.setState({
             token: "",
             isLoading: false,
             isLoggedIn: true,
-            member: data.member
+            member: data.member, 
+            username: "",
+            _id: ""
           });
         } 
       })
@@ -125,6 +128,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
+    
     return (
       <div>
         <Navbar dark expand="md">
@@ -153,7 +157,6 @@ export default class Navigation extends React.Component {
                     to={{
                       pathname: '/newProduct',
                       state: {
-                        email: this.state.email,
                         member:this.state.member
                       }
                     }}>
@@ -170,7 +173,14 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <Link to="/products" className="dropDown">ALL LISTINGS</Link>
+                    <Link className="navBarLinkStyle"
+                    to={{
+                      pathname: '/Products',
+                      state: {
+                        member:this.state.member
+                      }
+                    }}>
+                    ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE

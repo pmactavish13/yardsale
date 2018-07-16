@@ -1,5 +1,5 @@
 const db = require("../models");
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 // Defining methods for the productsController
 module.exports = {
@@ -18,8 +18,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log(req.body.member);
-    req.body.member = new mongoose.Types.ObjectId(req.body.member);
+    // console.log(req.body.member);
+    // req.body.member = new mongoose.Types.ObjectId(req.body.member);
     console.log(req.body.member);
     db.Product
       .create(req.body)

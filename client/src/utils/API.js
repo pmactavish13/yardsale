@@ -11,9 +11,9 @@ export default {
     return axios.get("/api/products/" + id);
   },
   // Updates the product with the given id
-  updateProduct: function (id) {
-    // return axios.put("/api/products/" + id, productData);
-    return axios.put("/api/products/" + id);
+  updateProduct: function (id, body) {
+    // return axios.put("/api/products/" + id);
+    return axios.put("/api/products/" + id, body);
   },
   // Deletes the product with the given id
   deleteProduct: function (id) {
@@ -56,8 +56,8 @@ export default {
     return axios.delete("/api/members/" + id);
   },
   // Update the member with the given id
-  updateMember: function (id) {
-    return axios.put("/api/members/" + id);
+  updateMember: function (id, body) {
+    return axios.put("/api/members/" + id, body);
   },
   // Saves a member to the database
   saveMember: function (memberData) {

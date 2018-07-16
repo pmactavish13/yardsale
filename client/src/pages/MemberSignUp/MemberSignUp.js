@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
-// import { Redirect } from 'react-router';
-// import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame";
@@ -18,7 +16,7 @@ class MemberSignUp extends Component {
             password: "",
             firstName: "",
             lastName: "",
-            phoneNum: "",
+            phoneNum: "", 
             member: {},
             //*** Authorization ******/
             isLoggedIn: false
@@ -73,9 +71,6 @@ class MemberSignUp extends Component {
                 })
                 this.verifySess()
             })
-        // this.setState({ email: "", username: "", password: "", firstName: "", lastName: "", phoneNum: "" })
-        // window.location.href = '/products';
-        
     }
 
     // handle any changes to the input fields
@@ -213,7 +208,7 @@ class MemberSignUp extends Component {
                                         type="tel"
                                         name="phoneNum"
                                         className="form-control form-control-sm"
-                                        placeholder="555-555-5555 Phone Number Placeholder"
+                                        placeholder="555-555-5555"
                                         value={this.state.phoneNum}
                                         onChange={this.handleNewMemberInputChange} />
                                 </ Column>

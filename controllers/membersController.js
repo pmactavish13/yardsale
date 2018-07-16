@@ -1,5 +1,5 @@
 const db = require("../models");
-
+const mongoose = require('mongoose');
 // Defining methods for the membersController
 module.exports = {
   findById: function (req, res) {
@@ -16,8 +16,10 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function (req, res) {
+    req.body.member = new mongoose.Types.ObjectId(req.body.member);
+    console.log("mongoose" + req.body.member);
     db.Member
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.body.member }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

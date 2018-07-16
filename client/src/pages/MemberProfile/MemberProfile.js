@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
-// import { Redirect } from 'react-router';
 // import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
@@ -15,14 +14,18 @@ class MemberProfile extends Component {
 
         // Setting the initial values of ex: this.state.username
         this.state = {
+            email: "",
+            username: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+            phoneNum: "",
+            _id: "",
+            product: [],
             member: {}
-            // email: "",
-            // username: "",
-            // password: "",
-            // firstName: "",
-            // lastName: "",
-            // phoneNum: ""
         };
+        this.handleUpdateMemberSubmit = this.handleUpdateMemberSubmit.bind(this);
+        this.handleDeleteMemberSubmit = this.handleDeleteMemberSubmit.bind(this);
     }
 
     componentWillMount() {
@@ -35,9 +38,15 @@ class MemberProfile extends Component {
                         token: "",
                         isLoading: false,
                         isLoggedIn: true,
-                        member: data.member,
-                        username: "",
-                        _id: ""
+                        email: data.member.email,
+                        username: data.member.username,
+                        password: data.member.password,
+                        firstName: data.member.firstName,
+                        lastName: data.member.lastName,
+                        phoneNum: data.member.phoneNum,
+                        _id: data.member._id,
+                        product: data.member.product,
+                        member: data.member
                     });
                 }
             })
@@ -47,23 +56,31 @@ class MemberProfile extends Component {
                     signInError: err,
                     isLoading: false,
                     isLoggedIn: false,
-                    member: {}
+                    member: {},
+
                 });
             })
     }
 
-    // componentDidMount() {
-    //     // this.loadMember();
-    //     API.getMember(this.props.match.params.id)
-    //         .then(res => this.setState({ member: res.data }))
+    componentDidMount() {
+        console.log(this.state.product)
+    //     if (this.state.product !== []) {
+    //         var i=0
+    //         API.getProduct(this.props.match.params.id)
+    //         // .then(res => console.log(res.data)) 
+    //         .then(res => this.setState({ product[i]: res.data }))
     //         .catch(err => console.log(err))
     // }
+}
 
-    // loadNewMembers = () => {
-    //     //alert(`You are signed up!\nemail: ${this.state.email}\nUsername: ${this.state.username}\nPassword: ${this.state.password}\nFirst Name: ${this.state.firstName}\nLast Name: ${this.state.lastName}\nPhone Number: ${this.state.phoneNum}`)
-    //     this.setState({ email: "", username: "", password: "", firstName: "", lastName: "", phoneNum: "" })
-    //     //window.location.href = '/products';
-    // }
+    loadUpdateMembers = () => {
+        alert("Update Successful")
+        // window.location.href = '/home';
+    }
+
+    deleteMemberLogout = () => {
+        window.location.href = '/home';
+    }
 
     // handle any changes to the input fields
     handleMemberInputChange = event => {
@@ -75,11 +92,38 @@ class MemberProfile extends Component {
         });
     };
 
+    handleDeleteMemberSubmit = event => {
+        API.signOut({
+            token: this.state.token
+        })
+            .then(res => {
+                Storage.removeFromStorage('YardSale');
+                this.setState({
+                    isLoggedIn: false
+                })
+            });
+        API.deleteMember(this.state.member._id)
+            .then(res => this.deleteMemberLogout())
+            .catch(err => console.log(err));
+    };
+
+
     // When the form is submitted, prevent the default event and alert the username and password
     handleUpdateMemberSubmit = event => {
         event.preventDefault();
+        const regEx = /(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]‌​)\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]‌​|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})\s*(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+)\s*)?$/i;
+        if (!this.state.phoneNum) {
+            alert(`Enter your phone number!`);
+        } else if (regEx.test(this.state.phoneNum)) {
+            var phoneFormatted = this.state.phoneNum.replace(regEx, "$1$2$3$4$5$6")
+        } else {
+            alert(`Enter your phone number in the proper format!`);
+        };
+
         if (!this.state.email) {
             alert("Enter your email address!");
+        } else if (this.state.email.includes("@") === false) {
+            alert("Enter a valid email address!");
         } else if (!this.state.username) {
             alert(`Enter your username!`);
         } else if (!this.state.password) {
@@ -88,18 +132,15 @@ class MemberProfile extends Component {
             alert(`Enter your first name!`);
         } else if (!this.state.lastName) {
             alert(`Enter your last name!`);
-        } else if (!this.state.username) {
-            alert(`Enter your username!`);
-        } else if (!this.state.phoneNum) {
-            alert(`Enter your phone number!`);
         } else {
-            API.updateMember({
+            API.updateMember(this.state._id, {
+                member: this.state._id,
                 email: this.state.email,
                 username: this.state.username,
                 password: this.state.password,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
-                phoneNum: this.state.phoneNum
+                phoneNum: phoneFormatted
             })
                 .then(res => this.loadUpdateMembers())
                 .catch(err => console.error(err));
@@ -116,40 +157,23 @@ class MemberProfile extends Component {
                     <form>
                         <div className="formgroup">
                             <Row>
-                                <Column size="md-12">
+                                <Column size="md-6">
                                     <label>Email</label>
                                     <input
                                         type="email"
                                         name="email"
                                         className="form-control form-control-sm"
-                                        placeholder="email@profile.com"
                                         value={this.state.email}
                                         onChange={this.handleMemberInputChange}
                                     />
                                 </ Column>
-                            </Row>
-                        </div>
-
-                        <div className="formgroup">
-                            <Row>
                                 <Column size="md-6">
                                     <label>User Name</label>
                                     <input
                                         type="text"
                                         name="username"
                                         className="form-control form-control-sm"
-                                        placeholder="Posted with any Listing"
                                         value={this.state.username}
-                                        onChange={this.handleMemberInputChange} />
-                                </ Column>
-                                <Column size="md-6">
-                                    <label>Password</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        className="form-control form-control-sm"
-                                        placeholder="Password Placeholder"
-                                        value={this.state.password}
                                         onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
@@ -157,28 +181,21 @@ class MemberProfile extends Component {
 
                         <div className="formgroup">
                             <Row>
-                                <Column size="md-12">
+                                <Column size="md-6">
                                     <label>First Name</label>
                                     <input
                                         type="text"
                                         name="firstName"
                                         className="form-control form-control-sm"
-                                        placeholder="First Name Placeholder"
                                         value={this.state.firstName}
                                         onChange={this.handleMemberInputChange} />
                                 </ Column>
-                            </Row>
-                        </div>
-
-                        <div className="formgroup">
-                            <Row>
-                                <Column size="md-12">
+                                <Column size="md-6">
                                     <label>Last Name</label>
                                     <input
                                         type="text"
                                         name="lastName"
                                         className="form-control form-control-sm"
-                                        placeholder="Last Name Placeholder"
                                         value={this.state.lastName}
                                         onChange={this.handleMemberInputChange} />
                                 </ Column>
@@ -187,19 +204,34 @@ class MemberProfile extends Component {
 
                         <div className="formgroup">
                             <Row>
-                                <Column size="md-12">
+                                <Column size="md-6">
                                     <label>Phone Number</label>
                                     <input
                                         type="number"
                                         name="phoneNum"
                                         className="form-control form-control-sm"
-                                        placeholder="Phone Number Placeholder"
                                         value={this.state.phoneNum}
                                         onChange={this.handleMemberInputChange} />
                                 </ Column>
                             </Row>
+                            <Row>
+                                <Column size="md-12">
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        className="form-control form-control-sm"
+                                        placeholder="Enter your Password to Edit or Delete"
+                                        ref={this.state.password}
+                                        onChange={this.handleMemberInputChange} />
+                                </ Column>
+                            </Row>
                         </div>
-                        <button type="submit" className="btn btn-primary newMember" onClick={this.handleUpdateMemberSubmit}>SIGN UP</button>
+                        <div className="buttonHolder">
+                            <button type="submit" className="btn editMember" onClick={this.handleUpdateMemberSubmit}>UPDATE</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" className="btn editMember" onClick={this.handleDeleteMemberSubmit}>DELETE</button>
+                        </div>
                     </form>
                 </FormContainer>
 

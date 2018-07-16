@@ -1,0 +1,9 @@
+.newMember {
+ margin: 8px 0px -15px 0px
+}
+
+button.btn.editMember {
+    margin: 5px 0px -8px 0px;
+    padding: 2px 8px;
+    font-size:15px
+}

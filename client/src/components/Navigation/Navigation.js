@@ -153,14 +153,7 @@ export default class Navigation extends React.Component {
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
-                  <Link className="navBarLinkStyle"
-                    to={{
-                      pathname: '/newProduct',
-                      state: {
-                        member:this.state.member
-                      }
-                    }}>
-                    POST NEW LISTING</Link>}
+                  <Link to='/newProduct' className="navBarLinkStyle">POST NEW LISTING</Link>}
               </NavItem>
               <NavItem>
                 {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === false ? null :
@@ -173,14 +166,7 @@ export default class Navigation extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    <Link className="navBarLinkStyle"
-                    to={{
-                      pathname: '/Products',
-                      state: {
-                        member:this.state.member
-                      }
-                    }}>
-                    ALL LISTINGS</Link>
+                    <Link to="/Products" className="navDropdownStyle">ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE

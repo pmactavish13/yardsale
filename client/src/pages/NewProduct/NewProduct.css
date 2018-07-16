@@ -7,3 +7,12 @@ h3 {
     padding-left:130px;
     padding-right:130px
 }
+
+.checkbox-inline {
+    margin-top: -10px
+}
+
+button.btn.listItem {
+    padding: 2px 8px;
+    font-size:15px
+}

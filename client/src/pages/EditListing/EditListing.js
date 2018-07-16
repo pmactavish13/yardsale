@@ -3,16 +3,16 @@ import API from "../../utils/API";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame"
-import "./NewProduct.css";
-import Session from "../../utils/session";
+//import "./EditListing.css";
 
-class NewProduct extends Component {
+class EditListing extends Component {
     constructor(props) {
         super(props);
 
         // Setting the initial values of controlled components ex: this.state.username
         // this.
         this.state = {
+            _id: "",
             item: "",
             description: "",
             price: "",
@@ -21,42 +21,38 @@ class NewProduct extends Component {
             image1: "",
             image2: "",
             image3: "",
-            member:{}
+            product:{}
             // username: ""
         };
     };
 
-    componentWillMount() {
-
-        Session.verify()
-            .then(data => {
-                console.log(data.member);
-                if (data && data.isVerified) {
-                    this.setState({
-                        token: "",
-                        isLoading: false,
-                        isLoggedIn: true,
-                        member: data.member,
-                    });
-                }
-            })
-            .catch(err => {
-                this.setState({
-                    signInError: err,
-                    isLoading: false,
-                    isLoggedIn: false,
-                    member: {}
-                });
-            })
+    componentDidMount() {
+        API.getProduct(this.props.match.params.id)
+            // .then(res => console.log(res.data)) 
+            .then(res => this.setState({ product: res.data }))
+            .catch(err => console.log(err))
     }
 
-    loadNewProducts = () => {
-        this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
-        alert ("Success!\nYour item is now listed\nTo make changes, go to Member Profile.")
+    UpdateProduct = () => {
+        // this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
+        alert ("Success!\nYour item was Updated")
+    }
+
+    DeleteProduct = () => {
+        // this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
+        alert ("Success!\nYour item was Deleted")
+        window.location.href = '/MemberProfile';
+    }
+
+ handleDeleteItemSubmit = event => {
+        API.deleteProduct(this.state.product._id)
+            .then(res => this.deleteProduct())
+            .catch(err => console.log(err));
+
     }
 
     // handle any changes to the input fields
-    handleListItemInputChange = event => {
+    handleUpdateItemInputChange = event => {
         // Pull the name and value properties off of the event.target (the element which triggered the event)
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -67,7 +63,7 @@ class NewProduct extends Component {
         });
     };
 
-    handleFileImageInputChange = event => {
+    handleUpdateImageInputChange = event => {
         console.log(event.target.files[0])
         let image1DataURL
         var file = event.target.files[0];
@@ -81,7 +77,7 @@ class NewProduct extends Component {
     }
 
     // When the form is submitted, prevent the default event and alert the username and password
-    handleListItemSubmit = event => {
+    handleUpdateItemSubmit = event => {
         event.preventDefault();
         if (!this.state.item) {
             alert(`Enter your item name!`);
@@ -93,8 +89,8 @@ class NewProduct extends Component {
                 alert(`Enter a location!`);
         } else {
             console.log(this.state)
-            API.saveProduct({
-                member: this.state.member._id,
+            API.updateProduct({
+                // member: this.state.member._id,
                 image1: this.state.image1,
                 image2: this.state.image2,
                 image3: this.state.image3,
@@ -102,7 +98,6 @@ class NewProduct extends Component {
                 item: this.state.item,
                 description: this.state.description,
                 price: parseInt(this.state.price, 10),
-                username: this.state.member.username,
                 location: this.state.location
             })
                 .then(res => this.loadNewProducts())
@@ -126,7 +121,7 @@ class NewProduct extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Item Placeholder"
                                         value={this.state.item}
-                                        onChange={this.handleListItemInputChange} />
+                                        onChange={this.handleUpdateItemInputChange} />
                                 </div>
                             </ Column>
                         </Row>
@@ -142,7 +137,7 @@ class NewProduct extends Component {
                                         placeholder="Desctiption Placeholder"
                                         rows="5"
                                         value={this.state.description}
-                                        onChange={this.handleListItemInputChange} />
+                                        onChange={this.handleUpdateItemInputChange} />
                                 </div>
                             </ Column>
                         </Row>
@@ -157,7 +152,7 @@ class NewProduct extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="Price Placeholder"
                                         value={this.state.price}
-                                        onChange={this.handleListItemInputChange} />
+                                        onChange={this.handleUpdateItemInputChange} />
                                 </div>
                             </ Column>
                             <Column size="md-4">
@@ -168,13 +163,13 @@ class NewProduct extends Component {
                                         className="form-control form-control-sm"
                                         placeholder="City, State"
                                         value={this.state.location}
-                                        onChange={this.handleListItemInputChange} />
+                                        onChange={this.handleUpdateItemInputChange} />
                                 </ Column>
                             <Column size="md-4">
                                 <label>Send Notes to Cell Number</label>
                                 <div className="checkbox-inline">
                                     <label><input
-                                        onChange={this.handleListItemInputChange}
+                                        onChange={this.handleUpdateItemInputChange}
                                         type="checkbox"
                                         name="selectOption"
                                         checked={this.state.selectOption}
@@ -189,7 +184,7 @@ class NewProduct extends Component {
                                     <input
                                         type="file"
                                         className="form-control form-control-sm"
-                                        onChange={this.handleFileImageInputChange} />
+                                        onChange={this.handleUpdateImageInputChange} />
                                 </div>
                             </ Column>
                             {/* <Column size="md-4">
@@ -216,7 +211,8 @@ class NewProduct extends Component {
                             </ Column> */}
                         </Row>
                         <div className='buttonHolder'>
-                            <button type="submit" className="btn listItem" onClick={this.handleListItemSubmit}>LIST ITEM</button>
+                            <button type="submit" className="btn updateItem" onClick={this.handleUpdateItemSubmit}>UPDATE</button>
+                            <button type="submit" className="btn deleteItem" onClick={this.handleDeleteItemSubmit}>DELETE</button>
                         </div>
                     </form >
                 </FormContainer >
@@ -225,4 +221,4 @@ class NewProduct extends Component {
     }
 }
 
-export default NewProduct;
+export default EditListing;

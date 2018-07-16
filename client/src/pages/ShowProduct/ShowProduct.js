@@ -31,7 +31,8 @@ class ShowProduct extends Component {
                         isLoggedIn: true,
                         member: data.member,
                         username: "",
-                        _id: ""
+                        _id: "",
+                        location: ""
                     });
                 }
             })
@@ -114,10 +115,16 @@ class ShowProduct extends Component {
                                     <div className="content">
                                         <ul>
                                             <li>
+                                                <strong>Posted By:</strong> {this.state.product.username}
+                                            </li>
+                                            <li>
                                                 <strong>Item:</strong> {this.state.product.item}
                                             </li>
                                             <li>
                                                 <strong>Description:</strong> {this.state.product.description}
+                                            </li>
+                                            <li>
+                                                <strong>Location:</strong> {this.state.product.location}
                                             </li>
                                             <li>
                                                 <strong>Price: $</strong> {this.state.product.price}

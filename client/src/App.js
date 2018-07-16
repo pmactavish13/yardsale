@@ -9,6 +9,7 @@ import NewProduct from "./pages/NewProduct";
 import MemberProfile from "./pages/MemberProfile";
 import MemberSignUp from "./pages/MemberSignUp";
 import NoMatch from "./pages/NoMatch";
+import EditListing from "./pages/EditListing";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
@@ -41,6 +42,7 @@ class App extends Component {
               <Route exact path="/newProduct" component={NewProduct} />
               <Route exact path="/memberSignUp" component={MemberSignUp} />
               <Route exact path="/memberProfile" component={MemberProfile} />
+              <Route exact path="/memberProfile/:id" component={EditListing} />
               <Route component={NoMatch} />
             </ Switch>
           </Wrapper>

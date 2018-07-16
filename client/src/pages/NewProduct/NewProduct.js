@@ -16,6 +16,7 @@ class NewProduct extends Component {
             item: "",
             description: "",
             price: "",
+            location: "",
             selectOption: false,
             image1: "",
             image2: "",
@@ -50,7 +51,8 @@ class NewProduct extends Component {
     }
 
     loadNewProducts = () => {
-        this.setState({ item: "", description: "", selectOption: "", price: "", image1: "", image2: "", image3: "", username: "" });
+        this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
+        alert ("Success!\nYour item is now listed\nTo make changes, go to Member Profile.")
     }
 
     // handle any changes to the input fields
@@ -87,6 +89,8 @@ class NewProduct extends Component {
             alert(`Enter a description of your item!`);
         } else if (!this.state.price) {
             alert(`Enter a price!`);
+        }  else if (!this.state.location) {
+                alert(`Enter a location!`);
         } else {
             console.log(this.state)
             API.saveProduct({
@@ -98,7 +102,8 @@ class NewProduct extends Component {
                 item: this.state.item,
                 description: this.state.description,
                 price: parseInt(this.state.price, 10),
-                username: this.state.member.username
+                username: this.state.member.username,
+                location: this.state.location
             })
                 .then(res => this.loadNewProducts())
                 .catch(err => console.error(err));
@@ -110,7 +115,6 @@ class NewProduct extends Component {
             <Frame>
                 <FormContainer>
                     <h3>New Item Listing Form </h3>
-                    <h3>{this.state.member.username}</h3>
                     <form>
                         <Row>
                             <Column size="md-12">
@@ -144,7 +148,7 @@ class NewProduct extends Component {
                         </Row>
 
                         <Row>
-                            <Column size="md-6">
+                            <Column size="md-4">
                                 <div className="formgroup">
                                     <label>Price</label>
                                     <input
@@ -156,8 +160,17 @@ class NewProduct extends Component {
                                         onChange={this.handleListItemInputChange} />
                                 </div>
                             </ Column>
-
-                            <Column size="md-6">
+                            <Column size="md-4">
+                                    <label>Location</label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        className="form-control form-control-sm"
+                                        placeholder="City, State"
+                                        value={this.state.location}
+                                        onChange={this.handleListItemInputChange} />
+                                </ Column>
+                            <Column size="md-4">
                                 <label>Send Notes to Cell Number</label>
                                 <div className="checkbox-inline">
                                     <label><input
@@ -172,7 +185,7 @@ class NewProduct extends Component {
                         <Row>
                             <Column size="md-4">
                                 <div className="formgroup loadImage">
-                                    <label>Image 1</label>
+                                    <label>Image</label>
                                     <input
                                         type="file"
                                         className="form-control form-control-sm"

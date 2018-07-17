@@ -1,0 +1,101 @@
+nav {
+    height: 70px;
+    background-color:rgb(22, 72, 27);
+    color: rgb(242, 240, 240);
+    border-bottom: solid 1px rgb(20, 72, 25);
+}
+
+logo {
+    margin-left:15px;
+    height: 65px;
+    position: relative;
+}
+
+img.logoImage {
+    height: 50px;
+    width:100px;
+    border-radius: 3px;
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+    margin-left: 15px; 
+}
+
+h6.logoName {
+    font-size:16px;
+    font-style: oblique;
+    color: rgb(242, 240, 240);
+    font-family:  "Book Antiqua", serif;
+    margin-top: -30px;
+    margin-left: 38px;
+    text-align: center;
+    position: absolute;
+    
+}
+.navbar-nav, .nav-link {
+    color: rgb(242, 240, 240) !important;
+    text-transform: uppercase;
+}
+
+li.nav-item {
+    margin-top: 12px;
+}
+a {
+    padding-left:8px;
+    padding-right:8px
+}
+a.dropdown-toggle {
+    margin-top: -8px;
+}
+
+a.dropdown-toggle:hover {
+    margin-top: -8px;
+}
+
+a.navBarLinkStyle {
+    color: rgb(242, 240, 240) !important;
+    text-transform: uppercase;
+}
+
+.dropdownList {
+    background-color: rgb(22, 72, 27);
+    position: relative;
+    z-index: 2;
+    border-radius: 1px;
+    text-align:center;
+}
+
+#logIn {
+    min-width: 300px;
+}
+
+.fa-bars {
+    color: rgb(242, 240, 240);
+    padding-left: 3px;
+} 
+
+.navbar-light, .navbar-toggler {
+    color: rgb(242, 240, 240);
+    border-color: rgb(20, 72, 25, 0.1);
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+}
+
+a:hover {
+    color:rgb(50, 141, 252)!important;
+}
+
+.dropDown {
+    color:rgb(22, 72, 27)!important;
+    background-color: #fff;
+}
+
+.logOut {
+    font-family: "Palatino Linotype", "Book Antiqua", serif; 
+    font-size: 15px !important;
+    margin-top: 6px;
+    margin-left: -3px;
+}
+
+.signInHolder {
+    text-align: center;
+    background-color: #fff
+}

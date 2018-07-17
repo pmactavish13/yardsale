@@ -22,24 +22,34 @@ class EditListing extends Component {
             image2: "",
             image3: "",
             product:{}
-            // username: ""
         };
+        this.handleUpdateItemSubmit = this.handleUpdateItemSubmit.bind(this);
+        this.handleDeleteItemSubmit = this.handleDeleteItemSubmit.bind(this);
     };
 
     componentDidMount() {
         API.getProduct(this.props.match.params.id)
             // .then(res => console.log(res.data)) 
-            .then(res => this.setState({ product: res.data }))
+            .then(res => this.setState({ 
+                product: res.data,
+                _id: res.data._id,
+                item: res.data.item,
+                description: res.data.description,
+                price: res.data.price,
+                location: res.data.location,
+                selectOption: res.data.selectOption,
+                image1: res.data.image1,
+                // image2: "",
+                // image3: "",
+            }))
             .catch(err => console.log(err))
     }
 
-    UpdateProduct = () => {
-        // this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
+    updateProduct = () => {
         alert ("Success!\nYour item was Updated")
     }
 
-    DeleteProduct = () => {
-        // this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
+    deleteProduct = () => {
         alert ("Success!\nYour item was Deleted")
         window.location.href = '/MemberProfile';
     }
@@ -89,18 +99,17 @@ class EditListing extends Component {
                 alert(`Enter a location!`);
         } else {
             console.log(this.state)
-            API.updateProduct({
-                // member: this.state.member._id,
+            API.updateProduct(this.state._id, {
                 image1: this.state.image1,
-                image2: this.state.image2,
-                image3: this.state.image3,
+                // image2: this.state.image2,
+                // image3: this.state.image3,
                 selectOption: this.state.selectOption,
                 item: this.state.item,
                 description: this.state.description,
                 price: parseInt(this.state.price, 10),
                 location: this.state.location
             })
-                .then(res => this.loadNewProducts())
+                .then(res => this.updateProduct())
                 .catch(err => console.error(err));
         };
     };
@@ -109,7 +118,7 @@ class EditListing extends Component {
         return (
             <Frame>
                 <FormContainer>
-                    <h3>New Item Listing Form </h3>
+                    <h3>{this.state.product.item}</h3>
                     <form>
                         <Row>
                             <Column size="md-12">
@@ -119,7 +128,6 @@ class EditListing extends Component {
                                         type="text"
                                         name="item"
                                         className="form-control form-control-sm"
-                                        placeholder="Item Placeholder"
                                         value={this.state.item}
                                         onChange={this.handleUpdateItemInputChange} />
                                 </div>
@@ -134,7 +142,6 @@ class EditListing extends Component {
                                         type="text"
                                         name="description"
                                         className="form-control form-control-sm"
-                                        placeholder="Desctiption Placeholder"
                                         rows="5"
                                         value={this.state.description}
                                         onChange={this.handleUpdateItemInputChange} />
@@ -150,7 +157,6 @@ class EditListing extends Component {
                                         type="number"
                                         name="price"
                                         className="form-control form-control-sm"
-                                        placeholder="Price Placeholder"
                                         value={this.state.price}
                                         onChange={this.handleUpdateItemInputChange} />
                                 </div>
@@ -161,7 +167,6 @@ class EditListing extends Component {
                                         type="text"
                                         name="location"
                                         className="form-control form-control-sm"
-                                        placeholder="City, State"
                                         value={this.state.location}
                                         onChange={this.handleUpdateItemInputChange} />
                                 </ Column>
@@ -178,7 +183,7 @@ class EditListing extends Component {
                             </Column>
                         </Row>
                         <Row>
-                            <Column size="md-4">
+                            <Column size="md-6">
                                 <div className="formgroup loadImage">
                                     <label>Image</label>
                                     <input
@@ -212,6 +217,7 @@ class EditListing extends Component {
                         </Row>
                         <div className='buttonHolder'>
                             <button type="submit" className="btn updateItem" onClick={this.handleUpdateItemSubmit}>UPDATE</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="submit" className="btn deleteItem" onClick={this.handleDeleteItemSubmit}>DELETE</button>
                         </div>
                     </form >

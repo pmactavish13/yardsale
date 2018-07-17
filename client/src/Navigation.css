@@ -56,6 +56,17 @@ a.navBarLinkStyle {
     text-transform: uppercase;
 }
 
+.navBarButton {
+    background-color: rgb(22, 72, 27);
+    border:  rgb(22, 72, 27);
+    color: rgb(242, 240, 240) !important;
+    /*
+   color: rgb(242, 240, 240) !important; 
+    position: relative;
+    z-index: 2;
+    border-radius: 1px;  
+    /* text-align: center;  */
+}
 .dropdownList {
     background-color: rgb(22, 72, 27);
     position: relative;

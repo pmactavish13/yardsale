@@ -203,19 +203,17 @@ class App extends Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                {/* {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
-                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>} */}
 
                 {
                   !this.isAuthenticated() && (
 
-                    <button type="submit" className="btn logOut" id="qsLoginBtn" onClick={this.login.bind(this)}>Log In</button>
+                    <button  className="navBarButton" id="LoginBtn" onClick={this.login.bind(this)}>SIGN IN</button>
                   )
                 }
                 {
                   this.isAuthenticated() && (
 
-                    <button type="submit" className="btn logOut" id="qsLogoutBtn" onClick={this.logout.bind(this)}>Log Out</button>
+                    <button  className="navBarButton" id="LogoutBtn" onClick={this.logout.bind(this)}>SIGN OUT</button>
 
                   )
                 }

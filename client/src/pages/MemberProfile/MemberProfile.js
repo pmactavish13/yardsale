@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame";
-// import ProductCard from "../../components/ProductCard";
 import "./MemberProfile.css";
 import Session from "../../utils/session";
 
@@ -22,14 +21,16 @@ class MemberProfile extends Component {
             phoneNum: "",
             _id: "",
             product: [],
-            member: {}
+            products:[],
+            member: {},
+            // myProducts: []
         };
         this.handleUpdateMemberSubmit = this.handleUpdateMemberSubmit.bind(this);
         this.handleDeleteMemberSubmit = this.handleDeleteMemberSubmit.bind(this);
     }
 
-    componentWillMount() {
-
+    componentDidMount() {
+        var myProducts = [];
         Session.verify()
             .then(data => {
                 console.log(data.member);
@@ -48,6 +49,17 @@ class MemberProfile extends Component {
                         product: data.member.product,
                         member: data.member
                     });
+
+                    data.member.product.forEach((productId) => {
+                        console.log(productId);
+                        API.getProduct(productId)
+                           .then(res => {
+                               myProducts.push(res.data);
+                               console.log(myProducts);
+                               this.setState({products: myProducts})
+                           })
+                            .catch(err => console.log(err))
+                    });
                 }
             })
             .catch(err => {
@@ -62,20 +74,8 @@ class MemberProfile extends Component {
             })
     }
 
-    componentDidMount() {
-        console.log(this.state.product)
-    //     if (this.state.product !== []) {
-    //         var i=0
-    //         API.getProduct(this.props.match.params.id)
-    //         // .then(res => console.log(res.data)) 
-    //         .then(res => this.setState({ product[i]: res.data }))
-    //         .catch(err => console.log(err))
-    // }
-}
-
     loadUpdateMembers = () => {
         alert("Update Successful")
-        // window.location.href = '/home';
     }
 
     deleteMemberLogout = () => {
@@ -233,32 +233,18 @@ class MemberProfile extends Component {
                             <button type="submit" className="btn editMember" onClick={this.handleDeleteMemberSubmit}>DELETE</button>
                         </div>
                     </form>
+                    {!this.state.products.length ? null :
+                        <div>
+                            <h5 className="yourListing">Your Listings</h5>
+                            <p>Click on Item to Update or Delete</p>
+                            <ul>
+                             {this.state.products.map(product => ( 
+                                 <Link to={"/memberProfile/" + product._id} className="productEdit" key={product._id}>{product.item}</Link>
+                            ))}
+                            </ul>
+                        </div>}
+
                 </FormContainer>
-
-                {/* <Row>
-                    {this.state.products.map(product => ( 
-                    <Column size="md-6" key={this.state.product._id}> */}
-
-                {/* <ProductCard key={this.state.product._id}>
-                            <div className="img-container">
-                                <img className="productImage" alt={this.state.product.item} src={this.state.product.image1} />
-                            </div>
-                            <div className="content">
-                                <ul>
-                                    <li>
-                                        <strong>Item:</strong> {this.state.product.item}
-                                    </li>
-                                    <li>
-                                        <strong>Description:</strong> {this.state.product.description}
-                                    </li>
-                                    <li>
-                                        <strong>Price: $</strong> {this.state.product.price}
-                                    </li>
-                                </ul>
-                            </div>
-                        </ProductCard> */}
-
-                {/* </Column> */}
             </Frame>
         );
     }

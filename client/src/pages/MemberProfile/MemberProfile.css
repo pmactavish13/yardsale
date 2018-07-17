@@ -7,3 +7,8 @@ button.btn.editMember {
     padding: 2px 8px;
     font-size:15px
 }
+
+h5.yourListing {
+    margin-top: 20px;
+    margin-bottom: -5px
+}

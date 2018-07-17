@@ -88,8 +88,9 @@ class ShowProduct extends Component {
             alert(`Enter a Note!`);
         } else {
             console.log("Show Prod Form submit 61" + this.state)
+            console.log(this.state.member._id)
             API.saveNote({
-                member_id: "5b49a02aa0dc680930660254",
+                member_id: this.state.member._id,
                 product_id: this.state.product._id,
                 message: this.state.newMessage,
                 private: this.state.newPubPrivOption

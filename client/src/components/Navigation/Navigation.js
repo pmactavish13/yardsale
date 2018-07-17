@@ -38,6 +38,28 @@ export default class Navigation extends React.Component {
 
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
+    //Auth0 authentication
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+  }
+
+
+  // goTo(route) {
+  //   this.props.history.replace(`/${route}`)
+  // }
+
+  login() {
+    this.props.auth.login();
+
+    // this.setState({ isLoggedIn: this.props.auth });
+  }
+
+  logout() {
+    this.props.auth.logout();
+    // this.setState({ isLoggedIn: this.props.auth });
+  }
+
+  isAuthenticated() {
+    return this.props.auth.isAuthenticated();
   }
 
   // Navbar Menu Open/Close
@@ -57,11 +79,11 @@ export default class Navigation extends React.Component {
             token: "",
             isLoading: false,
             isLoggedIn: true,
-            member: data.member, 
+            member: data.member,
             username: "",
             _id: ""
           });
-        } 
+        }
       })
       .catch(err => {
         // console.error(err);
@@ -128,7 +150,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    
+
     return (
       <div>
         <Navbar dark expand="md">
@@ -218,6 +240,24 @@ export default class Navigation extends React.Component {
                     </form>
                   </DropdownMenu>
                 </UncontrolledDropdown>}
+
+              <NavItem>
+
+                {
+                  !this.isAuthenticated() && (
+
+                    <button className="navBarButton" id="LoginBtn" onClick={this.login.bind(this)}>Auth0 IN</button>
+                  )
+                }
+                {
+                  this.isAuthenticated() && (
+
+                    <button className="navBarButton" id="LogoutBtn" onClick={this.logout.bind(this)}>Auth0 OUT</button>
+
+                  )
+                }
+              </NavItem>
+
               {this.props.children}
             </Nav>
           </Collapse>

@@ -1,7 +1,6 @@
 import history from '../history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
-import history from '../history';
 
 import API from "../utils/API";
 
@@ -12,7 +11,7 @@ export default class Auth {
     redirectUri: AUTH_CONFIG.callbackUrl,
     audience: `https://${AUTH_CONFIG.domain}/userinfo`,
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile email'
   });
 
   userProfile;
@@ -38,7 +37,7 @@ export default class Auth {
       } else if (err) {
         history.replace('/home');
         // TODO: Revisit this... needed?
-        console.log(err);
+        console.log("handleAuthentication: " + err.error);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
@@ -52,27 +51,46 @@ export default class Auth {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    // navigate to the home route
-    history.replace('/home');
 
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       if (profile) {
-        // localStorage.setItem('member', profile);
-
-        API.saveMember({
-          // email: this.state.email,
-          username: profile.sub,
-          // password: this.state.password,
-          firstName: profile.given_name,
-          lastName: profile.family_name,
-          // phoneNum: phoneFormatted
+        // TODO: Need in storage?
+        // TODO: Session storage?
+        localStorage.setItem('member', JSON.stringify(profile));
+        API.authMember({
+          authId: profile.sub
         })
-          .then(res => localStorage.setItem('Res', res))
+          .then(res => {
+            // localStorage.setItem('New Member', !res.data)
+            if (!res.data) {
+              API.saveMember({
+                authId: profile.sub,
+                username: profile.username || profile.email,
+                firstName: profile.given_name,
+                lastName: profile.family_name,
+                // phoneNum: phoneFormatted
+                picture: profile.picture,
+                email: profile.email
+                // password: this.state.password,
+              })
+            } else {
+              //TODO:  Figure out how to update "last visit"
+              console.log(Date.now());
+              // API.updateMember(res.data._id, {
+              //   lastvisit: Date.now()
+              // })
+              //   .then(res => this.loadUpdateMembers())
+              //   .catch(err => console.error(err));
+            }
+          })
           // .then(res => this.loadNewMembers())
           .catch(err => localStorage.setItem('Error', err.message));
-
       }
     })
+
+    //TODO: Don't navigate?
+    // navigate to the home route
+    history.replace('/');
   }
 
   getAccessToken() {
@@ -98,6 +116,7 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('member');
     this.userProfile = null;
     // navigate to the home route
     history.replace('/home');

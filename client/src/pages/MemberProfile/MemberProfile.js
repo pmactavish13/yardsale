@@ -13,6 +13,7 @@ class MemberProfile extends Component {
 
         // Setting the initial values of ex: this.state.username
         this.state = {
+            authId: "",
             email: "",
             username: "",
             password: "",
@@ -39,6 +40,7 @@ class MemberProfile extends Component {
                         token: "",
                         isLoading: false,
                         isLoggedIn: true,
+                        authId: data.member.authId,
                         email: data.member.email,
                         username: data.member.username,
                         password: data.member.password,
@@ -134,6 +136,7 @@ class MemberProfile extends Component {
             alert(`Enter your last name!`);
         } else {
             API.updateMember(this.state._id, {
+                authId: this.state.authId,
                 member: this.state._id,
                 email: this.state.email,
                 username: this.state.username,

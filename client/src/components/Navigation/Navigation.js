@@ -42,20 +42,39 @@ export default class Navigation extends React.Component {
     this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
+  //Navigation router...
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
 
-  // goTo(route) {
-  //   this.props.history.replace(`/${route}`)
-  // }
+  getAuthProfile() {
+    this.setState({
+      isLoggedIn: true,
+    })
+
+
+    // this.setState({ profile: {} });
+    // const { userProfile, getProfile } = this.props.auth;
+    // if (!userProfile) {
+    //   getProfile((err, profile) => {
+    //     this.setState({ profile });
+    //   });
+    // } else {
+    //   this.setState({ profile: userProfile });
+    // }
+  }
 
   login() {
     this.props.auth.login();
+    // TODO: Retrieve member data
+    // TODO: Match to username
+    // TODO: Save Session
 
-    // this.setState({ isLoggedIn: this.props.auth });
   }
 
   logout() {
     this.props.auth.logout();
-    // this.setState({ isLoggedIn: this.props.auth });
+    // TODO: clear session
   }
 
   isAuthenticated() {
@@ -242,7 +261,15 @@ export default class Navigation extends React.Component {
                 </UncontrolledDropdown>}
 
               <NavItem>
+                {
+                  this.isAuthenticated() && (
 
+                    <button className="navBarButton" id="ProfileBtn" onClick={this.goTo.bind(this, 'profile')}>Auth0 Profile</button>
+                  )
+                }
+              </NavItem>
+
+              <NavItem>
                 {
                   !this.isAuthenticated() && (
 
@@ -258,7 +285,9 @@ export default class Navigation extends React.Component {
                 }
               </NavItem>
 
+              {/* <div className="container"> */}
               {this.props.children}
+              {/* </div> */}
             </Nav>
           </Collapse>
         </Navbar>

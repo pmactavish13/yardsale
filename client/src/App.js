@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Router, Route, Switch } from "react-router-dom";
+import {  Redirect, Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import SafetyTips from "./pages/SafetyTips";
@@ -20,10 +20,11 @@ import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
 import history from './history';
 
+import Profile from './Profile/Profile';
+
 const auth = new Auth();
 
 const handleAuthentication = ({ location }) => {
-  console.log(location);
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
   }
@@ -46,13 +47,21 @@ class App extends Component {
       // <Router>
       <Router history={history}>
         <div>
-          <Navigation auth={auth} {...this.props} />
+          {/* <Navigation auth={auth} {...this.props} /> */}
+          <Route path="/" render={(props) => <Navigation auth={auth} {...props} />} />
           <Route path="/callback" render={(newProps) => {
-                handleAuthentication(newProps);
-                return <Callback {...this.props} />
-              }} />
+            handleAuthentication(newProps);
+            return <Callback {...this.props} />
+          }} />
           <Wrapper>
             <Switch>
+              <Route path="/profile" render={(props) => (
+                !auth.isAuthenticated() ? (
+                  <Redirect to="/home" />
+                ) : (
+                    <Profile auth={auth} {...props} />
+                  )
+              )} />
               <Route exact path="/" component={Home} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/about" component={About} />

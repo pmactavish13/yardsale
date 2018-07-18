@@ -29,7 +29,7 @@ module.exports = {
 
         db.Member.find({
             email: email,
-            password: password,
+            // password: password,
             isDeleted: false
         }, { password: 0 }, (err, members) => {
             if (err) {

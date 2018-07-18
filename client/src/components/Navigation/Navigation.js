@@ -47,33 +47,71 @@ export default class Navigation extends React.Component {
     this.props.history.replace(`/${route}`)
   }
 
-  getAuthProfile() {
-    this.setState({
-      isLoggedIn: true,
-    })
-
-
-    // this.setState({ profile: {} });
-    // const { userProfile, getProfile } = this.props.auth;
-    // if (!userProfile) {
-    //   getProfile((err, profile) => {
-    //     this.setState({ profile });
-    //   });
-    // } else {
-    //   this.setState({ profile: userProfile });
-    // }
-  }
+  // getAuthProfile() {
+  //   this.setState({
+  //     isLoggedIn: true,
+  //   })
+  // this.setState({ profile: {} });
+  // const { userProfile, getProfile } = this.props.auth;
+  // if (!userProfile) {
+  //   getProfile((err, profile) => {
+  //     this.setState({ profile });
+  //   });
+  // } else {
+  //   this.setState({ profile: userProfile });
+  // }
+  // }
 
   login() {
-    this.props.auth.login();
+    this.props.auth.login()
+    this.setUpSession();
+
+      // .then(data => {
+      //   console.log(data.member);
+      //   this.setState({
+      //     signInError: data.message,
+      //     isLoading: false,
+      //     signInEmail: '',
+      //     signInPassword: '',
+      //     isLoggedIn: true,
+      //     token: data.token,
+      //     memberId: data.memberId
+      //   })
+      // })
     // TODO: Retrieve member data
     // TODO: Match to username
     // TODO: Save Session
 
   }
 
+  setUpSession() {
+
+    if (!this.isAuthenticated()) {
+      this.setState({
+        token: "",
+        isLoading: false,
+        isLoggedIn: false,
+        // member: userProfile,
+        username: "",
+        _id: ""
+      });
+    } else {
+      
+      this.setState({
+        token: "",
+        isLoading: false,
+        isLoggedIn: true,
+        // member: userProfile,
+        username: "",
+        _id: ""
+      });
+    }
+
+  }
+
   logout() {
     this.props.auth.logout();
+    this.setUpSession()
     // TODO: clear session
   }
 
@@ -89,30 +127,47 @@ export default class Navigation extends React.Component {
   }
 
   componentDidMount() {
+    this.setUpSession();
 
-    Session.verify()
-      .then(data => {
-        console.log(data.member);
-        if (data && data.isVerified) {
-          this.setState({
-            token: "",
-            isLoading: false,
-            isLoggedIn: true,
-            member: data.member,
-            username: "",
-            _id: ""
-          });
-        }
-      })
-      .catch(err => {
-        // console.error(err);
-        this.setState({
-          signInError: err,
-          isLoading: false,
-          isLoggedIn: false,
-          member: {}
-        });
-      })
+    // if (!this.isAuthenticated()) {
+    //   // getProfile((err, profile) => {
+    //   //   this.setState({ profile });
+    //   // });
+    // } else {
+    //   // this.setState({ profile: userProfile });
+    //   this.setState({
+    //     token: "",
+    //     isLoading: false,
+    //     isLoggedIn: true,
+    //     // member: userProfile,
+    //     username: "",
+    //     _id: ""
+    //   });
+    // }
+
+    // Session.verify()
+    //   .then(data => {
+    //     console.log(data.member);
+    //     if (data && data.isVerified) {
+    //       this.setState({
+    //         token: "",
+    //         isLoading: false,
+    //         isLoggedIn: true,
+    //         member: data.member,
+    //         username: "",
+    //         _id: ""
+    //       });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     // console.error(err);
+    //     this.setState({
+    //       signInError: err,
+    //       isLoading: false,
+    //       isLoggedIn: false,
+    //       member: {}
+    //     });
+    //   })
   }
 
   // handle any changes to the input fields

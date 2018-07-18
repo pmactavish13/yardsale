@@ -16,8 +16,9 @@ export default {
     return axios.put("/api/products/" + id, body);
   },
   // Deletes the product with the given id
-  deleteProduct: function (id) {
-    return axios.delete("/api/products/" + id);
+  deleteProduct: function (id, body) {
+    console.log('body in delete product', body)
+    return axios.delete("/api/products/" + id, {data: body});
   },
   // Saves a product to the database
   saveProduct: function (productData) {
@@ -33,9 +34,9 @@ export default {
     return axios.get("/api/notes/" + id);
   },
   // Updates the notes with the given id
-  updateNote: function (id) {
+  updateNote: function (id, body) {
     // return axios.put("/api/notes/" + id, noteData);
-    return axios.put("/api/notes/" + id);
+    return axios.put("/api/notes/" + id, body);
   },
   // Deletes the note with the given id
   deleteNote: function (id) {
@@ -43,6 +44,7 @@ export default {
   },
   // Saves a note to the database
   saveNote: function (noteData) {
+    console.log("API.js" + noteData)
     return axios.post("/api/notes", noteData);
   },
 
@@ -59,6 +61,10 @@ export default {
   updateMember: function (id, body) {
     return axios.put("/api/members/" + id, body);
   },
+  // // Update the member with the given id and product
+  // findOneAndUpdateMember: function (id, body) {
+  //   return axios.put("/api/members/" + id, body);
+  // },
   // Saves a member to the database
   saveMember: function (memberData) {
     return axios.post("/api/members", memberData);

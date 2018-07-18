@@ -1,30 +1,26 @@
 const db = require("../models");
-// const mongoose = require('mongoose');
 
 // Defining methods for the productsController
 module.exports = {
-  findAll: function(req, res) {
+  findAll: function (req, res) {
     db.Product
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findById: function(req, res) {
+  findById: function (req, res) {
     console.log("prod controller" + req.params.id)
     db.Product
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: function(req, res) {
-    // console.log(req.body.member);
-    // req.body.member = new mongoose.Types.ObjectId(req.body.member);
-    console.log(req.body.member);
+  create: function (req, res) {
     db.Product
       .create(req.body)
-      .then(dbProduct => 
-        db.Member.findOneAndUpdate({_id: req.body.member }, { $push: { product: dbProduct._id } })
+      .then(dbProduct =>
+        db.Member.findOneAndUpdate({ _id: req.body.member }, { $push: { product: dbProduct._id } })
       )
       .then(dbMember =>
         res.json(dbMember))
@@ -33,17 +29,26 @@ module.exports = {
         res.status(422).json(err)
       });
   },
-  update: function(req, res) {
+  update: function (req, res) {
     db.Product
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function(req, res) {
+  
+  remove: function (req, res) {
     db.Product
       .findById({ _id: req.params.id })
-      .then(dbModel => dbModel.remove())
-      .then(dbModel => res.json(dbModel))
+      .then(dbProduct => dbProduct.remove())
+      .then(dbProduct => {
+
+        return db.Member.findOneAndUpdate({ _id: req.body.member._id }, { $pull: { 'product': req.params.id } })
+      })
+      .then(member => {
+        console.log('Matching member', member)
+        res.json(member)
+
+      })
       .catch(err => res.status(422).json(err));
   }
-};
+}

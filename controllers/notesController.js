@@ -12,6 +12,7 @@ find: function(req, res) {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    console.log("notesController create" + req.body)
     db.Note
       .create(req.body)
       .then(dbModel => res.json(dbModel))
@@ -25,7 +26,7 @@ find: function(req, res) {
   },
   remove: function(req, res) {
     db.Note
-      .findById({ _id: req.params.id })
+      .find({ product_id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

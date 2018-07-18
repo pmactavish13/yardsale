@@ -11,6 +11,7 @@ router
   .route("/:id")
   .get(membersController.findById)
   .put(membersController.update)
+  // .put(membersController.findOneAndUpdate)
   .delete(membersController.remove);
 
 module.exports = router;

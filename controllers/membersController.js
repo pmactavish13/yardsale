@@ -3,9 +3,14 @@ const mongoose = require('mongoose');
 // Defining methods for the membersController
 module.exports = {
   findById: function (req, res) {
-    // TODO:  Remove Password from returned member
     db.Member
-      .findById(req.params.id, { password:0 })
+      .findById(req.params.id, { password: 0 })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findByAuth: function (req, res) {
+    db.Member
+      .findOne({ authId: req.body.authId }, { password: 0 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -30,10 +35,11 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+
+  // TODO:  Remove this function, since Auth0 supercedes
   validPassword: function (req, res) {
-    // TODO:  Remove Password from returned member
     db.Member
-      .findById({ _id: req.params.id }, { password:0 })
+      .findById({ _id: req.params.id }, { password: 0 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

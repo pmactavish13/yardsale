@@ -1,19 +1,20 @@
 const mongoose = require("mongoose");
-//TODO: Encryption - Bcrypt is broken on YARN.
-//TODO: Bleeding edge version fixes it...  
-//TODO: https://github.com/yarnpkg/yarn/issues/2286
+//TODO: Encryption - Bcrypt is broken on YARN.  Issue goes away with Auth0
 // const bcrypt = require('bcrypt');
 const Product = require("./product")
 const Schema = mongoose.Schema;
 
 const memberSchema = new Schema({
+  authId: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   username: { type: String, required: true },
-  phoneNum: { type: String, required: true },
+  phoneNum: { type: String, required: false },
   email: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String, required: false },
+  picture: { type: String, required: false },
   date: { type: Date, default: Date.now },
+  lastvisit: { type: Date, default: Date.now },
   isDeleted: { type: Boolean, default: false },
   product: [{
     type: Schema.Types.ObjectId,

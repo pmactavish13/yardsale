@@ -13,4 +13,14 @@ router
   .put(membersController.update)
   .delete(membersController.remove);
 
+// // Matches with "/api/members/auth"
+// router.route("/auth")
+//   // .get(membersController.findAll)
+//   .get(membersController.findByAuth)
+
+// Matches with "/api/members/auth"
+router.route("/auth")
+  // .get(membersController.findAll)
+  .post(membersController.findByAuth)
+
 module.exports = router;

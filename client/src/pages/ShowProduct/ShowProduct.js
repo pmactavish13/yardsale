@@ -15,8 +15,11 @@ class ShowProduct extends Component {
             product: {},
             note: {},
             message: "",
-            pubPrivOption: false
+            pubPrivOption: false,
+            member:{}
         };
+        this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
+        this.handleNoteFormSubmit = this.handleNoteFormSubmit.bind(this);
     }
 
     componentWillMount() {
@@ -57,16 +60,17 @@ class ShowProduct extends Component {
             .then(res =>
                 // console.log(res.data[0])
                 this.setState({
-                    note: res.data,
-                    message: "",
-                    pubPrivOption: ""
+                    note: res.data
+                    // ,
+                    // message: "",
+                    // pubPrivOption: ""
                 })
             )
             .catch(err => console.log(err))
     };
 
     loadNewNote = () => {
-        this.setState({ message: "", pubPrivOption: "" });
+        this.setState({ newMessage: "", newPubPrivOption: "" });
     }
 
     // handle any changes to the input fields
@@ -87,8 +91,12 @@ class ShowProduct extends Component {
         if (!this.state.newMessage) {
             alert(`Enter a Note!`);
         } else {
-            console.log("Show Prod Form submit 61" + this.state)
-            console.log(this.state.member._id)
+            // console.log(`Show Prod Form submit 61` + this.state +
+            // `member_id:` + this.state.member._id +
+            // `product_id:` + this.state.product._id +
+            // `message:` + this.state.newMessage +
+            // `private:` + this.state.newPubPrivOption)
+            // console.log(this.state.member._id)
             API.saveNote({
                 member_id: this.state.member._id,
                 product_id: this.state.product._id,
@@ -142,20 +150,47 @@ class ShowProduct extends Component {
                                         <div>
                                             <h4 className="note-title">Notes</h4>
                                         </div>
+
                                         {this.state.note.length ? (
                                             <div>
+                                                <p>Public Notes</p>
                                                 <ul>
                                                     {this.state.note.map(note => (
+
+                                                        // {this.state.note.pubPrivOption === false ?
                                                         <li className="noteHistory" key={note._id}>
                                                             {note.message}
-                                                        </li>
+                                                        </li> 
+                                                        // : null}
                                                     ))}
+                
                                                 </ul>
                                             </div>
                                         ) : (
                                                 <h5 className="noNotes">There are no Public Notes for this Item.</h5>
                                             )}
-                                        {/* <hr /> */}
+                                      
+                                      {this.state.note.length ? (
+                                            <div>
+                                                <p>Private Notes</p>
+                                                <ul>
+                                                    {this.state.note.map(note => (
+
+                                                        // {note.pubPrivOption === true && this.state.note.member_id === this.state.member_id ?
+                                                        
+                                                            <li className="noteHistory" key={note._id}>
+                                                            {note.message}
+                                                        </li> 
+                                                        // : null}
+                                                    ))}
+                
+                                                </ul>
+                                            </div>
+                                        ) : (
+                                                <h5 className="noNotes">There are no Private Notes for this Item.</h5>
+                                            )}
+
+
                                         <form className="noteForm">
                                             <Row>
                                                 <Column size="md-12">
@@ -169,6 +204,7 @@ class ShowProduct extends Component {
                                                             rows="4"
                                                             value={this.state.newMessage}
                                                             onChange={this.handleNoteInputChange} />
+                              
                                                     </div>
                                                 </ Column>
                                             </Row>
@@ -178,7 +214,7 @@ class ShowProduct extends Component {
                                                         <label><input
                                                             onChange={this.handleNoteInputChange}
                                                             type="checkbox"
-                                                            name="newPubPrivOption"
+                                                            name="newPubPrivOption"  
                                                             checked={this.state.newPubPrivOption}
                                                         />  Private</label>
                                                     </div>

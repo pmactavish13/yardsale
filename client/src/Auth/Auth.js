@@ -1,6 +1,9 @@
 import history from '../history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
+import history from '../history';
+
+import API from "../utils/API";
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
@@ -9,14 +12,18 @@ export default class Auth {
     redirectUri: AUTH_CONFIG.callbackUrl,
     audience: `https://${AUTH_CONFIG.domain}/userinfo`,
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile'
   });
+
+  userProfile;
 
   constructor() {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.getAccessToken = this.getAccessToken.bind(this);
+    this.getProfile = this.getProfile.bind(this);
   }
 
   login() {
@@ -27,29 +34,63 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        // history.replace('/home');
+        history.replace('/home');
       } else if (err) {
-        if (authResult) {
-          console.log(err);
-          console.log(authResult.idToken);
-          console.log(authResult.accessToken);
-          console.log(authResult);
-          // alert(`Error: ${err.error}. Check the console for further details.`);
-          }
+        history.replace('/home');
+        // TODO: Revisit this... needed?
+        console.log(err);
+        alert(`Error: ${err.error}. Check the console for further details.`);
       }
-      // TODO: Figure out why this is throwing a State Transition error...
-      history.replace('/home');
     });
   }
 
   setSession(authResult) {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    let expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime()
+    );
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     // navigate to the home route
     history.replace('/home');
+
+    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+      if (profile) {
+        // localStorage.setItem('member', profile);
+
+        API.saveMember({
+          // email: this.state.email,
+          username: profile.sub,
+          // password: this.state.password,
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+          // phoneNum: phoneFormatted
+        })
+          .then(res => localStorage.setItem('Res', res))
+          // .then(res => this.loadNewMembers())
+          .catch(err => localStorage.setItem('Error', err.message));
+
+      }
+    })
+  }
+
+  getAccessToken() {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('No access token found');
+    }
+    return accessToken;
+  }
+
+  getProfile(cb) {
+    let accessToken = this.getAccessToken();
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+      cb(err, profile);
+    });
   }
 
   logout() {
@@ -57,6 +98,7 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    this.userProfile = null;
     // navigate to the home route
     history.replace('/home');
   }

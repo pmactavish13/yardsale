@@ -3,6 +3,7 @@ import API from "../../utils/API";
 import { Row, Column } from "../../components/Grid";
 import { FormContainer } from "../../components/Form";
 import Frame from "../../components/Frame"
+import Session from "../../utils/session";
 //import "./EditListing.css";
 
 class EditListing extends Component {
@@ -21,11 +22,36 @@ class EditListing extends Component {
             image1: "",
             image2: "",
             image3: "",
-            product:{}
+            product:{},
+            member:{}
         };
         this.handleUpdateItemSubmit = this.handleUpdateItemSubmit.bind(this);
         this.handleDeleteItemSubmit = this.handleDeleteItemSubmit.bind(this);
     };
+
+    componentWillMount() {
+
+        Session.verify()
+            .then(data => {
+                console.log(data.member);
+                if (data && data.isVerified) {
+                    this.setState({
+                        token: "",
+                        isLoading: false,
+                        isLoggedIn: true,
+                        member: data.member,
+                    });
+                }
+            })
+            .catch(err => {
+                this.setState({
+                    signInError: err,
+                    isLoading: false,
+                    isLoggedIn: false,
+                    member: {}
+                });
+            })
+    }
 
     componentDidMount() {
         API.getProduct(this.props.match.params.id)
@@ -55,10 +81,10 @@ class EditListing extends Component {
     }
 
  handleDeleteItemSubmit = event => {
-        API.deleteProduct(this.state.product._id)
+        API.deleteProduct(this.state.product._id,
+        { member:this.state.member })
             .then(res => this.deleteProduct())
             .catch(err => console.log(err));
-
     }
 
     // handle any changes to the input fields

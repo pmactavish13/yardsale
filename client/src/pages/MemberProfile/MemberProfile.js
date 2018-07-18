@@ -102,6 +102,25 @@ class MemberProfile extends Component {
                     isLoggedIn: false
                 })
             });
+
+            this.state.products.forEach((product) => {
+                console.log(product._id);
+                API.deleteProduct(product._id)
+                   .then(res => 
+                       console.log(res)) 
+                
+                   .catch(err => console.log(err))
+            })
+
+            this.state.products.forEach((product) => {
+                console.log(product._id);
+                API.deleteNote(product._id)
+                   .then(res => 
+                       console.log(res)) 
+                
+                   .catch(err => console.log(err))
+            })
+
         API.deleteMember(this.state.member._id)
             .then(res => this.deleteMemberLogout())
             .catch(err => console.log(err));

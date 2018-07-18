@@ -23,6 +23,17 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+//   findOneAndUpdate: function (req, res) {
+//     console.log("27" + req.params.member)
+//     req.params.id = new mongoose.Types.ObjectId(req.params.member);
+//     console.log("29" + req.params.member);
+//     req.body.member = new mongoose.Types.ObjectId(req.body.product);
+//     console.log("31" + req.body.product);
+//       db.Member
+//       .findOneAndUpdate({_id: req.body.member }, { $pull: { product: req.body.product} })
+//       .then(dbMember => res.json(dbMember))
+//       .catch(err => res.status(422).json(err));
+// },
   remove: function (req, res) {
     db.Member
       .findById({ _id: req.params.id })

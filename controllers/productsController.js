@@ -10,7 +10,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
-    console.log("prod controller" + req.params.id)
+    // console.log("prod controller" + req.params.id)
     db.Product
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
@@ -41,7 +41,6 @@ module.exports = {
       .findById({ _id: req.params.id })
       .then(dbProduct => dbProduct.remove())
       .then(dbProduct => {
-
         return db.Member.findOneAndUpdate({ _id: req.body.member._id }, { $pull: { 'product': req.params.id } })
       })
       .then(member => {

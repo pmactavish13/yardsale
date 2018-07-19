@@ -22,3 +22,7 @@ html, body, #root {
   margin: 0;
   font-family: "Palatino Linotype", "Book Antiqua", serif
 }
+
+#root {
+  margin-top: 0px
+}

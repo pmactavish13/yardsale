@@ -39,5 +39,11 @@ a.productLink {
 }
 
 div.col-md-3 {
-  max-width: 23%;
+  max-width: 21%;
+}
+
+@media (min-width: 768px) {
+  .col-md-3 {
+    max-width: 21%;
+  }
 }

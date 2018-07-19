@@ -83,14 +83,14 @@ export default class Auth extends React.Component {
           authId: profile.sub
         })
           .then(res => {
-            // localStorage.setItem('New Member', !res.data)
+            localStorage.setItem('New Member', !res.data)
             // console.log("Test Member");
 
             if (!res.data) {
               // console.log("New Member");
               API.saveMember({
                 authId: profile.sub,
-                username: profile.username || profile.email,
+                username: profile.nickname || profile.email,
                 firstName: profile.given_name,
                 lastName: profile.family_name,
                 // phoneNum: phoneFormatted

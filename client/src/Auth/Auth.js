@@ -48,7 +48,7 @@ export default class Auth extends React.Component {
   }
 
   handleAuthentication() {
-    console.log("Auth.handleAuthentication");
+
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
@@ -78,16 +78,16 @@ export default class Auth extends React.Component {
         // TODO: Need in storage?
         // TODO: Session storage?
         localStorage.setItem('member', JSON.stringify(profile));
-        console.log("profile:" + profile.email);
+        // console.log("profile:" + profile.email);
         API.authMember({
           authId: profile.sub
         })
           .then(res => {
             // localStorage.setItem('New Member', !res.data)
-            console.log("Test Member");
+            // console.log("Test Member");
 
             if (!res.data) {
-              console.log("New Member");
+              // console.log("New Member");
               API.saveMember({
                 authId: profile.sub,
                 username: profile.username || profile.email,
@@ -102,7 +102,7 @@ export default class Auth extends React.Component {
                 .catch(err => console.error(err));
             } else {
 
-              console.log("Existing Member");
+              // console.log("Existing Member");
               //TODO: At this point this.userProfile is the Auth0 record
               // console.log(this.userProfile);
 
@@ -127,7 +127,7 @@ export default class Auth extends React.Component {
   }
 
   getAccessToken() {
-    console.log("Auth.getAccessToken");
+    // console.log("Auth.getAccessToken");
     const accessToken = localStorage.getItem('access_token');
     if (!accessToken) {
       throw new Error('No access token found');
@@ -136,7 +136,7 @@ export default class Auth extends React.Component {
   }
 
   getProfile(cb) {
-    console.log("Auth.getProfile");
+    // console.log("Auth.getProfile");
     let accessToken = this.getAccessToken();
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
@@ -147,7 +147,7 @@ export default class Auth extends React.Component {
   }
 
   logout() {
-    console.log("Auth.logout");
+    // console.log("Auth.logout");
     // Clear access token and ID token from local storage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
@@ -171,51 +171,44 @@ export default class Auth extends React.Component {
 
 
   verifySess = () => {
-    console.log("Auth:175 - verifying session");
+    // console.log("Auth:175 - verifying session");
     Session.verify()
       .then(data => {
-        console.log("Auth:179 - session verified");
-        // TODO: Return data object!!!
+        // console.log("Auth:179 - session verified");
+
         if (data && data.isVerified) {
-          this.setState({
-            token: "",
-            isLoading: false,
-            isLoggedIn: true,
-            member: data.member,
-            username: "",
-            _id: ""
-          });
+          // this.setState({
+          //   // token: "",
+          //   // isLoading: false,
+          //   // isLoggedIn: true,
+          //   // member: data.member,
+          //   // username: "",
+
+          //   // _id: ""
+          // });
         }
 
       })
       .catch(err => {
-        // console.error(err);
-        this.setState({
-          signInError: err,
-          isLoading: false,
-          isLoggedIn: false,
-          member: {}
-        });
+        console.error(err);
+        // this.setState({
+        //   signInError: err,
+        //   isLoading: false,
+        //   isLoggedIn: false,
+        //   member: {}
+        // });
       })
   }
 
   loadMembers = () => {
-    console.log("Auth:203 - loading member");
+    // console.log("Auth:203 - loading member");
     Session.signIn({
       email: this.userProfile.email
     })
       .then(data => {
-        
-        console.log("Auth:209 - member loaded");
-        this.setState({
-          signInError: data.message,
-          isLoading: false,
-          signInEmail: '',
-          signInPassword: '',
-          isLoggedIn: true,
-          token: data.token,
-          memberId: data.memberId
-        })
+
+        // console.log("Auth:209 - member loaded");
+
         this.verifySess()
       })
   }

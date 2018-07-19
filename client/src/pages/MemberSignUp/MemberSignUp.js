@@ -55,8 +55,9 @@ class MemberSignUp extends Component {
 
     loadNewMembers = () => {
         Session.signIn({
-            email: this.state.email,
-            password: this.state.password
+            email: this.state.email
+            // ,
+            // password: this.state.password
         })
             .then(data => {
                 // console.log(data.member);
@@ -101,8 +102,8 @@ class MemberSignUp extends Component {
             alert("Enter a valid email address!");
         } else if (!this.state.username) {
             alert(`Enter your username!`);
-        } else if (!this.state.password) {
-            alert(`Enter your password!`);
+        // } else if (!this.state.password) {
+        //     alert(`Enter your password!`);
         } else if (!this.state.firstName) {
             alert(`Enter your first name!`);
         } else if (!this.state.lastName) {

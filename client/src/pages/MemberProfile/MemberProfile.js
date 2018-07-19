@@ -13,6 +13,7 @@ class MemberProfile extends Component {
 
         // Setting the initial values of ex: this.state.username
         this.state = {
+            authId: "",
             email: "",
             username: "",
             password: "",
@@ -39,9 +40,10 @@ class MemberProfile extends Component {
                         token: "",
                         isLoading: false,
                         isLoggedIn: true,
+                        authId: data.member.authId,
                         email: data.member.email,
                         username: data.member.username,
-                        password: data.member.password,
+                        // password: data.member.password,
                         firstName: data.member.firstName,
                         lastName: data.member.lastName,
                         phoneNum: data.member.phoneNum,
@@ -145,18 +147,19 @@ class MemberProfile extends Component {
             alert("Enter a valid email address!");
         } else if (!this.state.username) {
             alert(`Enter your username!`);
-        } else if (!this.state.password) {
-            alert(`Enter your password!`);
+        // } else if (!this.state.password) {
+        //     alert(`Enter your password!`);
         } else if (!this.state.firstName) {
             alert(`Enter your first name!`);
         } else if (!this.state.lastName) {
             alert(`Enter your last name!`);
         } else {
             API.updateMember(this.state._id, {
+                authId: this.state.authId,
                 member: this.state._id,
                 email: this.state.email,
                 username: this.state.username,
-                password: this.state.password,
+                // password: this.state.password,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 phoneNum: phoneFormatted
@@ -235,14 +238,14 @@ class MemberProfile extends Component {
                             </Row>
                             <Row>
                                 <Column size="md-12">
-                                    <label>Password</label>
+                                    {/* <label>Password</label>
                                     <input
                                         type="password"
                                         name="password"
                                         className="form-control form-control-sm"
                                         placeholder="Enter your Password to Edit or Delete"
                                         ref={this.state.password}
-                                        onChange={this.handleMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} /> */}
                                 </ Column>
                             </Row>
                         </div>

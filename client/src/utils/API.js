@@ -80,6 +80,10 @@ export default {
   saveMember: function (memberData) {
     return axios.post("/api/members", memberData);
   },
+  // Gets the member with the given Auth0 id
+  authMember: function (authData) {
+    return axios.post("/api/members/auth", authData);
+  },
 
   //*************** SESSION *************************/
   // Gets the member with the given email/pass

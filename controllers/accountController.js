@@ -7,16 +7,19 @@ const db = require("../models");
 // module.exports = (app) => {
 module.exports = {
     signIn: function (req, res) {
+        // console.log("accountController: Sign in")
         const { body } = req;
-        const { password } = body;
+        // const { password } = body;
         let { email } = body;
 
-        if (!password) {
-            return res.send({
-                success: false,
-                message: 'Error: password cannot be blank.'
-            })
-        }
+        console.log(email);
+
+        // if (!password) {
+        //     return res.send({
+        //         success: false,
+        //         message: 'Error: password cannot be blank.'
+        //     })
+        // }
 
         if (!email) {
             return res.send({
@@ -25,11 +28,11 @@ module.exports = {
             })
         }
 
-        email = email.toLowerCase();
+        // email = email.toLowerCase();
 
         db.Member.find({
             email: email,
-            password: password,
+            // password: password,
             isDeleted: false
         }, { password: 0 }, (err, members) => {
             if (err) {
@@ -45,15 +48,8 @@ module.exports = {
             }
 
             const member = members[0];
-            //TODO: Restore password validation.
-            // if (!member.validPassword(password)) {
-            //     return res.send({
-            //         success: false,
-            //         message: 'Error: Invalid'
-            //     });
-            // }
 
-            //otherwise launch a session
+            // console.log("Start session");
             const session = new db.Session();
             session.userId = member._id;
             session.save((err, doc) => {

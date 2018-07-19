@@ -8,15 +8,17 @@ const db = require("../models");
 module.exports = {
     signIn: function (req, res) {
         const { body } = req;
-        const { password } = body;
+        // const { password } = body;
         let { email } = body;
 
-        if (!password) {
-            return res.send({
-                success: false,
-                message: 'Error: password cannot be blank.'
-            })
-        }
+        console.log(email);
+
+        // if (!password) {
+        //     return res.send({
+        //         success: false,
+        //         message: 'Error: password cannot be blank.'
+        //     })
+        // }
 
         if (!email) {
             return res.send({
@@ -53,6 +55,7 @@ module.exports = {
             //     });
             // }
 
+            console.log("Start session");
             //otherwise launch a session
             const session = new db.Session();
             session.userId = member._id;

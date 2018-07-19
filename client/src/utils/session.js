@@ -52,9 +52,11 @@ export default {
     signIn: function (signinData) {
 
         return new Promise(function (resolve, reject) {
+            console.log("sesson signIn: " + JSON.stringify(signinData))
             API.signIn({
-                email: signinData.email,
-                password: signinData.password
+                email: signinData.email
+                // ,
+                // password: signinData.password
             })
                 .then(res => {
                     const { data } = res;
@@ -88,6 +90,27 @@ export default {
                         member: ""
                     });
                 } );
+        })
+    }
+    ,
+
+    //*************** Verify User From Storage *************************/
+    signOut: function (signinData) {
+
+        return new Promise(function (resolve, reject) {
+            console.log("sesson signOut: " + JSON.stringify(signinData))
+
+            API.signOut({
+              token: this.state.token
+            })
+              .then(res => {
+                  
+                Storage.removeFromStorage('YardSale');
+                this.setState({
+                  isLoggedIn: false
+                })
+              });
+            this.setState({ email: "", password: "" });
         })
     }
 };

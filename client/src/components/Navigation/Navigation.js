@@ -13,8 +13,8 @@ import {
   DropdownItem
 } from 'reactstrap';
 import "./Navigation.css";
-import API from "../../utils/API";
-import Storage from "../../utils/storage";
+// import API from "../../utils/API";
+// import Storage from "../../utils/storage";
 import Session from "../../utils/session";
 
 export default class Navigation extends React.Component {
@@ -40,6 +40,7 @@ export default class Navigation extends React.Component {
     this.toggle = this.toggle.bind(this);
     //Auth0 authentication
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.setUpSession = this.setUpSession.bind(this);
   }
 
   //Navigation router...
@@ -65,27 +66,16 @@ export default class Navigation extends React.Component {
   login() {
     this.props.auth.login()
     this.setUpSession();
+    //TODO: Figure out how to force page refresh.
 
-      // .then(data => {
-      //   console.log(data.member);
-      //   this.setState({
-      //     signInError: data.message,
-      //     isLoading: false,
-      //     signInEmail: '',
-      //     signInPassword: '',
-      //     isLoggedIn: true,
-      //     token: data.token,
-      //     memberId: data.memberId
-      //   })
-      // })
-    // TODO: Retrieve member data
-    // TODO: Match to username
-    // TODO: Save Session
 
   }
 
   setUpSession() {
 
+    // TODO: Retrieve member data
+    // TODO: Match to username
+    // TODO: Save Session
     if (!this.isAuthenticated()) {
       this.setState({
         token: "",
@@ -96,15 +86,31 @@ export default class Navigation extends React.Component {
         _id: ""
       });
     } else {
-      
-      this.setState({
-        token: "",
-        isLoading: false,
-        isLoggedIn: true,
-        // member: userProfile,
-        username: "",
-        _id: ""
-      });
+
+      Session.signIn({
+        email: this.state.email
+      })
+        .then(data => {
+          // console.log(data.member);
+          this.setState({
+            signInError: data.message,
+            isLoading: false,
+            signInEmail: '',
+            signInPassword: '',
+            isLoggedIn: true,
+            token: data.token,
+            memberId: data.memberId
+          })
+        })
+
+      // this.setState({
+      //   token: "",
+      //   isLoading: false,
+      //   isLoggedIn: true,
+      //   // member: userProfile,
+      //   username: "",
+      //   _id: ""
+      // });
     }
 
   }
@@ -112,7 +118,6 @@ export default class Navigation extends React.Component {
   logout() {
     this.props.auth.logout();
     this.setUpSession()
-    // TODO: clear session
   }
 
   isAuthenticated() {
@@ -211,15 +216,19 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutFormSubmit = event => {
     event.preventDefault();
-    API.signOut({
+    this.props.auth.logout();
+
+    Session.signOut({
       token: this.state.token
+    }) 
+    .then(data => {
+      // console.log(data.member);
+      this.setState({
+        isLoggedIn: false,
+        token: '',
+        memberId: ''
+      })
     })
-      .then(res => {
-        Storage.removeFromStorage('YardSale');
-        this.setState({
-          isLoggedIn: false
-        })
-      });
     this.setState({ email: "", password: "" });
   }
 

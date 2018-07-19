@@ -165,8 +165,9 @@ export default class Navigation extends React.Component {
                   LISTINGS
                 </DropdownToggle>
                 <DropdownMenu right>
+                {/* TODO: Product Listing link doesn't work */}
                   <DropdownItem>
-                    <Link to="/Products" className="navDropdownStyle">ALL LISTINGS</Link>
+                    <Link to="/products" className="navDropdownStyle">ALL LISTINGS</Link>
                   </DropdownItem>
                   <DropdownItem>
                     FURNITURE

@@ -14,6 +14,8 @@ class Home extends Component {
                 <Container fluid>
                     <Frame frameStyle="homePage">
                         <Masthead>
+                        {/* TODO: Product Listing link doesn't work */}
+
                             <ButtonViewListings >
                                 <Link to="/products"
                                     className={

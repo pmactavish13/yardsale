@@ -1,6 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 .DS_Store
-
+.env
+dist
+.cache
 # dependencies
 /node_modules
 

@@ -21,8 +21,7 @@ class NewProduct extends Component {
             image1: "",
             image2: "",
             image3: "",
-            member:{}
-            // username: ""
+            member: {}
         };
     };
 
@@ -30,7 +29,6 @@ class NewProduct extends Component {
 
         Session.verify()
             .then(data => {
-                console.log(data.member);
                 if (data && data.isVerified) {
                     this.setState({
                         token: "",
@@ -52,7 +50,7 @@ class NewProduct extends Component {
 
     loadNewProducts = () => {
         this.setState({ item: "", description: "", selectOption: "", location: "", price: "", image1: "", image2: "", image3: "", username: "" });
-        alert ("Success!\nYour item is now listed\nTo make changes, go to Member Profile.")
+        alert("Success!\nYour item is now listed\nTo make changes, go to Member Profile.")
     }
 
     // handle any changes to the input fields
@@ -68,13 +66,12 @@ class NewProduct extends Component {
     };
 
     handleFileImageInputChange = event => {
-        console.log(event.target.files[0])
+        // console.log(event.target.files[0])
         let image1DataURL
         var file = event.target.files[0];
         var reader = new FileReader();
         reader.onloadend = () => {
             image1DataURL = reader.result
-            console.log(image1DataURL)
             this.setState({ image1: image1DataURL })
         }
         reader.readAsDataURL(file);
@@ -89,10 +86,9 @@ class NewProduct extends Component {
             alert(`Enter a description of your item!`);
         } else if (!this.state.price) {
             alert(`Enter a price!`);
-        }  else if (!this.state.location) {
-                alert(`Enter a location!`);
+        } else if (!this.state.location) {
+            alert(`Enter a location!`);
         } else {
-            console.log(this.state)
             API.saveProduct({
                 member: this.state.member._id,
                 image1: this.state.image1,
@@ -161,15 +157,15 @@ class NewProduct extends Component {
                                 </div>
                             </ Column>
                             <Column size="md-4">
-                                    <label>Location</label>
-                                    <input
-                                        type="text"
-                                        name="location"
-                                        className="form-control form-control-sm"
-                                        placeholder="City, State"
-                                        value={this.state.location}
-                                        onChange={this.handleListItemInputChange} />
-                                </ Column>
+                                <label>Location</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    className="form-control form-control-sm"
+                                    placeholder="City, State"
+                                    value={this.state.location}
+                                    onChange={this.handleListItemInputChange} />
+                            </ Column>
                             <Column size="md-4">
                                 <label>Send Notes to Cell Number</label>
                                 <div className="checkbox-inline">

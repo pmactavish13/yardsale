@@ -1,28 +1,50 @@
+require('dotenv').config();
+const cors = require('cors');
+const twilio = require('twilio');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const express = require('express');
-// const fs = require('fs');
-// const historyApiFallback = require('connect-history-api-fallback');
 const mongoose = require('mongoose');
-// const path = require('path');
-// const webpack = require('webpack');
-// const webpackDevMiddleware = require('webpack-dev-middleware');
-// const webpackHotMiddleware = require('webpack-hot-middleware');
-
-// const config = require('../config/config');
-// const webpackConfig = require('../webpack.config');
 
 // const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 3001;
 
 // Define middleware here
 const app = express();
-app.use(bodyParser.urlencoded({ limit:'50mb', extended: false }));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+app.use(bodyParser.json({ limit: '50mb' }));
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
+
+// const SID = process.env.TWILIO_SID;
+// const TOKEN = process.env.TWILIO_TOKEN;
+// const SENDER = process.env.SENDER
+
+// if (!SID || !TOKEN) {
+//   return res.json({ message: 'add TWILIO_SID and TWILIO_TOKEN to .env file.' })
+// }
+
+// const client = new twilio(SID, TOKEN)
+
+// app.use(cors()); //Blocks browser from restricting any data
+
+//Twilio 
+// app.get('/send-text', (req, res) => {
+//   //Welcome Message
+//   res.send('Hello to the Twilio Server')
+
+//   //_GET Variables
+//   const { recipient, textmessage } = req.query;
+
+//   //Send Text
+//   client.messages.create({
+//     body: textmessage,
+//     to: recipient,  // Text this number
+//     from: SENDER // From a valid Twilio number
+//   }).then((message) => console.log(message.body));
+// })
 
 // Configuration
 // ================================================================================================

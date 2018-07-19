@@ -190,11 +190,11 @@ export default class Navigation extends React.Component {
                   <Link to="/safetyTips" className="navBarLinkStyle">SAFETY TIPS</Link>}
               </NavItem>
               <NavItem>
-                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
+                {window.location.pathname === '/newProduct' || this.isAuthenticated() === false ? null :
                   <Link to='/newProduct' className="navBarLinkStyle">POST NEW LISTING</Link>}
               </NavItem>
               <NavItem>
-                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === false ? null :
+                {window.location.pathname === '/memberProfile' || this.isAuthenticated() === false ? null :
                   <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link>}
               </NavItem>
 

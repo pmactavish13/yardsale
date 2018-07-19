@@ -9,8 +9,10 @@ router.route("/")
 // Matches with "/api/notes/:id"
 router
   .route("/:id")
-  .get(notesController.find)
+  //.get(notesController.find)
   .put(notesController.update)
   .delete(notesController.remove);
+
+router.route("/:memberid/:productid").get(notesController.find);
 
 module.exports = router;

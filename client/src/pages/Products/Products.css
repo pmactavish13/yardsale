@@ -1,5 +1,6 @@
 .productPage-fluid {
-  margin: 30px 40px 20px 40px
+  margin: 30px 20px 20px;
+  margin-right: -30px;
 }
 
 .img-container {

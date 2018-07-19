@@ -20,8 +20,6 @@ import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
 import history from './history';
 
-import Profile from './Profile/Profile';
-
 const auth = new Auth();
 
 const handleAuthentication = ({ location }) => {
@@ -55,13 +53,6 @@ class App extends Component {
           }} />
           <Wrapper>
             <Switch>
-              <Route path="/profile" render={(props) => (
-                !auth.isAuthenticated() ? (
-                  <Redirect to="/home" />
-                ) : (
-                    <Profile auth={auth} {...props} />
-                  )
-              )} />
               <Route exact path="/" component={Home} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/about" component={About} />

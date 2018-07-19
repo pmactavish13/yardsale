@@ -48,40 +48,20 @@ export default class Navigation extends React.Component {
     this.props.history.replace(`/${route}`)
   }
 
-  // getAuthProfile() {
-  //   this.setState({
-  //     isLoggedIn: true,
-  //   })
-  // this.setState({ profile: {} });
-  // const { userProfile, getProfile } = this.props.auth;
-  // if (!userProfile) {
-  //   getProfile((err, profile) => {
-  //     this.setState({ profile });
-  //   });
-  // } else {
-  //   this.setState({ profile: userProfile });
-  // }
-  // }
-
   login() {
     this.props.auth.login()
     this.setUpSession();
     //TODO: Figure out how to force page refresh.
 
-
   }
 
   setUpSession() {
 
-    // TODO: Retrieve member data
-    // TODO: Match to username
-    // TODO: Save Session
     if (!this.isAuthenticated()) {
       this.setState({
         token: "",
         isLoading: false,
         isLoggedIn: false,
-        // member: userProfile,
         username: "",
         _id: ""
       });
@@ -104,21 +84,13 @@ export default class Navigation extends React.Component {
           })
         })
 
-      // this.setState({
-      //   token: "",
-      //   isLoading: false,
-      //   isLoggedIn: true,
-      //   // member: userProfile,
-      //   username: "",
-      //   _id: ""
-      // });
     }
 
   }
 
   logout() {
     this.props.auth.logout();
-    this.setUpSession()
+    this.setUpSession();
   }
 
   isAuthenticated() {
@@ -134,46 +106,6 @@ export default class Navigation extends React.Component {
 
   componentDidMount() {
     this.setUpSession();
-
-    // if (!this.isAuthenticated()) {
-    //   // getProfile((err, profile) => {
-    //   //   this.setState({ profile });
-    //   // });
-    // } else {
-    //   // this.setState({ profile: userProfile });
-    //   this.setState({
-    //     token: "",
-    //     isLoading: false,
-    //     isLoggedIn: true,
-    //     // member: userProfile,
-    //     username: "",
-    //     _id: ""
-    //   });
-    // }
-
-    // Session.verify()
-    //   .then(data => {
-    //     console.log(data.member);
-    //     if (data && data.isVerified) {
-    //       this.setState({
-    //         token: "",
-    //         isLoading: false,
-    //         isLoggedIn: true,
-    //         member: data.member,
-    //         username: "",
-    //         _id: ""
-    //       });
-    //     }
-    //   })
-    //   .catch(err => {
-    //     // console.error(err);
-    //     this.setState({
-    //       signInError: err,
-    //       isLoading: false,
-    //       isLoggedIn: false,
-    //       member: {}
-    //     });
-    //   })
   }
 
   // handle any changes to the input fields
@@ -283,11 +215,6 @@ export default class Navigation extends React.Component {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-
-              <NavItem>
-                {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
-                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>}
-              </NavItem>
 
               <NavItem>
               {  this.isAuthenticated()  ?

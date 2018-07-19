@@ -7,7 +7,7 @@ const db = require("../models");
 // module.exports = (app) => {
 module.exports = {
     signIn: function (req, res) {
-        console.log("accountController: Sign in")
+        // console.log("accountController: Sign in")
         const { body } = req;
         // const { password } = body;
         let { email } = body;

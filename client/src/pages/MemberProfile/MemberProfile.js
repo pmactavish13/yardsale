@@ -43,7 +43,7 @@ class MemberProfile extends Component {
                         authId: data.member.authId,
                         email: data.member.email,
                         username: data.member.username,
-                        password: data.member.password,
+                        // password: data.member.password,
                         firstName: data.member.firstName,
                         lastName: data.member.lastName,
                         phoneNum: data.member.phoneNum,
@@ -128,8 +128,8 @@ class MemberProfile extends Component {
             alert("Enter a valid email address!");
         } else if (!this.state.username) {
             alert(`Enter your username!`);
-        } else if (!this.state.password) {
-            alert(`Enter your password!`);
+        // } else if (!this.state.password) {
+        //     alert(`Enter your password!`);
         } else if (!this.state.firstName) {
             alert(`Enter your first name!`);
         } else if (!this.state.lastName) {
@@ -140,7 +140,7 @@ class MemberProfile extends Component {
                 member: this.state._id,
                 email: this.state.email,
                 username: this.state.username,
-                password: this.state.password,
+                // password: this.state.password,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 phoneNum: phoneFormatted
@@ -219,14 +219,14 @@ class MemberProfile extends Component {
                             </Row>
                             <Row>
                                 <Column size="md-12">
-                                    <label>Password</label>
+                                    {/* <label>Password</label>
                                     <input
                                         type="password"
                                         name="password"
                                         className="form-control form-control-sm"
                                         placeholder="Enter your Password to Edit or Delete"
                                         ref={this.state.password}
-                                        onChange={this.handleMemberInputChange} />
+                                        onChange={this.handleMemberInputChange} /> */}
                                 </ Column>
                             </Row>
                         </div>

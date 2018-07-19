@@ -42,19 +42,8 @@ class ShowProduct extends Component {
                     //#########################################################################################//
                     // get note by member and product id (this.props.match.params.id)  
                     // API.getNote(this.props.match.params.id)
-                    var myMember = {
-                        product: this.props.match.params.id,
-                        member:this.state.member._id}
-                    var myJSON = JSON.stringify(myMember)
-                    console.log(myJSON)
-                    API.getNote(myJSON)
-                        .then(res => {
-                            // console.log(res.data[0])
-                            this.setState({
-                                note: res.data
-                            })
-                        })
-                        .catch(err => console.log(err))
+                                   
+                    this.fetchUserNotes();
                 }
             })
             .catch(err => {
@@ -93,8 +82,26 @@ class ShowProduct extends Component {
     };
 
     loadNewNote = () => {
-        this.setState({ newMessage: "", newPubPrivOption: "" });
+        this.setState({ newMessage: "", newPubPrivOption: "" }, this.fetchUserNotes);
+        
     }
+
+    fetchUserNotes = () => {
+        if (this.state.member._id && this.props.match.params.id) {
+            debugger;
+
+            API.getNote(this.state.member._id, this.props.match.params.id)
+                .then(res => {
+                    console.log('response', res.data);
+                    this.setState({
+                        note: res.data
+                    })
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+
 
     // handle any changes to the input fields
     handleNoteInputChange = event => {

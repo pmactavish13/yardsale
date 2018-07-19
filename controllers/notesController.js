@@ -3,10 +3,11 @@ const db = require("../models");
 // Defining methods for the notesController
 module.exports = {
   find: function (req, res) {
-    console.log("body " + req.params.ids);
+    console.log("find body " + req.params.memberid);
+    console.log("find body " + req.params.productid);
     db.Note
-    .find (req.params.ids)
-      // .find({ product_id: req.params.id, member_id: req.body.member._id })
+    //.find (req.params.ids)
+      .find({ product_id: req.params.productid, member_id: req.params.memberid })
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

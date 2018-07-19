@@ -10,7 +10,7 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  // DropdownItem
 } from 'reactstrap';
 import "./Navigation.css";
 import API from "../../utils/API";
@@ -57,11 +57,11 @@ export default class Navigation extends React.Component {
             token: "",
             isLoading: false,
             isLoggedIn: true,
-            member: data.member, 
+            member: data.member,
             username: "",
             _id: ""
           });
-        } 
+        }
       })
       .catch(err => {
         // console.error(err);
@@ -128,7 +128,7 @@ export default class Navigation extends React.Component {
   }
 
   render() {
-    
+
     return (
       <div>
         <Navbar dark expand="md">
@@ -160,7 +160,11 @@ export default class Navigation extends React.Component {
                   <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link>}
               </NavItem>
 
-              <UncontrolledDropdown nav inNavbar>
+              <NavItem>
+                {window.location.pathname === '/Products' || this.state.isLoggedIn === false ? null :
+                  <Link to="/Products" className="navBarLinkStyle">ALL LISTINGS</Link>}
+              </NavItem>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   LISTINGS
                 </DropdownToggle>
@@ -176,7 +180,7 @@ export default class Navigation extends React.Component {
                     OTHER
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
 
               <NavItem>
                 {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :

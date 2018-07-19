@@ -29,9 +29,20 @@ export default {
   //*************** NOTE *****************/
 
   // Gets the notes with the given id
-  getNote: function (ids) {
-    console.log("API.js" + ids)
-    return axios.get("/api/notes/" + ids);
+  getNote: function (memberId, productId) {
+    //console.log("API.js" + ids)
+    debugger;
+    return axios.get("/api/notes/" + memberId + "/" + productId);
+
+
+    //return axios.get(`/api/notes?memberid=${memberId}&productId=${productId}`);
+    // return axios.get('api/notes/', {
+    //   params: {
+    //     memberId: memberId,
+    //     productId: productId
+    //   }
+    // });
+    //return axios.get('api/notes/' + memberId);
   },
   // Updates the notes with the given id
   updateNote: function (id, body) {

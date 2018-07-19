@@ -36,12 +36,4 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
 
-  // // TODO:  Remove this function, since Auth0 supercedes
-  // validPassword: function (req, res) {
-  //   db.Member
-  //     .findById({ _id: req.params.id }, { password: 0 })
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-  // }
-
 };

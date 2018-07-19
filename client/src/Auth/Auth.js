@@ -44,7 +44,6 @@ export default class Auth extends React.Component {
   }
 
   login() {
-    console.log("Auth.login");
     this.auth0.authorize();
   }
 
@@ -64,7 +63,6 @@ export default class Auth extends React.Component {
   }
 
   setSession(authResult) {
-    console.log("Auth.setSession");
     // Set the time that the access token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
@@ -105,7 +103,8 @@ export default class Auth extends React.Component {
             } else {
 
               console.log("Existing Member");
-              console.log(this.userProfile);
+              //TODO: At this point this.userProfile is the Auth0 record
+              // console.log(this.userProfile);
 
               // this.loadMembers()
               //TODO:  Figure out how to update "last visit"
@@ -172,11 +171,11 @@ export default class Auth extends React.Component {
 
 
   verifySess = () => {
-    console.log("Auth.verifySess");
-    console.log(this.userProfile);
+    console.log("Auth:175 - verifying session");
     Session.verify()
       .then(data => {
-        console.log(data.member);
+        console.log("Auth:179 - session verified");
+        // TODO: Return data object!!!
         if (data && data.isVerified) {
           this.setState({
             token: "",
@@ -187,7 +186,7 @@ export default class Auth extends React.Component {
             _id: ""
           });
         }
-        this.setState({ email: "", username: "", password: "", firstName: "", lastName: "", phoneNum: "" })
+
       })
       .catch(err => {
         // console.error(err);
@@ -201,13 +200,13 @@ export default class Auth extends React.Component {
   }
 
   loadMembers = () => {
-    console.log("Auth.loadMembers");
-    console.log(this.userProfile);
+    console.log("Auth:203 - loading member");
     Session.signIn({
       email: this.userProfile.email
     })
       .then(data => {
-        console.log(data.member);
+        
+        console.log("Auth:209 - member loaded");
         this.setState({
           signInError: data.message,
           isLoading: false,

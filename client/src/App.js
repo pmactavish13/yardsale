@@ -13,7 +13,7 @@ import EditListing from "./pages/EditListing";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends Component {
   constructor(props) {

@@ -29,9 +29,9 @@ export default {
   //*************** NOTE *****************/
 
   // Gets the notes with the given id
-  getNote: function (id) {
-    console.log("API.js" + id)
-    return axios.get("/api/notes/" + id);
+  getNote: function (ids) {
+    console.log("API.js" + ids)
+    return axios.get("/api/notes/" + ids);
   },
   // Updates the notes with the given id
   updateNote: function (id, body) {

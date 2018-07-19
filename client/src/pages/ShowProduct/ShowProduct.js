@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'whatwg-fetch';
 import API from "../../utils/API";
 import ProductCard from "../../components/ProductCard";
 import { Row, Column } from "../../components/Grid";
@@ -10,20 +11,21 @@ import Session from "../../utils/session";
 class ShowProduct extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
+            // text: {
+            //     recipient: "",
+            //     textmessage: ""
+            // },
             product: {},
             note: {},
             message: "",
-            pubPrivOption: false,
-            member:{}
+            member: {},
         };
         this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleNoteFormSubmit = this.handleNoteFormSubmit.bind(this);
     }
 
     componentWillMount() {
-
         Session.verify()
             .then(data => {
                 console.log(data.member);
@@ -33,10 +35,26 @@ class ShowProduct extends Component {
                         isLoading: false,
                         isLoggedIn: true,
                         member: data.member,
-                        username: "",
-                        _id: "",
-                        location: ""
+                        // username: data.member.username,
+                        // _id: data.member._id,
+                        // location: data.member.location
                     });
+                    //#########################################################################################//
+                    // get note by member and product id (this.props.match.params.id)  
+                    // API.getNote(this.props.match.params.id)
+                    var myMember = {
+                        product: this.props.match.params.id,
+                        member:this.state.member._id}
+                    var myJSON = JSON.stringify(myMember)
+                    console.log(myJSON)
+                    API.getNote(myJSON)
+                        .then(res => {
+                            // console.log(res.data[0])
+                            this.setState({
+                                note: res.data
+                            })
+                        })
+                        .catch(err => console.log(err))
                 }
             })
             .catch(err => {
@@ -55,18 +73,23 @@ class ShowProduct extends Component {
             // .then(res => console.log(res.data)) 
             .then(res => this.setState({ product: res.data }))
             .catch(err => console.log(err))
+    };
 
-        API.getNote(this.props.match.params.id)
-            .then(res =>
-                // console.log(res.data[0])
-                this.setState({
-                    note: res.data
-                    // ,
-                    // message: "",
-                    // pubPrivOption: ""
-                })
-            )
-            .catch(err => console.log(err))
+    // sendText = _ => {
+    //     const { text } = this.state;
+    //     //pass text message GET variables via query string
+    //     fetch(`http://127.0.0.1:4000/send-text?recipient=${text.recipient}&textmessage=${text.textmessage}`)
+    //         .catch(err => console.error(err))
+    // }
+
+    handleMessageChange = event => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        // Set the state for the appropriate input field
+        this.setState({
+            [name]: value,
+        });
     };
 
     loadNewNote = () => {
@@ -91,12 +114,6 @@ class ShowProduct extends Component {
         if (!this.state.newMessage) {
             alert(`Enter a Note!`);
         } else {
-            // console.log(`Show Prod Form submit 61` + this.state +
-            // `member_id:` + this.state.member._id +
-            // `product_id:` + this.state.product._id +
-            // `message:` + this.state.newMessage +
-            // `private:` + this.state.newPubPrivOption)
-            // console.log(this.state.member._id)
             API.saveNote({
                 member_id: this.state.member._id,
                 product_id: this.state.product._id,
@@ -116,11 +133,9 @@ class ShowProduct extends Component {
                         <Row>
                             <Column size="md-6" key={this.state.product._id}>
                                 <ProductCard key={this.state.product._id}>
-                                    {/* {this.state.products.map(product => ( */}
                                     <div className="img-container">
                                         <img className="productImage" alt={this.state.product.item} src={this.state.product.image1} />
                                     </div>
-                                    {/* ))} */}
                                     <div className="content">
                                         <ul>
                                             <li>
@@ -140,7 +155,6 @@ class ShowProduct extends Component {
                                             </li>
                                         </ul>
                                     </div>
-
                                 </ProductCard>
                             </Column>
 
@@ -153,43 +167,18 @@ class ShowProduct extends Component {
 
                                         {this.state.note.length ? (
                                             <div>
-                                                <p>Public Notes</p>
                                                 <ul>
                                                     {this.state.note.map(note => (
-
-                                                        // {this.state.note.pubPrivOption === false ?
                                                         <li className="noteHistory" key={note._id}>
                                                             {note.message}
-                                                        </li> 
-                                                        // : null}
+                                                        </li>
                                                     ))}
-                
+
                                                 </ul>
                                             </div>
                                         ) : (
-                                                <h5 className="noNotes">There are no Public Notes for this Item.</h5>
+                                                <h5 className="noNotes">You have no Notes for this Item.</h5>
                                             )}
-                                      
-                                      {this.state.note.length ? (
-                                            <div>
-                                                <p>Private Notes</p>
-                                                <ul>
-                                                    {this.state.note.map(note => (
-
-                                                        // {note.pubPrivOption === true && this.state.note.member_id === this.state.member_id ?
-                                                        
-                                                            <li className="noteHistory" key={note._id}>
-                                                            {note.message}
-                                                        </li> 
-                                                        // : null}
-                                                    ))}
-                
-                                                </ul>
-                                            </div>
-                                        ) : (
-                                                <h5 className="noNotes">There are no Private Notes for this Item.</h5>
-                                            )}
-
 
                                         <form className="noteForm">
                                             <Row>
@@ -204,26 +193,32 @@ class ShowProduct extends Component {
                                                             rows="4"
                                                             value={this.state.newMessage}
                                                             onChange={this.handleNoteInputChange} />
-                              
                                                     </div>
                                                 </ Column>
-                                            </Row>
-                                            <Row>
-                                                <Column size="md-12">
-                                                    <div className="checkbox-inline privateCheck">
-                                                        <label><input
-                                                            onChange={this.handleNoteInputChange}
-                                                            type="checkbox"
-                                                            name="newPubPrivOption"  
-                                                            checked={this.state.newPubPrivOption}
-                                                        />  Private</label>
-                                                    </div>
-                                                </Column>
                                             </Row>
                                             <button type="submit" className="newNote" onClick={this.handleNoteFormSubmit}>
                                                 New Note
                                             </button>
                                         </form>
+                                    </div>
+                                    <div>
+                                        {/* <div >
+                                            <h2> Send Text Message </h2>
+
+                                            <label> Your Phone Number </label>
+                                            <input
+                                                value={this.state.text.recipient}
+                                                onChange={this.handleMessageChange} />
+
+                                            <label> Message </label>
+                                            <textarea
+                                                rows="3"
+                                                value={this.state.text.textmessage}
+                                                onChange={this.handleMessageChange} />
+
+                                            <button onClick={this.sendText}> Send Text </button>
+                                        </div> */}
+
                                     </div>
                                 </ProductCard>
                             </Column>

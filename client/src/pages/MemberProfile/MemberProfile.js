@@ -21,7 +21,7 @@ class MemberProfile extends Component {
             phoneNum: "",
             _id: "",
             product: [],
-            products:[],
+            products: [],
             member: {},
             // myProducts: []
         };
@@ -53,11 +53,11 @@ class MemberProfile extends Component {
                     data.member.product.forEach((productId) => {
                         console.log(productId);
                         API.getProduct(productId)
-                           .then(res => {
-                               myProducts.push(res.data);
-                               console.log(myProducts);
-                               this.setState({products: myProducts})
-                           })
+                            .then(res => {
+                                myProducts.push(res.data);
+                                console.log(myProducts);
+                                this.setState({ products: myProducts })
+                            })
                             .catch(err => console.log(err))
                     });
                 }
@@ -103,23 +103,23 @@ class MemberProfile extends Component {
                 })
             });
 
-            this.state.products.forEach((product) => {
-                console.log(product._id);
-                API.deleteProduct(product._id)
-                   .then(res => 
-                       console.log(res)) 
-                
-                   .catch(err => console.log(err))
-            })
+        this.state.products.forEach((product) => {
+            console.log(product._id);
+            API.deleteProduct(product._id)
+                .then(res =>
+                    console.log(res))
 
-            this.state.products.forEach((product) => {
-                console.log(product._id);
-                API.deleteNote(product._id)
-                   .then(res => 
-                       console.log(res)) 
-                
-                   .catch(err => console.log(err))
-            })
+                .catch(err => console.log(err))
+        })
+
+        this.state.products.forEach((product) => {
+            console.log(product._id);
+            API.deleteNote(product._id)
+                .then(res =>
+                    console.log(res))
+
+                .catch(err => console.log(err))
+        })
 
         API.deleteMember(this.state.member._id)
             .then(res => this.deleteMemberLogout())
@@ -257,9 +257,9 @@ class MemberProfile extends Component {
                             <h5 className="yourListing">Your Listings</h5>
                             <p>Click on Item to Update or Delete</p>
                             <ul>
-                             {this.state.products.map(product => ( 
-                                 <Link to={"/memberProfile/" + product._id} className="productEdit" key={product._id}>{product.item}</Link>
-                            ))}
+                                {this.state.products.map(product => (
+                                    <Link to={"/memberProfile/" + product._id} className="productEdit" key={product._id}>{product.item}</Link>
+                                ))}
                             </ul>
                         </div>}
 

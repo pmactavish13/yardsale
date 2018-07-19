@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {  Redirect, Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import SafetyTips from "./pages/SafetyTips";
@@ -13,7 +14,23 @@ import EditListing from "./pages/EditListing";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// Auth0 Adds ...
+import Callback from './Callback/Callback';
+import Auth from './Auth/Auth';
+import history from './history';
+
+const auth = new Auth();
+
+const handleAuthentication = ({ location }) => {
+  if (/access_token|id_token|error/.test(location.hash)) {
+    auth.handleAuthentication();
+  }
+}
+// ... Auth0 Adds
 
 class App extends Component {
   constructor(props) {
@@ -28,9 +45,15 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      // <Router>
+      <Router history={history}>
         <div>
-          <Navigation/>
+          {/* <Navigation auth={auth} {...this.props} /> */}
+          <Route path="/" render={(props) => <Navigation auth={auth} {...props} />} />
+          <Route path="/callback" render={(newProps) => {
+            handleAuthentication(newProps);
+            return <Callback {...this.props} />
+          }} />
           <Wrapper>
             <Switch>
               <Route exact path="/" component={Home} />

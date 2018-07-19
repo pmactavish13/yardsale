@@ -10,9 +10,12 @@ class About extends Component {
             <div>
                 <Container fluid>
                     <Frame frameStyle="about">
-                        <Jumbotron 
-                        
-                        />
+                    <Jumbotron>
+                       <h3>Yardsale is a Philadelphia based resale platform.</h3>
+                       <p>Sellers list items which are then displayed in listings.</p>
+                       <p>Prospective buyers can view the listings and contact the seller safely through notes.</p>
+                       <p>Concentrated locally, sellers can reach the geograhical area where their buyers are located!</p>
+                       </Jumbotron>
                     </Frame>
                 </Container>
             </div>

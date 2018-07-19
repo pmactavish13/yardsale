@@ -12,7 +12,11 @@ class SafetyTips extends Component {
             <Jumbotron>
               <h2>Safety Tips</h2>
               <ul>
-                <li></li>
+                <li>If your item is small, meet arrange to meet at a well lit public place.  For example, the food court at the mall.</li>
+                <li> If you are buying an item, don't bring cash.</li>
+                <li>Go, inspect the item, if the situation feels comfortable and you wish to purchase the item go to a nearby ATM.</li>
+                <li>Be careful with personal information.</li>
+                <li>Communicate through Yardsale</li>
               </ul>
             </Jumbotron>
           </Column>

@@ -13,8 +13,8 @@ import {
   DropdownItem
 } from 'reactstrap';
 import "./Navigation.css";
-import API from "../../utils/API";
-import Storage from "../../utils/storage";
+// import API from "../../utils/API";
+// import Storage from "../../utils/storage";
 import Session from "../../utils/session";
 
 export default class Navigation extends React.Component {
@@ -38,6 +38,63 @@ export default class Navigation extends React.Component {
 
     // handles navbar collapse - expand
     this.toggle = this.toggle.bind(this);
+    //Auth0 authentication
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.setUpSession = this.setUpSession.bind(this);
+  }
+
+  //Navigation router...
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login() {
+    this.props.auth.login()
+    this.setUpSession();
+    //TODO: Figure out how to force page refresh.
+
+  }
+
+  setUpSession() {
+
+    if (!this.isAuthenticated()) {
+      this.setState({
+        token: "",
+        isLoading: false,
+        isLoggedIn: false,
+        username: "",
+        _id: ""
+      });
+    } else {
+
+      Session.signIn({
+        email: this.state.email
+      })
+        .then(data => {
+          console.log("Navigation:94 setup")
+          console.log(data.member);
+          this.setState({
+            signInError: data.message,
+            isLoading: false,
+            signInEmail: '',
+            signInPassword: '',
+            isLoggedIn: true,
+            token: data.token,
+            memberId: data.memberId
+          })
+        })
+
+    }
+
+  }
+
+  logout() {
+    this.props.auth.logout();
+    this.setUpSession();
+  }
+
+  isAuthenticated() {
+    return this.props.auth.isAuthenticated();
   }
 
   // Navbar Menu Open/Close
@@ -48,30 +105,7 @@ export default class Navigation extends React.Component {
   }
 
   componentDidMount() {
-
-    Session.verify()
-      .then(data => {
-        console.log(data.member);
-        if (data && data.isVerified) {
-          this.setState({
-            token: "",
-            isLoading: false,
-            isLoggedIn: true,
-            member: data.member, 
-            username: "",
-            _id: ""
-          });
-        } 
-      })
-      .catch(err => {
-        // console.error(err);
-        this.setState({
-          signInError: err,
-          isLoading: false,
-          isLoggedIn: false,
-          member: {}
-        });
-      })
+    this.setUpSession();
   }
 
   // handle any changes to the input fields
@@ -115,20 +149,24 @@ export default class Navigation extends React.Component {
   //  Sign Out
   handleSignOutFormSubmit = event => {
     event.preventDefault();
-    API.signOut({
+    this.props.auth.logout();
+
+    Session.signOut({
       token: this.state.token
     })
-      .then(res => {
-        Storage.removeFromStorage('YardSale');
+      .then(data => {
+        // console.log(data.member);
         this.setState({
-          isLoggedIn: false
+          isLoggedIn: false,
+          token: '',
+          memberId: ''
         })
-      });
+      })
     this.setState({ email: "", password: "" });
   }
 
   render() {
-    
+
     return (
       <div>
         <Navbar dark expand="md">
@@ -152,11 +190,11 @@ export default class Navigation extends React.Component {
                   <Link to="/safetyTips" className="navBarLinkStyle">SAFETY TIPS</Link>}
               </NavItem>
               <NavItem>
-                {window.location.pathname === '/newProduct' || this.state.isLoggedIn === false ? null :
+                {window.location.pathname === '/newProduct' || this.isAuthenticated() === false ? null :
                   <Link to='/newProduct' className="navBarLinkStyle">POST NEW LISTING</Link>}
               </NavItem>
               <NavItem>
-                {window.location.pathname === '/memberProfile' || this.state.isLoggedIn === false ? null :
+                {window.location.pathname === '/memberProfile' || this.isAuthenticated() === false ? null :
                   <Link to="/memberProfile" className="navBarLinkStyle">MEMBER PROFILE</Link>}
               </NavItem>
 
@@ -179,46 +217,15 @@ export default class Navigation extends React.Component {
               </UncontrolledDropdown>
 
               <NavItem>
-                {window.location.pathname === '/memberSignUp' || this.state.isLoggedIn === true ? null :
-                  <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>}
+              {  this.isAuthenticated()  ?
+              <button className="navBarButton" id="LogoutBtn" onClick={this.logout.bind(this)}>SIGN OUT</button>
+                :                    <button className="navBarButton" id="LoginBtn" onClick={this.login.bind(this)}>SIGN IN</button>
+              }
               </NavItem>
 
-              {this.state.isLoggedIn === true ?
-
-                <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
-
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>SIGN IN</DropdownToggle>
-                  <DropdownMenu right id="logIn">
-                    <form className="p-4">
-                      <div className="form-group">
-                        <label>Email address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          name="email"
-                          placeholder="email@navigation.com"
-                          value={this.state.email}
-                          onChange={this.handleInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Password</label>
-                        <input type="password"
-                          className="form-control"
-                          name="password"
-                          placeholder="Password"
-                          value={this.state.password}
-                          onChange={this.handleInputChange}
-                        />
-                      </div>
-                      <div className="signInHolder">
-                        <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
-                      </div>
-                    </form>
-                  </DropdownMenu>
-                </UncontrolledDropdown>}
+              {/* <div className="container"> */}
               {this.props.children}
+              {/* </div> */}
             </Nav>
           </Collapse>
         </Navbar>

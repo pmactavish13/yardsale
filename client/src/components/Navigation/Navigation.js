@@ -91,7 +91,8 @@ export default class Navigation extends React.Component {
         email: this.state.email
       })
         .then(data => {
-          // console.log(data.member);
+          console.log("Navigation:94 setup")
+          console.log(data.member);
           this.setState({
             signInError: data.message,
             isLoading: false,
@@ -220,15 +221,15 @@ export default class Navigation extends React.Component {
 
     Session.signOut({
       token: this.state.token
-    }) 
-    .then(data => {
-      // console.log(data.member);
-      this.setState({
-        isLoggedIn: false,
-        token: '',
-        memberId: ''
-      })
     })
+      .then(data => {
+        // console.log(data.member);
+        this.setState({
+          isLoggedIn: false,
+          token: '',
+          memberId: ''
+        })
+      })
     this.setState({ email: "", password: "" });
   }
 
@@ -288,65 +289,11 @@ export default class Navigation extends React.Component {
                   <Link to="/memberSignUp" className="navBarLinkStyle">SIGN UP</Link>}
               </NavItem>
 
-              {this.state.isLoggedIn === true ?
-
-                <button type="submit" className="btn logOut" id="logOutBtn" onClick={this.handleSignOutFormSubmit}>SIGN OUT</button> :
-
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>SIGN IN</DropdownToggle>
-                  <DropdownMenu right id="logIn">
-                    <form className="p-4">
-                      <div className="form-group">
-                        <label>Email address</label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          name="email"
-                          placeholder="email@navigation.com"
-                          value={this.state.email}
-                          onChange={this.handleInputChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Password</label>
-                        <input type="password"
-                          className="form-control"
-                          name="password"
-                          placeholder="Password"
-                          value={this.state.password}
-                          onChange={this.handleInputChange}
-                        />
-                      </div>
-                      <div className="signInHolder">
-                        <button type="submit" className="btn signIn" id="logInBtn" onClick={this.handleSignInFormSubmit}>SIGN IN</button>
-                      </div>
-                    </form>
-                  </DropdownMenu>
-                </UncontrolledDropdown>}
-
               <NavItem>
-                {
-                  this.isAuthenticated() && (
-
-                    <button className="navBarButton" id="ProfileBtn" onClick={this.goTo.bind(this, 'profile')}>Auth0 Profile</button>
-                  )
-                }
-              </NavItem>
-
-              <NavItem>
-                {
-                  !this.isAuthenticated() && (
-
-                    <button className="navBarButton" id="LoginBtn" onClick={this.login.bind(this)}>Auth0 IN</button>
-                  )
-                }
-                {
-                  this.isAuthenticated() && (
-
-                    <button className="navBarButton" id="LogoutBtn" onClick={this.logout.bind(this)}>Auth0 OUT</button>
-
-                  )
-                }
+              {  this.isAuthenticated()  ?
+              <button className="navBarButton" id="LogoutBtn" onClick={this.logout.bind(this)}>SIGN OUT</button>
+                :                    <button className="navBarButton" id="LoginBtn" onClick={this.login.bind(this)}>SIGN IN</button>
+              }
               </NavItem>
 
               {/* <div className="container"> */}

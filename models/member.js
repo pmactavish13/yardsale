@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const memberSchema = new Schema({
   authId: { type: String, required: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String, required: false },
+  lastName: { type: String, required: false },
   username: { type: String, required: true },
   phoneNum: { type: String, required: false },
   email: { type: String, required: true },
@@ -17,7 +17,7 @@ const memberSchema = new Schema({
   product: [{
     type: Schema.Types.ObjectId,
     ref: "Product"
- }]
+  }]
 });
 
 const Member = mongoose.model("Member", memberSchema);
